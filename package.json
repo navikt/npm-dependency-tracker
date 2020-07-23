@@ -4,16 +4,17 @@
     "license": "MIT",
     "main": "./crawler/index.js",
     "scripts": {
-        "start": "node ./crawler/index.js > log.txt"
+        "start": "node ./crawler/index.js",
+        "start:log": "node ./crawler/index.js > OUTPUT.md"
     },
     "engines": {
         "node": "^13.12.0",
         "npm": "^6.14.5"
     },
-    "dependencies": {
-        "request": "^2.88.0"
-    },
+    "dependencies": {},
     "devDependencies": {
-        "prettier": "2.0.5"
+        "prettier": "2.0.5",
+        "chalk": "4.1.0",
+        "request": "^2.88.0"
     }
 }
