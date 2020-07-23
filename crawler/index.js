@@ -5,7 +5,8 @@ console.time(msg.finished);
 
 if (!config.token) {
     console.log(msg.tokenError);
-    process.exit();
+    process.exit(0);
 }
 
 console.timeEnd(msg.finished);
+console.log('\n');
