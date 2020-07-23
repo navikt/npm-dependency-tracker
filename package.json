@@ -1,16 +1,19 @@
 {
-    "name": "package-crawler",
-    "version": "0.0.1",
-    "main": "./crawler/index.js",
-    "scripts": {
-      "start": "node ./crawler/index.js > log.txt"
-    },
-    "engines": {
-      "node": "^13.12.0",
-      "npm": "^6.14.5"
-    },
-    "dependencies": {
-      "request": "^2.88.0"
-    },
-    "license": "MIT"
+  "name": "package-crawler",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "./crawler/index.js",
+  "scripts": {
+    "start": "node ./crawler/index.js > log.txt"
+  },
+  "engines": {
+    "node": "^13.12.0",
+    "npm": "^6.14.5"
+  },
+  "dependencies": {
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "prettier": "2.0.5"
+  }
 }

@@ -1,4 +1,3 @@
-
 <h1 align="center">
     <img src="https://www.nav.no/_/asset/no.nav.navno:1575554845/img/navno/logo.svg" />
     <br/>package-crawler
@@ -19,8 +18,8 @@
 
 Går gjennom alle repos i en github org og genererer data basert på dependencies som de bruker.
 
-For Designsystemet sitt bruk går den gjennom alle repoene i `navikt` organisasjonen og sjekker om de bruker designsystemet sine komponenter 
-samt om de holder dem oppdatert. 
+For Designsystemet sitt bruk går den gjennom alle repoene i `navikt` organisasjonen og sjekker om de bruker designsystemet sine komponenter
+samt om de holder dem oppdatert.
 
 ## Bakgrunn
 
