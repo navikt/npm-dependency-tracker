@@ -5,7 +5,8 @@
     "main": "./crawler/index.js",
     "scripts": {
         "start": "node ./build/index.js",
-        "start:log": "node ./build/index.js > OUTPUT.md"
+        "start:log": "node ./build/index.js > OUTPUT.md",
+        "watch": "tsc -w"
     },
     "engines": {
         "node": "^13.12.0",
