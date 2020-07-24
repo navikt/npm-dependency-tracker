@@ -1,12 +1,13 @@
 
-import Packagejson from './package';
+import Packagejson, { dependency } from './package';
+
 
 export default class Repo {
     name: string;
     url: string;
     packages: Packagejson[]
 
-    constructor(name, url) {
+    constructor(name:string, url:string) {
         this.name = name;
         this.url = url;
         this.packages = [];
@@ -17,7 +18,7 @@ export default class Repo {
     }
 
     getDependencies(){
-        let dep = [];
+        let dep:dependency[][] = [];
         this.packages.forEach(pack => (dep.push(pack.getDepUnion())));
         return dep;
     }

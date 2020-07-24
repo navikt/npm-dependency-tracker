@@ -1,7 +1,7 @@
-const config = require('../config.js');
-const msg = require('./msg.js');
-const Repo = require('./data/repo.js');
-const Package = require('./data/package');
+const config = require('./config.js');
+import * as msg from './msg';
+import Repo from './data/repo.js';
+import Package from './data/package';
 
 console.time(msg.finished);
 

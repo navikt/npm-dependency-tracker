@@ -1,13 +1,18 @@
 const union = require('underscore');
 
+export interface dependency {
+    name: string;
+    version: string;
+}
+
 export default class Packagejson {
     name: string;
     url: string;
-    dependencies: [];
-    devDependencies: [];
-    peerDependencies: [];
+    dependencies: dependency[];
+    devDependencies: dependency[];
+    peerDependencies: dependency[];
 
-    constructor(name: string, url: string, dep: [], devDep: [], peerDep: []) {
+    constructor(name: string, url: string, dep: dependency[], devDep: dependency[], peerDep: dependency[]) {
         this.name = name;
         this.url = url;
         this.dependencies = dep;
@@ -15,7 +20,7 @@ export default class Packagejson {
         this.peerDependencies = peerDep;
     }
 
-    getDepUnion(): [] {
-        return undefined;
+    getDepUnion(): dependency[] {
+        return [];
     }
 }
