@@ -1,3 +1,4 @@
+require('dotenv').config();
 const config = require('./config.js');
 import * as msg from './msg';
 import Repo from './data/repo.js';

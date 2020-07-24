@@ -32,9 +32,9 @@ Vi i designsystemet ønsker mer informasjon om bruken av våre komponenter innen
 
 1. `Installer Node.js, npm og typescript lokalt om ikke allerede gjort.`
 2. `Konfiguer config.ts for endring av org, blacklists etc`
-3. `npm install`
-4. `tsc`
-5. `export token=DIN_GITHUB_TOKEN`
+3. `Lag en .env fil i root og sett variablene for TOKEN, AGENT og ORG. (https://github.com/motdotla/dotenv)`
+4. `npm install`
+5. `tsc`
 6. `npm start`
 
 ## Kontakt

@@ -1,6 +1,7 @@
 // Github access token https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
-export const token = process.env['token'];
-export const org = 'navikt';
+export const token = process.env['TOKEN'];
+export const org = process.env['ORG'];
+export const userAgent = process.env['AGENT'];
 
 // What file we want to look for dependecies in
 export const depFiles = ['package.json'];
@@ -12,3 +13,4 @@ export const depPackages = ['nav-frontend-knapper', 'nav-frontend-alertstriper']
 export const blacklistRepo = ['nav-frontend-moduler', 'Designsystemet', 'nav-frontend-core'];
 // Directories we want to ignore looking into
 export const blacklistDir = ['node_modules'];
+
