@@ -2,6 +2,7 @@ const config = require('./config.js');
 import * as msg from './msg';
 import Repo from './data/repo.js';
 import Package from './data/package';
+import * as con from './connection/fetch';
 
 console.time(msg.finished);
 
@@ -16,4 +17,3 @@ repo.logInfo();
 
 
 console.timeEnd(msg.finished);
-console.log('\n');
