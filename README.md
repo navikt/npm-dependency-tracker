@@ -11,6 +11,9 @@
       <a href="https://github.com/navikt/package-crawler/pulls">
           <img src="https://img.shields.io/badge/PRs-welcome-green.svg" />
       </a>
+      <a href="https://github.com/navikt/package-crawler/projects/1">
+          <img src="https://progress-bar.dev/20?title=Completed" />
+      </a>
     </p>
 </div>
 
