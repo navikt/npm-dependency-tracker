@@ -27,11 +27,12 @@ Vi i designsystemet ønsker mer informasjon om bruken av våre komponenter innen
 
 ## Bruk
 
-1. `Installer Node.js and npm lokalt om ikke allerede gjort.`
-2. `Konfiguer config.js for endring av org, blacklists etc`
+1. `Installer Node.js, npm og typescript lokalt om ikke allerede gjort.`
+2. `Konfiguer config.ts for endring av org, blacklists etc`
 3. `npm install`
-4. `export token=DIN_GITHUB_TOKEN`
-5. `npm start`
+4. `tsc`
+5. `export token=DIN_GITHUB_TOKEN`
+6. `npm start`
 
 ## Kontakt
 
