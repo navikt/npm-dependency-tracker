@@ -3,6 +3,8 @@ export const token = process.env['TOKEN'];
 export const org = process.env['ORG'];
 export const userAgent = process.env['AGENT'];
 
+export const gitApi = 'https://api.github.com/';
+
 // What file we want to look for dependecies in
 export const depFiles = ['package.json'];
 // How deep into a repos directory we want to look for depFiles in

@@ -16,5 +16,6 @@ if (!config.token) {
 const repo = new Repo("DS_REPO", "https://api.github.com/xyz");
 repo.logInfo();
 
+con.testFetching();
 
 console.timeEnd(msg.finished);
