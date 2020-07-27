@@ -3,13 +3,15 @@ import Packagejson, { dependency } from './package';
 
 
 export default class Repo {
-    name: string;
+    fullName: string;
     url: string;
+    size: string;
     packages: Packagejson[]
 
-    constructor(name:string, url:string) {
-        this.name = name;
+    constructor(fullName:string, url:string, size:string) {
+        this.fullName = fullName;
         this.url = url;
+        this.size = size;
         this.packages = [];
     }
 
@@ -24,6 +26,6 @@ export default class Repo {
     }
 
     logInfo(): void {
-        console.table([{name: this.name, url: this.url} ])
+        console.table([{name: this.fullName, url: this.url, size: this.size} ])
     }
 }
