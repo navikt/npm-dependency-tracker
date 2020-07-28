@@ -9,3 +9,7 @@ export const xrateError = (wait:string) => {
     return chalk.redBright('Overstepped Github x-rate, resets at: ' + wait + '\nProgram can not be executed until then, so time for a coffee!');
 }
 export const runtime = '';
+
+export const repoProgress = (index:number, length:number) => {
+    return chalk.whiteBright('Processed repo nr ' + index + ' of ' + length);
+}

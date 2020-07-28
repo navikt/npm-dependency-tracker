@@ -1,34 +1,28 @@
 const config = require('../config.js');
 const download = require('download-git-repo');
+const rimraf = require('rimraf');
 
-const cb = (success, error, err) => {
+const cb = (err) => {
     if(err){
         // TODO: handle error better
         console.log(err);
-        error(0);
-    }
-    else{
-        success(1);
     }
 }
 
 // Downloads the given repo with proper OAuth
-const dlRep = (fullName, cbSuccess, cbError) =>
+export const dlRepo = (fullName, callback) =>
     download(
         'github:' + fullName,
-        './repo',
+        (config.tmpDirName + '/' + fullName),
         {
             headers: {
                 Authorization: `token ${config.token}`,
                 'User-Agent': config.userAgent
             }
         },
-        (err, cbSuccess, cbError) => cb
+        callback ? callback : cb
     );
 
-const dlRepo = (name) => {
-    return new Promise((resolve, reject) => {
-        dlRep(name, (s) => resolve(s), (e) => reject(e))
-    })
+export const delRepo = (fullName) => {
+    rimraf.sync(config.tmpDirName + '/' + fullName);
 }
-export default dlRepo;

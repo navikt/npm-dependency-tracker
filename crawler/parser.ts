@@ -1,5 +1,24 @@
+const fs = require('fs');
+const glob = require('glob');
+
+const config = require('./config.js');
 import * as connector from './connection/fetch';
 import Repo from './data/repo.js';
+
+
+const generateGlob = (dep:string, dir:string) => {
+    return (dir + '/**/' + dep);
+}
+export const findPackages = (dirName:string) => {
+
+    let results:string[] = [];
+    let files:string[];
+    config.depFiles.forEach((dep: string) => {
+        files = glob.sync(generateGlob(dep, dirName), {});
+        results = results.concat(files);
+    });
+    return results;
+}
 
 export const generateRepos = async () => {
     let totalSize = 0;
