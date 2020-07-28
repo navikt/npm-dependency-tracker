@@ -41,12 +41,21 @@ const generateGlob = (dep:string, dir:string) => {
  */
 export const findPackages = (dirName:string) => {
 
+    // Filters out looking for dependiencies in blacklisted dirnames
+    let whitelisted = true;
+    config.blacklistDir.forEach((dir:string) => {
+        if(dirName.indexOf(dir) !== -1) whitelisted = false;
+    });
+
     let results:string[] = [];
     let files:string[];
-    config.depFiles.forEach((dep: string) => {
-        files = glob.sync(generateGlob(dep, dirName), {});
-        results = results.concat(files);
-    });
+    if(whitelisted) {
+        config.depFiles.forEach((dep: string) => {
+            files = glob.sync(generateGlob(dep, dirName), {});
+            results = results.concat(files);
+        });
+    }
+   
     return results;
 }
 /**
