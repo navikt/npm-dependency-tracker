@@ -23,9 +23,12 @@ export default class Repo {
         this.packages.push(pack);
     }
 
+    /**
+     * Filters out the unwanted dependencies based on the config.
+     */
     setFilteredDependencies() {
         const depFilter: string[] = config.depPackages;
-        let deps:{ [key: string]: any } = {};
+        let deps: { [key: string]: any } = {};
         this.packages.forEach((pack) => {
             deps = { ...deps, ...pack.devDependencies, ...pack.dependencies, ...pack.peerDependencies };
         });
@@ -34,15 +37,11 @@ export default class Repo {
             .filter((key) => depFilter.includes(key))
             .reduce((obj, key) => {
                 return {
-                  ...obj,
-                  [key]: deps[key]
+                    ...obj,
+                    [key]: deps[key]
                 };
-              }, {});
+            }, {});
 
         this.filteredDep = filtered;
-    }
-
-    logInfo(): void {
-        console.table([{ name: this.fullName, url: this.url, size: this.size }]);
     }
 }

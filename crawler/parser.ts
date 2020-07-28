@@ -5,11 +5,19 @@ import * as connector from './connection/fetch';
 import Repo from './data/repo.js';
 import Package from './data/package';
 
+/**
+ * 
+ * @param jsonObj Json object likely read from package.json file types
+ * @param location Relative path to the file for that dependency file(for filtering out blaclisted dir)
+ */
 export const parseDepFile = (jsonObj: any, location:string) => {
-    const pack = new Package(jsonObj.name, location, jsonObj.dependencies, jsonObj.devDependencies, jsonObj.peerDependencies);
-    return pack;
+    return new Package(jsonObj!.name, location, jsonObj!.dependencies, jsonObj!.devDependencies, jsonObj!.peerDependencies);
 }
 
+/**
+ * Takes a relative path and tries to read the .json content 
+ * @param filename Relative path to .json file
+ */
 export const readDepFile = (filename:string):object => {
     let jsonData = {};
     const contents = fs.readFileSync(filename, 'utf8');
@@ -26,6 +34,11 @@ export const readDepFile = (filename:string):object => {
 const generateGlob = (dep:string, dir:string) => {
     return (dir + '/**/' + dep);
 }
+
+/**
+ * Generates an array with the relative paths to dependency files.
+ * @param dirName root directory to look into for dependency files
+ */
 export const findPackages = (dirName:string) => {
 
     let results:string[] = [];
@@ -36,17 +49,19 @@ export const findPackages = (dirName:string) => {
     });
     return results;
 }
-
+/**
+ * Fetches all org repos from github and inserts them into the Repo class
+ */
 export const generateRepos = async () => {
-    let totalSize = 0;
     const parsedRepos: Repo[] = [];
 
     const rawRepos = await connector.getAllRepos();
     rawRepos.forEach((repo) => {
+        // Filters out the blacklisted repos
+        if(config.blacklistRepo.includes(repo.name)) return;
+        
         parsedRepos.push(new Repo(repo.full_name, repo.html_url, repo.size, repo.updated_at));
-        totalSize += +repo.size;
     });
-    console.table([{Total_repos: parsedRepos.length, Total_size_MB: totalSize/(1000)}]);
 
     return parsedRepos;
 }

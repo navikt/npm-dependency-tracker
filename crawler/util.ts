@@ -10,6 +10,18 @@ export const xrateError = (wait:string) => {
 }
 export const runtime = '';
 
-export const repoProgress = (index:number, length:number) => {
-    return chalk.whiteBright('Processed repo nr ' + index + ' of ' + length);
+export const repoProgress = (index:string) => {
+    return chalk.whiteBright('Processed ' + index + '%');
 }
+
+export const trackProgress = (proms: Promise<any>[], progress_cb: Function) => {
+    let d = 0;
+    progress_cb(0);
+    for (const p of proms) {
+        p.then(() => {
+            d++;
+            progress_cb((d * 100) / proms.length);
+        });
+    }
+    return Promise.all(proms);
+};

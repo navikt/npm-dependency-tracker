@@ -14,8 +14,4 @@ export default class Packagejson {
         this.devDependencies = devDep;
         this.peerDependencies = peerDep;
     }
-
-    getDepUnion(): {} {
-        return {};
-    }
 }

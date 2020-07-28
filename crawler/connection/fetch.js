@@ -1,6 +1,6 @@
 import Request from 'request';
 
-import * as msg from '../msg';
+import * as util from '../util';
 import * as config from '../config';
 import * as underscore from 'underscore';
 
@@ -33,7 +33,7 @@ const fetch = (options) => {
             let resHeader = res.headers['x-ratelimit-remaining'];
             if (resHeader !== undefined && +resHeader === 0) {
                 const wait = new Date(+res.headers['x-ratelimit-reset'] * 1000).toLocaleString();
-                reject(new Error(msg.xrateError(wait)));
+                reject(new Error(util.xrateError(wait)));
             }
 
             resolve({
