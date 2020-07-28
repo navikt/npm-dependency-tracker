@@ -15,32 +15,42 @@ if (!config.token) {
     process.exit(0);
 }
 
-
 const execute = async () => {
+    let errors = 0;
+    let packages: string[] = [];
+    let promises: any[] = [];
+    let dep = {};
     const repos = await parser.generateRepos();
-    repos.forEach(async(repo, i) => {
-        // Download repo
-        // Find package.jsons in repo
-        // Read dependencies from repo
-            if(i < 1 && i >= 0) {
-                await clone.dlRepo(repo.fullName, (error?:Error) => {
-                    if(error){
-                        console.log(error.message)
-                    }
-                    else {
-                        console.log(msg.repoProgress(i+1, repos.length));
-                        console.log(parser.findPackages(config.tmpDirName + '/' + repo.fullName));
-                        //clone.delRepo(repo.fullName);
-                        
-                    }
-                });
-            }
-            else {
-
+    repos.forEach(async (repo, i) => {
+        if (i < 20) {
+            promises.push(
+                new Promise((resolve, reject) => {
+                    clone.dlRepo(repo.fullName, (error?: Error) => {
+                        if (error) {
+                            errors += 1;
+                            reject(error);
+                        } else {
+                            packages = parser.findPackages(config.tmpDirName + '/' + repo.fullName);
+                            packages.forEach((name) => {
+                                repo.addPackage(parser.parseDepFile(parser.readDepFile(name), name));
+                            });
+                            repo.setFilteredDependencies();
+                            //clone.delRepo(repo.fullName);
+                            console.log(msg.repoProgress(i + 1, repos.length));
+                            resolve();
+                        }
+                    });
+                })
+            );
+        } else {
+        }
+    });
+    await Promise.all(promises).then(()=> {
+        repos.forEach(repo => {
+            if(Object.keys(repo.filteredDep).length > 0){
             }
         });
-}
+    })
+};
 
 execute().then(() => console.timeEnd(msg.finished));
-
-

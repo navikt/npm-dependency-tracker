@@ -1,9 +1,26 @@
 const fs = require('fs');
 const glob = require('glob');
-
 const config = require('./config.js');
 import * as connector from './connection/fetch';
 import Repo from './data/repo.js';
+import Package from './data/package';
+
+export const parseDepFile = (jsonObj: any, location:string) => {
+    const pack = new Package(jsonObj.name, location, jsonObj.dependencies, jsonObj.devDependencies, jsonObj.peerDependencies);
+    return pack;
+}
+
+export const readDepFile = (filename:string):object => {
+    let jsonData = {};
+    const contents = fs.readFileSync(filename, 'utf8');
+    try {
+        jsonData = JSON.parse(contents);
+    }
+    catch(error){
+        console.log("Invalid JSON in: " + filename);
+    }
+    return jsonData;
+}
 
 
 const generateGlob = (dep:string, dir:string) => {

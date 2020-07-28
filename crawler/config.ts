@@ -8,7 +8,7 @@ export const gitApi = 'https://api.github.com/';
 // What file we want to look for dependecies in (ONLY SUPPORTS .JSON FOR NOW)
 export const depFiles = ['package.json'];
 // Packages we want data on
-export const depPackages = ['nav-frontend-knapper', 'nav-frontend-alertstriper'];
+export const depPackages = ['nav-frontend-knapper', 'nav-frontend-alertstriper', 'less', 'nodemon'];
 // Repos we want to ignore
 export const blacklistRepo = ['nav-frontend-moduler', 'Designsystemet', 'nav-frontend-core'];
 // Directories we want to ignore looking into
