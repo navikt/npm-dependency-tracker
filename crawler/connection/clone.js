@@ -1,16 +1,21 @@
 const config = require('../config.js');
 const download = require('download-git-repo');
 
-const cb = (err) => {
+const cb = (success, error, err) => {
     if(err){
         // TODO: handle error better
         console.log(err);
+        error(0);
+    }
+    else{
+        success(1);
     }
 }
 
-const dlRepo = (url, callback) =>
+// Downloads the given repo with proper OAuth
+const dlRep = (fullName, cbSuccess, cbError) =>
     download(
-        'github:' + url,
+        'github:' + fullName,
         './repo',
         {
             headers: {
@@ -18,7 +23,12 @@ const dlRepo = (url, callback) =>
                 'User-Agent': config.userAgent
             }
         },
-        cb
+        (err, cbSuccess, cbError) => cb
     );
 
+const dlRepo = (name) => {
+    return new Promise((resolve, reject) => {
+        dlRep(name, (s) => resolve(s), (e) => reject(e))
+    })
+}
 export default dlRepo;

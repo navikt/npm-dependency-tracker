@@ -1,7 +1,6 @@
 import Request from 'request';
 
 import * as msg from '../msg';
-import Repo from '../data/repo';
 import * as config from '../config';
 import * as underscore from 'underscore';
 
@@ -67,6 +66,8 @@ function fetchOrgReposByPage(page) {
     return fetch(optionsTemplate(page));
 }
 
+
+// Fetches all the repos avaliable in the organization without parsing the data.
 const fetchAllRepos = () => {
     return fetchOrgReposByPage(1)
         .then((val) => {
@@ -88,8 +89,6 @@ const fetchAllRepos = () => {
         });
 };
 
-export const getAllRepos = async () => {
-    const repos = await fetchAllRepos();
-    return repos;
-    // console.log('Found ' + repos.length + ' repos withing the org ' + config.org);
+export const getAllRepos = () => {
+    return fetchAllRepos();
 };
