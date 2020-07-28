@@ -8,6 +8,7 @@ import * as clone from './connection/clone';
 import { report } from 'process';
 import * as parser from './parser';
 
+// TODO: Handle erros better, try to rerun them at the end?
 console.time(util.finished);
 
 if (!config.token) {
@@ -23,29 +24,27 @@ const execute = async () => {
     // Fetches every repo on Org and inserts them into an array of class Repo
     const repos = await parser.generateRepos();
     repos.forEach(async (repo, i) => {
-        if (i < 100) {
-            promises.push(
-                new Promise((resolve, reject) => {
-                    // Downloads repo from github locally
-                    clone.dlRepo(repo.fullName, (error?: Error) => {
-                        if (error) {
-                            errors += 1;
-                            reject(error);
-                        } else {
-                            packages = parser.findPackages(config.tmpDirName + '/' + repo.fullName);
-                            packages.forEach((name) => {
-                                repo.addPackage(parser.parseDepFile(parser.readDepFile(name), name));
-                            });
-                            repo.setFilteredDependencies();
+        promises.push(
+            new Promise((resolve, reject) => {
+                // Downloads repo from github locally
+                clone.dlRepo(repo.fullName, (error?: Error) => {
+                    if (error) {
+                        errors += 1;
+                        reject(error);
+                    } else {
+                        packages = parser.findPackages(config.tmpDirName + '/' + repo.fullName);
+                        packages.forEach((name) => {
+                            repo.addPackage(parser.parseDepFile(parser.readDepFile(name), name));
+                        });
+                        repo.setFilteredDependencies();
 
-                            // Deletes downloaded repo after parsing is complete
-                            clone.delRepo(repo.fullName);
-                            resolve();
-                        }
-                    });
-                }).catch(() => null)
-            );
-        }
+                        // Deletes downloaded repo after parsing is complete
+                        clone.delRepo(repo.fullName);
+                        resolve();
+                    }
+                });
+            }).catch(() => null)
+        );
     });
 
     await util.trackProgress(promises, (p: number) => {
@@ -56,7 +55,6 @@ const execute = async () => {
         let totalDep = 0;
         repos.forEach((repo) => {
             if (Object.keys(repo.filteredDep).length > 0) {
-                console.log(repo.filteredDep);
                 allDep = { ...allDep, ...repo.filteredDep };
                 totalDep += Object.keys(repo.filteredDep).length;
             }
