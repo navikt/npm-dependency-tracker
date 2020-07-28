@@ -12,14 +12,14 @@
           <img src="https://img.shields.io/badge/PRs-welcome-green.svg" />
       </a>
       <a href="https://github.com/navikt/package-crawler/projects/1">
-          <img src="https://progress-bar.dev/20?title=Completed" />
+          <img src="https://progress-bar.dev/40?title=Completed" />
       </a>
     </p>
 </div>
 
 ## Funksjon
 
-Går gjennom alle repos i en github org og genererer data basert på dependencies som de bruker.
+Går gjennom alle repos i en github org og genererer data basert på dependencies som de bruker. Løser dette ved å laste ned alle repoene (2000+) og gjennomgår dem lokalt. 
 
 For Designsystemet sitt bruk går den gjennom alle repoene i `navikt` organisasjonen og sjekker om de bruker designsystemet sine komponenter
 samt om de holder dem oppdatert.
