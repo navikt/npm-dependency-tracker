@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+const config = require('./config.js');
 
 export const finished = chalk.cyan('\nFinished OK');
 export const tokenError = chalk.redBright(
@@ -8,10 +9,13 @@ export const tokenError = chalk.redBright(
 export const xrateError = (wait:string) => {
     return chalk.redBright('Overstepped Github x-rate, resets at: ' + wait + '\nProgram can not be executed until then, so time for a coffee!');
 }
-export const runtime = '';
 
-export const repoProgress = (index:string) => {
-    return chalk.whiteBright('Processed ' + index + '%');
+export const repoProgress = (index:string, batch:number, length:number) => {
+    return chalk.whiteBright('Processed ' + index + '% in batch ' + batch + ' of ' + Math.ceil(length/config.batchSize));
+}
+
+export const repoProgressComplete = (index:string, batch:number, length:number) => {
+    return chalk.whiteBright('Completed batch ' + (+batch + 1) + ' of ' + Math.ceil(length/config.batchSize));
 }
 
 export const trackProgress = (proms: Promise<any>[], progress_cb: Function) => {
@@ -25,3 +29,7 @@ export const trackProgress = (proms: Promise<any>[], progress_cb: Function) => {
     }
     return Promise.all(proms);
 };
+
+export const nextBatch = (n:number, end:number) => {
+    return n + config.batchSize > end ? config.batchSize : n + config.batchSize;
+}

@@ -74,3 +74,27 @@ export const generateRepos = async () => {
 
     return parsedRepos;
 }
+
+export const batchRepos = (repos:Repo[]):Repo[][] => {
+    
+    let n;
+    let [...arr]  = repos;
+    let res = [];
+    while (arr.length) {
+        n = arr.length < config.batchSize ? arr.length : config.batchSize;
+        res.push(arr.splice(0, n));
+    }
+    return res;
+      
+}
+
+export const writeData = (data:{}) => {
+    let json:string;
+    try {
+        json = JSON.stringify(data);
+        fs.writeFileSync(config.outputFile, json, 'utf8');
+    }
+    catch {
+        console.log("Could not write data for repo")
+    }
+}

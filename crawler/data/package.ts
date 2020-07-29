@@ -14,4 +14,13 @@ export default class Packagejson {
         this.devDependencies = devDep;
         this.peerDependencies = peerDep;
     }
+
+    getData = () => {
+        return {
+            name: this.name,
+            dependencies: this.dependencies,
+            devDependencies: this.devDependencies,
+            peerDependencies: this.peerDependencies
+        }
+    } 
 }
