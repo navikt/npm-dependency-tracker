@@ -9,15 +9,23 @@ export default class Repo {
     lastActivity: string;
     packages: Packagejson[];
     filteredDep: { [key: string]: any };
+    mainBranch: string;
     processed: boolean;
 
-    constructor(fullName: string = '', url: string = '', size: string = '', lastActivity: string = '') {
+    constructor(
+        fullName: string = '',
+        url: string = '',
+        size: string = '',
+        lastActivity: string = '',
+        branch: string = ''
+    ) {
         this.fullName = fullName;
         this.url = url;
         this.size = size;
         this.lastActivity = lastActivity;
         this.packages = [];
         this.filteredDep = {};
+        this.mainBranch = branch;
         this.processed = false;
     }
 
@@ -26,16 +34,18 @@ export default class Repo {
         this.processed = true;
     }
 
-
     getData = () => {
         return {
             name: this.fullName,
             url: this.url,
             size: this.size,
             activity: this.lastActivity,
-            packages: this.packages.map((pack) => { return pack.getData()})
-        }
-    }
+            branch: this.mainBranch,
+            packages: this.packages.map((pack) => {
+                return pack.getData();
+            })
+        };
+    };
     /**
      * Filters out the unwanted dependencies based on the config.
      * ? Move out to separate filter class/ file

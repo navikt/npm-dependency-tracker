@@ -68,8 +68,9 @@ export const generateRepos = async () => {
     rawRepos.forEach((repo) => {
         // Filters out the blacklisted repos
         if(config.blacklistRepo.includes(repo.name)) return;
+        if([repo.full_name, repo.html_url, repo.size, repo.updated_at, repo.default_branch].includes(undefined)) return;
         
-        parsedRepos.push(new Repo(repo.full_name, repo.html_url, repo.size, repo.updated_at));
+        parsedRepos.push(new Repo(repo.full_name, repo.html_url, repo.size, repo.updated_at, repo.default_branch));
     });
 
     return parsedRepos;

@@ -9,6 +9,9 @@ import { report } from 'process';
 import * as parser from './parser';
 import { fileURLToPath } from 'url';
 
+
+import { download } from './download';
+
 // TODO: Handle erros better, try to rerun them at the end?
 console.time(util.finished);
 
@@ -18,9 +21,7 @@ if (!config.token) {
 }
 
 /**
- * TODO execute downloading in batches of X repos
  * TODO Handle errors better when downloading fails
- * TODO Write repo data to a .json file
  * TODO Option to just download updated repos/ Repos not located locally
  */
 const execute = async () => {
@@ -35,27 +36,10 @@ const execute = async () => {
     const batchedRepos = parser.batchRepos(repos);
     tail = util.nextBatch(tail, repos.length);
 
-    if (entry < 24) {
-        batchedRepos[batch].forEach((repos: Repo) => {
+    while(batch < batchedRepos.length){
+        batchedRepos[batch].forEach((repo: Repo) => {
             promises.push(
-                new Promise((resolve, reject) => {
-                    // Downloads repo from github locally
-
-                    clone.dlRepo(repos.fullName, (error?: Error) => {
-                        if (error) {
-                            errors += 1;
-                            reject(error);
-                        } else {
-                            packages = parser.findPackages(config.tmpDirName + '/' + repos.fullName);
-                            packages.forEach((name) => {
-                                repos.addPackage(parser.parseDepFile(parser.readDepFile(name), name));
-                            });
-                            // Deletes downloaded repo after parsing is complete
-                            clone.delRepo(repos.fullName);
-                            resolve();
-                        }
-                    });
-                }).catch(() => console.log('Rejected promise!'))
+                download(repo).catch((e) => console.log(e))
             );
             entry += 1;
         });
