@@ -1,7 +1,7 @@
 require('dotenv').config();
 const config = require('./config.js');
 import * as util from './util';
-import Repo from './data/repo.js';
+import Repo, { RepoData } from './data/repo.js';
 import Package from './data/package';
 import * as connector from './connection/fetch';
 import * as clone from './connection/clone';
@@ -55,18 +55,7 @@ const execute = async () => {
 
     let totalSize = 0;
     let totalDep = 0;
-    let toWrite: {
-        name: string;
-        url: string;
-        size: number;
-        activity: string;
-        packages: {
-            name: string;
-            dependencies: {};
-            devDependencies: {};
-            peerDependencies: {};
-        }[];
-    }[] = [];
+    let toWrite: RepoData[] = [];
     repos.forEach((repo) => {
         totalSize += +repo.size;
         if (repo.processed) {

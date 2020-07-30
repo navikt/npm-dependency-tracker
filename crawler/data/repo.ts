@@ -2,6 +2,19 @@ import Packagejson from './package';
 import { last } from 'underscore';
 const config = require('../config.js');
 
+export interface RepoData {
+        name: string;
+        url: string;
+        size: number;
+        activity: string;
+        packages: {
+            name: string;
+            dependencies: {};
+            devDependencies: {};
+            peerDependencies: {};
+        }[]
+}
+
 export default class Repo {
     fullName: string;
     url: string;
