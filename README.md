@@ -5,24 +5,20 @@
 
 <div align="center">
     <p>
-        Crawler for generering av data og statistikk for designsystemet. Vil by default lete etter komponentbruk i package.json
+        Crawler for generering av data og statistikk for designsystemet. Vil i første omgang finne alle dependencies brukt i NAV sine repos og skrive dataen til en outputfil for videre prosessering.
     </p>
     <p>
-      <a href="https://github.com/navikt/package-crawler/pulls">
-          <img src="https://img.shields.io/badge/PRs-welcome-green.svg" />
-      </a>
       <a href="https://github.com/navikt/package-crawler/projects/1">
-          <img src="https://progress-bar.dev/40?title=Completed" />
+          <img src="https://progress-bar.dev/80?title=Completed" />
       </a>
     </p>
 </div>
 
 ## Funksjon
 
-Går gjennom alle repos i en github org og genererer data basert på dependencies som de bruker. Løser dette ved å laste ned alle repoene (2000+) og gjennomgår dem lokalt. 
+Går gjennom alle repos i en github org og henter ut alle dependencies de bruker. Løser dette ved å laste ned alle repoene og gjennomgår dem lokalt. En mer praktisk løsning ville vært å bare gjøre calls til github-api, men med maks 5000 github-api calls i timen er dette upraktisk.
 
-For Designsystemet sitt bruk går den gjennom alle repoene i `navikt` organisasjonen og sjekker om de bruker designsystemet sine komponenter
-samt om de holder dem oppdatert.
+For Designsystemet sitt bruk går den gjennom alle repoene i `navikt` organisasjonen og henter ut dependencies som blir brukt.
 
 ## Bakgrunn
 
@@ -36,6 +32,13 @@ Vi i designsystemet ønsker mer informasjon om bruken av våre komponenter innen
 4. `npm install`
 5. `tsc`
 6. `npm start`
+
+### .env eksempel
+```
+TOKEN=GITHUB_OAUTH_TOKEN
+AGENT=NAV-Designsystemet-crawler
+ORG=navikt
+```
 
 ## Kontakt
 
