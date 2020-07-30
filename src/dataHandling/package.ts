@@ -1,5 +1,3 @@
-const union = require('underscore');
-
 export default class Packagejson {
     name: string;
     location: string;

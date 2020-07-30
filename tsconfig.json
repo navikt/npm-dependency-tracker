@@ -5,12 +5,12 @@
         "lib": ["es6"],
         "allowJs": true,
         "outDir": "build",
-        "rootDir": "crawler",
+        "rootDir": "src",
         "strict": true,
         "noImplicitAny": true,
         "esModuleInterop": true,
         "resolveJsonModule": true
     },
-    "include": ["crawler"],
+    "include": ["src"],
     "exclude": ["node_modules"]
 }

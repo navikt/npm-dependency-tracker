@@ -1,6 +1,4 @@
 import Packagejson from './package';
-import { last } from 'underscore';
-const config = require('../config.js');
 
 export interface RepoData {
         name: string;

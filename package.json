@@ -2,11 +2,12 @@
     "name": "package-crawler",
     "version": "0.0.1",
     "license": "MIT",
-    "main": "./crawler/index.js",
+    "main": "./src/index.js",
     "scripts": {
         "start": "node ./build/index.js",
         "start:log": "node ./build/index.js > OUTPUT.md",
-        "watch": "tsc -w"
+        "watch": "tsc -w",
+        "build": "tsc"
     },
     "engines": {
         "node": "^13.12.0",
