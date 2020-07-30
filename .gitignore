@@ -5,3 +5,4 @@ build
 .env
 tmprepos
 output.json
+.vscode
