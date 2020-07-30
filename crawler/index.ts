@@ -1,15 +1,12 @@
 require('dotenv').config();
 const config = require('./config.js');
 import * as util from './util';
-import Repo, { RepoData } from './data/repo.js';
-import Package from './data/package';
-import * as connector from './connection/fetch';
-import * as clone from './connection/clone';
-import { report } from 'process';
-import * as parser from './parser';
-import { fileURLToPath } from 'url';
+import Repo, { RepoData } from './dataHandling/repo.js';
+import Package from './dataHandling/package';
+import * as parser from './dataHandling/parser';
+import * as connector from './api/fetch';
+import { download } from './api/download';
 
-import { download } from './download';
 
 // TODO: Handle erros better, try to rerun them at the end?
 console.time(util.finished);
@@ -68,7 +65,6 @@ const execute = async () => {
     console.table([
         { Total_repos: repos.length, Total_size_MB: totalSize / 1000, Repos_w_dep: totalDep, Errors: errors }
     ]);
-    clone.delRepo(config.tmpDirName);
 
     /* 
     repos.forEach((repo, i) => {

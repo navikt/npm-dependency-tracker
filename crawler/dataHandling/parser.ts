@@ -1,9 +1,9 @@
 const fs = require('fs');
 const glob = require('glob');
 const config = require('./config.js');
-import * as connector from './connection/fetch';
-import Repo from './data/repo.js';
-import Package from './data/package';
+import * as connector from '../api/fetch';
+import Repo from '../dataHandling/repo.js';
+import Package from '../dataHandling/package';
 
 /**
  * 

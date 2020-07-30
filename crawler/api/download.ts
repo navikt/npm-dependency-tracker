@@ -1,8 +1,10 @@
-import * as config from './config';
+import * as config from '../config';
 import git_dl from 'download-git-repo';
-import Repo from './data/repo';
-import * as parser from './parser';
-import * as clone from './connection/clone';
+import Repo from '../dataHandling/repo';
+import * as parser from '../dataHandling/parser';
+
+import { deleteRepoDir } from '../dataHandling/filehandler';
+
 // Downloads the given repo with proper OAuth
 const downloadRepo = (repo: Repo, callback: Function = () => null) => {
     if (repo.url === '' || repo.mainBranch === '') return;
@@ -32,7 +34,7 @@ export const download = (repo: Repo) => {
                     repo.addPackage(parser.parseDepFile(parser.readDepFile(name), name));
                 });
                 // Deletes downloaded repo after parsing is complete
-                clone.delRepo(repo.fullName);
+                deleteRepoDir(repo.fullName);
                 resolve();
             }
         });

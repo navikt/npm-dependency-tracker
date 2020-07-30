@@ -74,4 +74,4 @@ export const blacklistRepo = ['nav-frontend-moduler', 'Designsystemet', 'nav-fro
 // Directories we want to ignore looking into
 export const blacklistDir = ['node_modules'];
 
-export const tmpDirName = 'tmprepos';
+export const tmpDirName = 'tmp_repos';

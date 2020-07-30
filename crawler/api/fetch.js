@@ -45,7 +45,7 @@ const fetch = (options) => {
     });
 };
 
-function getPaginateHeaderData(headerStr) {
+const getPaginateHeaderData = (headerStr) => {
     const nextRegExp = /repos\?per_page=100\&page=(\d+)\>\; rel=\"next\"/;
     const lastRegExp = /repos\?per_page=100\&page=(\d+)\>\; rel=\"last\"/;
 
@@ -62,10 +62,9 @@ const generateUrl = (path) => {
     return config.gitApi + path;
 };
 
-function fetchOrgReposByPage(page) {
+const fetchOrgReposByPage = (page) => {
     return fetch(optionsTemplate(page));
 }
-
 
 // Fetches all the repos avaliable in the organization without parsing the data.
 const fetchAllRepos = () => {
