@@ -1,5 +1,6 @@
 const fs = require('fs');
 const glob = require('glob');
+const fg = require('fast-glob');
 const config = require('../config.js');
 import * as connector from '../api/fetch';
 import Repo from '../dataHandling/repo.js';
@@ -54,13 +55,28 @@ export const findPackages = (dirName: string) => {
     let files: string[];
     if (whitelisted) {
         config.depFiles.forEach((dep: string) => {
-            files = glob.sync(generateGlob(dep, dirName), {});
+            //files = fg.sync(generateGlob(dep, dirName), {deep: 4});
+            files = fg.sync(generateGlob(dep, dirName), {deep: 4});
             results = results.concat(files);
         });
     }
 
     return results;
 };
+
+export const batchRepos = (repos:Repo[]):Repo[][] => {
+    
+    let n;
+    let [...arr]  = repos;
+    let res = [];
+    while (arr.length) {
+        n = arr.length < config.concurrent ? arr.length : config.concurrent;
+        res.push(arr.splice(0, n));
+    }
+    return res;
+      
+}
+
 /**
  * Fetches all org repos from github and inserts them into the Repo class
  */
@@ -77,6 +93,7 @@ export const generateRepos = async () => {
             } else if (+repo.size === 0) {
                 return false;
             }
+            return true;
         })
         .map((repo) => {
             return new Repo(repo.full_name, repo.html_url, repo.size, repo.updated_at, repo.default_branch);
