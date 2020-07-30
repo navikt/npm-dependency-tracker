@@ -1,5 +1,5 @@
 import * as config from '../config';
-import git_dl from 'download-git-repo';
+const git_dl = require('download-git-repo');
 import Repo from '../dataHandling/repo';
 import * as parser from '../dataHandling/parser';
 

@@ -3,6 +3,6 @@ node_modules
 index.old.js
 build
 .env
-tmprepos
+tmp_repos
 output.json
 .vscode

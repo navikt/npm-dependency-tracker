@@ -1,5 +1,4 @@
 require('dotenv').config();
-const config = require('./config.js');
 import * as util from './util';
 import execute from './crawler';
 

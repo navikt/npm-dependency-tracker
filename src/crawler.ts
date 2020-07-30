@@ -2,38 +2,32 @@ import * as util from './util';
 import Repo, { RepoData } from './dataHandling/repo.js';
 import * as parser from './dataHandling/parser';
 import { download } from './api/download';
+import * as config from './config';
+import pLimit from 'p-limit';
 
 /**
  * TODO Handle errors better when downloading fails
  * TODO Option to just download updated repos/ Repos not located locally
  */
 const execute = async () => {
-    let promises: any[] = [];
     let toWrite: RepoData[] = [];
-    let batch = 0,
-        totalSize = 0,
+    let totalSize = 0,
         totalDep = 0,
         errors = 0;
 
+    const limiter = pLimit(config.concurrent)
 
     const repos = await parser.generateRepos();
-    const batchedRepos = parser.batchRepos(repos);
 
+    let promisess = repos.map((repo: Repo) => {
+        return limiter(() => download(repo).catch((e) => console.log(e)));
+    });
 
-
-    while (batch < batchedRepos.length) {
-        batchedRepos[batch].forEach((repo: Repo) => {
-            if (!repo.invalid) {
-                promises.push(download(repo).catch((e) => console.log(e)));
-            }
-        });
-        await util.trackProgress(promises, (p: number) => {
-            if (p === 100) {
-                console.log(util.repoProgressComplete(p.toFixed(2), batch, repos.length));
-            }
-        });
-        batch += 1;
-    }
+    await util.trackProgress(promisess, (p: number) => {
+        if (p % 5 === 0) {
+            console.log(util.repoProgressComplete(p.toFixed(1), repos.length));
+        }
+    });
 
     repos.forEach((repo) => {
         totalSize += +repo.size;

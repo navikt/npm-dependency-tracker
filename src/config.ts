@@ -4,7 +4,7 @@ export const org = process.env['ORG'];
 export const userAgent = process.env['AGENT'];
 
 export const gitApi = 'https://api.github.com/';
-export const batchSize = 25;
+export const concurrent = 10;
 export const outputFile = 'output.json';
 
 // What file we want to look for dependecies in (ONLY SUPPORTS .JSON FOR NOW)

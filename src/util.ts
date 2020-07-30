@@ -20,8 +20,8 @@ export const repoProgress = (index:string, batch:number, length:number) => {
     return chalk.whiteBright('Processed ' + index + '% in batch ' + batch + ' of ' + Math.ceil(length/config.batchSize));
 }
 
-export const repoProgressComplete = (index:string, batch:number, length:number) => {
-    return chalk.whiteBright('Completed batch ' + (+batch + 1) + ' of ' + Math.ceil(length/config.batchSize));
+export const repoProgressComplete = (index:string, length:number) => {
+    return chalk.whiteBright('Progress ' + index + '%');
 }
 
 export const trackProgress = (proms: Promise<any>[], progress_cb: Function) => {
