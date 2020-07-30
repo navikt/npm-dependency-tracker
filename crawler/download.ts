@@ -7,7 +7,7 @@ import * as clone from './connection/clone';
 const downloadRepo = (repo: Repo, callback: Function = () => null) => {
     if (repo.url === '' || repo.mainBranch === '') return;
     git_dl(
-        repo.url + '/archive/' + repo.mainBranch + '.zip',
+        'direct:' + repo.url + '/archive/' + repo.mainBranch + '.zip',
         config.tmpDirName + '/' + repo.fullName,
         {
             headers: {
@@ -25,7 +25,7 @@ export const download = (repo: Repo) => {
         let packages;
         downloadRepo(repo, (error?: Error) => {
             if (error) {
-                reject(error);
+                reject(repo);
             } else {
                 packages = parser.findPackages(config.tmpDirName + '/' + repo.fullName);
                 packages.forEach((name) => {

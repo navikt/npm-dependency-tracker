@@ -9,7 +9,6 @@ import { report } from 'process';
 import * as parser from './parser';
 import { fileURLToPath } from 'url';
 
-
 import { download } from './download';
 
 // TODO: Handle erros better, try to rerun them at the end?
@@ -36,11 +35,11 @@ const execute = async () => {
     const batchedRepos = parser.batchRepos(repos);
     tail = util.nextBatch(tail, repos.length);
 
-    while(batch < batchedRepos.length){
+    while (batch < batchedRepos.length) {
         batchedRepos[batch].forEach((repo: Repo) => {
-            promises.push(
-                download(repo).catch((e) => console.log(e))
-            );
+            if (!repo.invalid) {
+                promises.push(download(repo).catch((e) => console.log(e)));
+            }
             entry += 1;
         });
         await util.trackProgress(promises, (p: number) => {
@@ -59,7 +58,7 @@ const execute = async () => {
     let toWrite: {
         name: string;
         url: string;
-        size: string;
+        size: number;
         activity: string;
         packages: {
             name: string;
@@ -81,7 +80,6 @@ const execute = async () => {
         { Total_repos: repos.length, Total_size_MB: totalSize / 1000, Repos_w_dep: totalDep, Errors: errors }
     ]);
     clone.delRepo(config.tmpDirName);
-    
 
     /* 
     repos.forEach((repo, i) => {

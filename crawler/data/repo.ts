@@ -5,17 +5,18 @@ const config = require('../config.js');
 export default class Repo {
     fullName: string;
     url: string;
-    size: string;
+    size: number;
     lastActivity: string;
     packages: Packagejson[];
     filteredDep: { [key: string]: any };
     mainBranch: string;
     processed: boolean;
+    invalid: boolean;
 
     constructor(
         fullName: string = '',
         url: string = '',
-        size: string = '',
+        size: number = 0,
         lastActivity: string = '',
         branch: string = ''
     ) {
@@ -27,6 +28,7 @@ export default class Repo {
         this.filteredDep = {};
         this.mainBranch = branch;
         this.processed = false;
+        this.invalid = size <= 0 ? true : false;
     }
 
     addPackage(pack: Packagejson) {
