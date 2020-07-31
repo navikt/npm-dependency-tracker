@@ -10,7 +10,7 @@ export const deleteRepoDir = (fullName: string) => {
 export const writeData = (data: {}) => {
     let json: string;
     try {
-        json = JSON.stringify(data);
+        json = JSON.stringify(data, null, 4);
         fs.writeFileSync(config.outputFile, json, 'utf8');
     } catch {
         console.log('Could not write data for repo');

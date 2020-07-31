@@ -28,7 +28,7 @@ export const generateRepos = async () => {
             if (config.blacklistRepo.includes(repo.name)) {
                 return false;
             } else if (
-                [repo.full_name, repo.html_url, repo.size, repo.updated_at, repo.default_branch].includes(undefined)
+                [repo.full_name, repo.html_url, repo.size, repo.updated_at, repo.default_branch, repo.language].includes(undefined)
             ) {
                 return false;
             } else if (+repo.size === 0) {
@@ -37,7 +37,7 @@ export const generateRepos = async () => {
             return true;
         })
         .map((repo) => {
-            return new Repo(repo.full_name, repo.html_url, repo.size, repo.updated_at, repo.default_branch);
+            return new Repo(repo.full_name, repo.html_url, repo.size, repo.updated_at, repo.default_branch, repo.language);
         });
 };
 

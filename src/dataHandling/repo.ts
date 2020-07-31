@@ -22,6 +22,8 @@ export default class Repo {
     filteredDep: { [key: string]: any };
     mainBranch: string;
     processed: boolean;
+    processTime: number;
+    language: string;
     invalid: boolean;
 
     constructor(
@@ -29,7 +31,8 @@ export default class Repo {
         url: string = '',
         size: number = 0,
         lastActivity: string = '',
-        branch: string = ''
+        branch: string = '',
+        language: string = ''
     ) {
         this.fullName = fullName;
         this.url = url;
@@ -38,13 +41,19 @@ export default class Repo {
         this.packages = [];
         this.filteredDep = {};
         this.mainBranch = branch;
+        this.language = language;
         this.processed = false;
+        this.processTime = 0;
         this.invalid = size <= 0 ? true : false;
     }
 
     addPackage(pack: Packagejson) {
         this.packages.push(pack);
         this.processed = true;
+    }
+
+    setProcessTime(time:number) {
+        this.processTime = time;
     }
 
     getData = () => {
@@ -54,6 +63,8 @@ export default class Repo {
             size: this.size,
             activity: this.lastActivity,
             branch: this.mainBranch,
+            language: this.language,
+            processTime: this.processTime,
             packages: this.packages.map((pack) => {
                 return pack.getData();
             })

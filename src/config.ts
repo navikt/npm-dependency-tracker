@@ -4,7 +4,7 @@ export const org = process.env['ORG'];
 export const userAgent = process.env['AGENT'];
 
 export const gitApi = 'https://api.github.com/';
-export const concurrent = 50;
+export const concurrent = 25;
 export const outputFile = 'output.json';
 
 // What file we want to look for dependecies in (ONLY SUPPORTS .JSON FOR NOW)
@@ -70,7 +70,7 @@ export const depPackages = [
     'nav-frontend-veilederpanel-style'
 ];
 // Repos we want to ignore
-export const blacklistRepo = ['nav-frontend-moduler', 'Designsystemet', 'nav-frontend-core'];
+export const blacklistRepo = ['nav-frontend-moduler', 'Designsystemet', 'nav-frontend-core', 'nav-frontend-ikoner-backend'];
 // Directories we want to ignore looking into
 export const blacklistDir = ['node_modules'];
 

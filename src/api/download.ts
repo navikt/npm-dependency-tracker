@@ -24,6 +24,9 @@ const downloadRepo = (repo: Repo, callback: Function = () => null) => {
 
 export const download = (repo: Repo) => {
     return new Promise((resolve, reject) => {
+        // Sets starttime
+        repo.setProcessTime(new Date().getTime());
+
         // Downloads repo from github locally
         let packages;
         downloadRepo(repo, (error?: Error) => {
@@ -36,6 +39,7 @@ export const download = (repo: Repo) => {
                 });
                 // Deletes downloaded repo after parsing is complete
                 deleteRepoDir(repo.fullName);
+                repo.setProcessTime(new Date().getTime() - repo.processTime);
                 resolve();
             }
         });
