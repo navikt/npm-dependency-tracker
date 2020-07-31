@@ -1,6 +1,7 @@
 import * as config from '../config';
 const git_dl = require('download-git-repo');
 import Repo from '../dataHandling/repo';
+import { readDepFile, findPackages } from '../dataHandling/filehandler';
 import * as parser from '../dataHandling/parser';
 
 import { deleteRepoDir } from '../dataHandling/filehandler';
@@ -29,9 +30,9 @@ export const download = (repo: Repo) => {
             if (error) {
                 reject(repo);
             } else {
-                packages = parser.findPackages(config.tmpDirName + '/' + repo.fullName);
+                packages = findPackages(config.tmpDirName + '/' + repo.fullName);
                 packages.forEach((name) => {
-                    repo.addPackage(parser.parseDepFile(parser.readDepFile(name), name));
+                    repo.addPackage(parser.parseDepFile(readDepFile(name), name));
                 });
                 // Deletes downloaded repo after parsing is complete
                 deleteRepoDir(repo.fullName);
