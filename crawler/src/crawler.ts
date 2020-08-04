@@ -1,7 +1,7 @@
 import * as util from './util';
 import Repo, { RepoData } from './dataHandling/repo.js';
 import * as parser from './dataHandling/parser';
-import { writeData } from './dataHandling/filehandler';
+import { writeData, deleteTmpDir } from './dataHandling/filehandler';
 import { download } from './api/download';
 import * as config from './config';
 import pLimit from 'p-limit';
@@ -34,6 +34,7 @@ const execute = async () => {
         bar1.update(+p.toFixed(1));
     });
 
+    deleteTmpDir();
     bar1.stop()
     repos.forEach((repo) => {
         totalSize += +repo.size;

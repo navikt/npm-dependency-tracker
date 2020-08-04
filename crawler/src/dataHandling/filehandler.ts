@@ -7,6 +7,10 @@ export const deleteRepoDir = (fullName: string) => {
     rimraf.sync(config.tmpDirName + '/' + fullName);
 }
 
+export const deleteTmpDir = () => {
+    rimraf.sync(config.tmpDirName);
+}
+
 export const writeData = (data: {}) => {
     let json: string;
     try {
