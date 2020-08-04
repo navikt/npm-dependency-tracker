@@ -15,7 +15,6 @@
         "forceConsistentCasingInFileNames": true,
         "moduleResolution": "node",
         "isolatedModules": true,
-        "noEmit": true,
         "jsx": "react"
     },
     "include": ["./src"],
