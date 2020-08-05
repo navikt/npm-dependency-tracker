@@ -11,7 +11,9 @@
     "license": "MIT",
     "private": true,
     "workspaces": [
-      "crawler",
-      "frontend"
-    ]
-  }
+        "crawler",
+        "frontend"
+    ],
+    "dependencies": {
+    }
+}

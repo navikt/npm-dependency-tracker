@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Fragment } from 'react'
+import classnames from 'classnames';
 import './Home.less';
 
 
@@ -9,13 +10,15 @@ import Results from '../../components/results/Results';
 
 const Home = () => {
     return (
-        <div className="mdc-layout-grid">
+        <Fragment>
             <Header />
-            <main>
-                <Filter />
-                <Results />
+            <main className={classnames("main", "mdc-layout-grid")}>
+                <div className="mdc-layout-grid__inner">
+                    <Filter className={classnames("mdc-layout-grid__cell", "mdc-layout-grid__cell--span-4")}/>
+                    <Results className={classnames("mdc-layout-grid__cell", "mdc-layout-grid__cell--span-8")}/>
+                </div>
             </main>
-        </div>
+        </Fragment>
     );
 };
 

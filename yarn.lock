@@ -1386,6 +1386,11 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
+"@material/layout-grid@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@material/layout-grid/-/layout-grid-7.0.0.tgz#4ec9ba1fbc6b2a1122b6b09d148d08a3124d37ac"
+  integrity sha512-AvCU58jTqeJxzzTbf1H1YeRDaI9uaXzoayKquemym+NBrczrao1mVnn6xAjEMMu3MeLIP7c/ngpUSOLEXYtOvw==
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -1628,6 +1633,11 @@
   version "0.12.2"
   resolved "https://registry.yarnpkg.com/@types/caseless/-/caseless-0.12.2.tgz#f65d3d6389e01eeb458bd54dc8f52b95a9463bc8"
   integrity sha512-6ckxMjBBD8URvjB6J3NcnuAn5Pkl7t3TizAg+xdlzzQGSPSmBcXf8KoIH0ua/i+tio+ZRUHEXp0HEmvaR4kt0w==
+
+"@types/classnames@^2.2.10":
+  version "2.2.10"
+  resolved "https://registry.yarnpkg.com/@types/classnames/-/classnames-2.2.10.tgz#cc658ca319b6355399efc1f5b9e818f1a24bf999"
+  integrity sha512-1UzDldn9GfYYEsWWnn/P4wkTlkZDH7lDb0wBMGbtIQc9zXEQq7FlKBdZUn6OBqD8sKZZ2RQO2mAjGpXiDGoRmQ==
 
 "@types/color-name@^1.1.1":
   version "1.1.1"
