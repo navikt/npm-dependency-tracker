@@ -2,10 +2,27 @@
 
 .filter {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 
+    &__headline {
+        display: flex;
+        flex-direction: row;
+    }
     &__logo {
         height: 24px;
         padding-right: 10px;
+    }
+
+    &__options {
+        margin-top: 30px;
+    }
+
+    &__version {
+        &--margin {
+            margin-top: 10px;
+        }
+    }
+    &--toppadding {
+        margin-top: 30px;
     }
 }
