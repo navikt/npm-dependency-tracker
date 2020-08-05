@@ -1,0 +1,31 @@
+@import (reference) '~nav-frontend-core/less/_variabler';
+
+.header {
+    width: 100%;
+    height: 100px;
+    min-width: min-content;
+
+    margin: 0px;
+    padding: 0px;
+    z-index: 999;
+
+    background-color: @white;
+    border-bottom: 2px solid @navLysBla;
+
+    display: flex;
+    justify-content: flex-start;
+    &__content {
+        display: flex;
+
+        align-items: center;
+        width: 100%;
+        white-space: nowrap;
+    }
+    &__text {
+        padding-left: 30px;
+    }
+    &__logo {
+        height: 70%;
+        padding-left: 50px;
+    }
+}

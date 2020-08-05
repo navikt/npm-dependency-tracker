@@ -1,14 +1,20 @@
 import React from 'react';
-import logo from '../../assets/logo.svg';
 import './Home.less';
 
-import { Sidetittel } from 'nav-frontend-typografi';
+
+import Header from '../../components/header/Header';
+import Filter from '../../components/filter/Filter';
+import Results from '../../components/results/Results';
+// import { Sidetittel } from 'nav-frontend-typografi';
 
 const Home = () => {
     return (
-        <div>
-            <Sidetittel>Package-crawler</Sidetittel>
-            <img src={logo} alt="nav lo go" />
+        <div className="mdc-layout-grid">
+            <Header />
+            <main>
+                <Filter />
+                <Results />
+            </main>
         </div>
     );
 };
