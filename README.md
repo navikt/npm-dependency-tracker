@@ -16,22 +16,22 @@
 
 ## Funksjon
 
-Går gjennom alle repos i en github org og henter ut alle dependencies de bruker. Løser dette ved å laste ned alle repoene og gjennomgår dem lokalt. En mer praktisk løsning ville vært å bare gjøre calls til github-api, men med maks 5000 github-api calls i timen er dette upraktisk.
-
+Går gjennom alle repos i en github org og henter ut alle dependencies de bruker. Løser dette ved å laste ned alle repoene og gjennomgå dem lokalt.
 For Designsystemet sitt bruk går den gjennom alle repoene i `navikt` organisasjonen og henter ut dependencies som blir brukt.
 
 ## Bakgrunn
 
 Vi i designsystemet ønsker mer informasjon om bruken av våre komponenter innenfor NAV, samt hvordan vi kan forbedre bruken og brukeropplevelsen rundt våre komponenter. For å gjøre dette trengs det statistikk og data.
 
-## Bruk
+## Kjøring av crawler
 
-1. `Installer Node.js, npm og typescript lokalt om ikke allerede gjort.`
+1. `Installer Node.js, yarn og typescript lokalt om ikke allerede gjort.`
 2. `Konfiguer config.ts for endring av org, blacklists etc`
 3. `Lag en .env fil i root og sett variablene for TOKEN, AGENT og ORG. (https://github.com/motdotla/dotenv)`
-4. `npm install`
+4. `yarn install`
 5. `tsc`
-6. `npm start`
+6. `yarn run crawler`
+
 
 ### .env eksempel
 ```
@@ -39,6 +39,11 @@ TOKEN=GITHUB_OAUTH_TOKEN
 AGENT=NAV-Designsystemet-crawler
 ORG=navikt
 ```
+
+## Kjøring av webside
+
+1. yarn install
+2. yarn run website
 
 ## Kontakt
 
