@@ -15,9 +15,12 @@
     "@types/react-dom": "^16.9.0",
     "classnames": "^2.2.6",
     "craco-less": "^1.17.0",
+    "crawler": "0.0.1",
     "lodash.throttle": "^4.1.1",
     "nav-frontend-core": "^5.0.1",
     "nav-frontend-js-utils": "^1.0.9",
+    "nav-frontend-knapper": "^2.0.9",
+    "nav-frontend-knapper-style": "^1.0.1",
     "nav-frontend-lenker": "^1.0.41",
     "nav-frontend-lenker-style": "^0.2.29",
     "nav-frontend-paneler-style": "^0.3.21",
@@ -29,8 +32,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
-    "typescript": "~3.7.2",
-    "crawler": "0.0.1"
+    "semver-regex": "^3.1.1",
+    "typescript": "~3.7.2"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.10",

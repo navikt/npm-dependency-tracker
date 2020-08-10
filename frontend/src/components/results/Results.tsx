@@ -3,7 +3,6 @@ import classnames from 'classnames';
 import { Undertittel } from 'nav-frontend-typografi';
 import { RepoData } from 'crawler/src/dataHandling/repo';
 
-import resultsLogo from '../../assets/resultat.svg';
 import './Results.less';
 
 interface ResultsProps {
@@ -33,7 +32,6 @@ const Results: FC<ResultsProps> = (props: ResultsProps) => {
     return (
         <div className={classnames(className, 'results')}>
             <div className="results__headline">
-                <img className="results__logo" src={resultsLogo} alt="Resultat-logo" />
                 <Undertittel>Resultat</Undertittel>
             </div>
             <div className="results__data">
