@@ -2,18 +2,18 @@ import React, { useEffect } from 'react';
 import { Knapp } from 'nav-frontend-knapper';
 
 import './FilterButton.less';
-import { DepFilterData } from '../filter/Filter';
+import { DepNameData, VersionScope } from '../types';
 import { CloseIcon, UpIcon, DownIcon, SpesificIcon } from '../../assets/icons';
 
 interface FilterButtonProps {
     /**
      * Data to generate buttons from
      */
-    data: DepFilterData[];
+    data: DepNameData[];
     /**
      * handler for when dep button is removed
      */
-    onClick: (data: DepFilterData[]) => void;
+    onClick: (data: DepNameData[]) => void;
 }
 
 const FilterButton = (props: FilterButtonProps) => {
@@ -25,13 +25,13 @@ const FilterButton = (props: FilterButtonProps) => {
         onClick(tmpData);
     };
 
-    const getIcon = (s: string) => {
+    const getIcon = (s: VersionScope) => {
         switch (s) {
-            case 'spesific':
+            case VersionScope.SPESIFIC:
                 return <SpesificIcon />;
-            case 'over':
+            case VersionScope.UP:
                 return <UpIcon />;
-            case 'under':
+            case VersionScope.DOWN:
                 return <DownIcon />;
             default:
                 return null;

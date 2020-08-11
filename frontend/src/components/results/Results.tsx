@@ -25,7 +25,7 @@ const Results: FC<ResultsProps> = (props: ResultsProps) => {
         data.length === 0
             ? 'Ingen resultater...'
             : data.map((x, i) => {
-                  return <p>Data {i}</p>;
+                  return <p key={i}>Data {i}</p>;
               });
     results = error && error.length > 0 ? error : results;
 

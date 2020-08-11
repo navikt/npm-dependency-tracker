@@ -1,30 +1,15 @@
-import React, { FC, useState, FormEvent } from 'react';
+import React, { FC, useState, FormEvent, useEffect } from 'react';
 import classnames from 'classnames';
 import { Undertittel } from 'nav-frontend-typografi';
-import { SkjemaGruppe ,RadioGruppe, Radio, CheckboxGruppe, Checkbox, Input, Select } from 'nav-frontend-skjema';
+import { SkjemaGruppe, RadioGruppe, Radio, CheckboxGruppe, Checkbox, Input, Select } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
+import { FilterData, FilterType, SelectedData, VersionScope, DepNameData, ActivityRange } from '../types';
 
 import filterlogo from '../../assets/filter.svg';
 import './Filter.less';
 import FilterButton from '../FilterButton/FilterButton';
 import semverRegex from 'semver-regex';
-
-export interface FilterData {
-    type: string;
-    value: string;
-}
-
-export interface DepFilterData {
-    name: string;
-    version: string;
-    scope: string;
-}
-
-export interface IFilter {
-    activity: FilterData;
-    preset: FilterData;
-    depFilters: DepFilterData[];
-}
+import PresetCheckbox from '../PresetCheckbox/PresetCheckbox';
 
 interface FilterProps {
     /**
@@ -39,31 +24,54 @@ interface FilterProps {
 
 const Filter: FC<FilterProps> = (props: FilterProps) => {
     const { className = '', onFilterChange = () => null } = props;
+    let presets = ["React", "DS Komponenter", "DS Komponenter-styles"];
 
-    const [customDeps, setCustomDeps] = useState<DepFilterData[]>([]);
-    const [activity, setActivity] = useState<FilterData>()
+
+    const [namedDeps, setNamedDeps] = useState<DepNameData[]>([]);
+    const [activity, setActivity] = useState<SelectedData>({ type: FilterType.ACTIVITY, value: ActivityRange.ALL });
+    const [depPresets, setDepPresets] = useState<SelectedData[]>([]);
+
     const [depName, setDepName] = useState('');
     const [version, setVersion] = useState('');
-    const [scope, setScope] = useState('spesific');
+    const [scope, setScope] = useState<VersionScope>(VersionScope.SPESIFIC);
 
     const [error, setError] = useState('');
     const [nameError, setNameError] = useState(false);
     const [versionError, setVersionError] = useState(false);
-    const handleClick = (info: FilterData, type:string) => {
-        const data: IFilter = {
 
+    const [filterOptions, setFilterOptions] = useState<FilterData>();
+
+    useEffect(() => {
+        if (filterOptions) onFilterChange(filterOptions);
+    }, [filterOptions]);
+
+    useEffect(() => {}, [namedDeps, activity, depPresets]);
+
+    const handleClick = (data: SelectedData) => {
+        switch (data.type) {
+            case FilterType.ACTIVITY:
+                setActivity(data);
+                break;
+            case FilterType.DEPPRESET:
+                //setDepPresets();
+                break;
+            default:
+                break;
         }
-        onFilterChange();
     };
+
+    const handleCheckbox = (data: SelectedData[]) => {
+        return;
+    }
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
         setError('');
         if (!depName.length) {
-            setError('Må fylle ut dependency navn'); 
+            setError('Må fylle ut dependency navn');
             setNameError(true);
-            return
+            return;
         }
         if (!!version.length && !semverRegex().test(version)) {
             setError('Ikke gylding semver format');
@@ -73,13 +81,17 @@ const Filter: FC<FilterProps> = (props: FilterProps) => {
         setNameError(false);
         setVersionError(false);
 
-        const data: DepFilterData = {name: depName.toLowerCase(), version: version, scope: !!version.length ? scope : ''}
+        const data: DepNameData = {
+            name: depName.toLowerCase(),
+            version: version,
+            scope: !!version.length ? scope : VersionScope.SPESIFIC
+        };
 
-        setCustomDeps([...customDeps, data]);
+        setNamedDeps([...namedDeps, data]);
     };
 
-    const handleRemove = (data: DepFilterData[]) => {
-        setCustomDeps([...data]);
+    const handleRemove = (data: DepNameData[]) => {
+        setNamedDeps([...data]);
     };
 
     return (
@@ -98,11 +110,11 @@ const Filter: FC<FilterProps> = (props: FilterProps) => {
                                 label="Versjon"
                                 bredde="S"
                                 onChange={(e) => setVersion(e.target.value)}
-                                />
-                            <Select defaultValue="spesific" bredde="s" onChange={(e) => setScope(e.target.value)}>
-                                <option value="spesific">Spesifikk</option>
-                                <option value="over">Over</option>
-                                <option value="under">Under</option>
+                            />
+                            <Select defaultValue="spesific" bredde="s" onChange={(e) => setScope(+e.target.value)}>
+                                <option value={VersionScope.SPESIFIC}>Spesifikk</option>
+                                <option value={VersionScope.UP}>Over</option>
+                                <option value={VersionScope.DOWN}>Under</option>
                             </Select>
                         </div>
                         <Knapp type="hoved" className="filter__version--margin" kompakt>
@@ -111,46 +123,36 @@ const Filter: FC<FilterProps> = (props: FilterProps) => {
                     </SkjemaGruppe>
                 </form>
 
-                <FilterButton onClick={handleRemove} data={customDeps} />
+                <FilterButton onClick={handleRemove} data={namedDeps} />
 
                 <RadioGruppe legend="Siste aktivitet" className="filter--toppadding">
                     <Radio
-                        onClick={() => handleClick({ type: 'activity', value: 'all' })}
+                        onClick={() => handleClick({ type: FilterType.ACTIVITY, value: ActivityRange.ALL })}
                         label={'Alle'}
                         name="aktivitet"
                     />
                     <Radio
-                        onClick={() => handleClick({ type: 'activity', value: '1' })}
+                        onClick={() => handleClick({ type: FilterType.ACTIVITY, value: ActivityRange.ONE })}
                         label={'En månede'}
                         name="aktivitet"
                     />
                     <Radio
-                        onClick={() => handleClick({ type: 'activity', value: '3' })}
+                        onClick={() => handleClick({ type: FilterType.ACTIVITY, value: ActivityRange.THREE })}
                         label={'Tre måneder'}
                         name="aktivitet"
                     />
                     <Radio
-                        onClick={() => handleClick({ type: 'activity', value: '6' })}
+                        onClick={() => handleClick({ type: FilterType.ACTIVITY, value: ActivityRange.SIX })}
                         label={'Seks Måneder'}
                         name="aktivitet"
                     />
                     <Radio
-                        onClick={() => handleClick({ type: 'activity', value: '12' })}
+                        onClick={() => handleClick({ type: FilterType.ACTIVITY, value: ActivityRange.YEAR })}
                         label={'Siste år'}
                         name="aktivitet"
                     />
                 </RadioGruppe>
-                <CheckboxGruppe className="filter--toppadding" legend="Dependency Presets">
-                    <Checkbox onClick={() => handleClick({ type: 'dep', value: 'react' })} label={'React'} />
-                    <Checkbox
-                        onClick={() => handleClick({ type: 'dep', value: 'nav-components' })}
-                        label={'navds komponenter'}
-                    />
-                    <Checkbox
-                        onClick={() => handleClick({ type: 'dep', value: 'nav-components-styles' })}
-                        label={'navds styles'}
-                    />
-                </CheckboxGruppe>
+                <PresetCheckbox onInputChange={handleCheckbox} presets={presets} />
             </div>
         </div>
     );

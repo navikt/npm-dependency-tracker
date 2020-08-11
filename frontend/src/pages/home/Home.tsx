@@ -4,10 +4,11 @@ import classnames from 'classnames';
 import './Home.less';
 
 import Header from '../../components/header/Header';
-import Filter, { FilterData } from '../../components/filter/Filter';
+import Filter from '../../components/filter/Filter';
 import Results from '../../components/results/Results';
 import DataFilter from '../../ts/dataFilter';
 import { RepoData } from 'crawler/src/dataHandling/repo';
+import { FilterData } from '../../components/types';
 
 // import { Sidetittel } from 'nav-frontend-typografi';
 
@@ -34,22 +35,22 @@ const Home = () => {
     }
 
     const handleClick = (info:FilterData):void => {
-        console.log(info);
-        if(info.type === 'activity') {
-            setActiveFilter(info.value);
-        }
-        else if(info.type === 'version') {
-            setVersionFilter(info.value);
-        }
-        else if(info.type === 'dep') {
-            setDepFilter(info.value);
-        }
-        else return;
+        // console.log(info);
+        // if(info.type === 'activity') {
+        //     setActiveFilter(info.value);
+        // }
+        // else if(info.type === 'version') {
+        //     setVersionFilter(info.value);
+        // }
+        // else if(info.type === 'dep') {
+        //     setDepFilter(info.value);
+        // }
+        // else return;
 
-        if(changeTracker !== (activeFilter + versionFilter + depFilter)) {
-            setChangeTracker(activeFilter + versionFilter + depFilter);
-            filterResults();
-        }
+        // if(changeTracker !== (activeFilter + versionFilter + depFilter)) {
+        //     setChangeTracker(activeFilter + versionFilter + depFilter);
+        //     filterResults();
+        // }
 
 
     }
@@ -59,7 +60,7 @@ const Home = () => {
             <Header />
             <main className={classnames('main', 'mdc-layout-grid')}>
                 <div className="mdc-layout-grid__inner">
-                    <Filter onClick={handleClick} className={classnames('mdc-layout-grid__cell', 'mdc-layout-grid__cell--span-4')} />
+                    <Filter onFilterChange={handleClick} className={classnames('mdc-layout-grid__cell', 'mdc-layout-grid__cell--span-4')} />
                     <Results error={filter.error} data={result} className={classnames('mdc-layout-grid__cell', 'mdc-layout-grid__cell--span-8')} />
                 </div>
             </main>
