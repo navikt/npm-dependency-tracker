@@ -41,7 +41,6 @@ const FilterButton = (props: FilterButtonProps) => {
     useEffect(() => {
         const elem = document.getElementById('hidden_scroll');
         elem?.scrollIntoView(false);
-        console.log('test');
     }, [data]);
 
     const buttons = data.map((dep, i) => {

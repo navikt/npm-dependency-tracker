@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { Undertittel } from 'nav-frontend-typografi';
 import { SkjemaGruppe, RadioGruppe, Radio, CheckboxGruppe, Checkbox, Input, Select } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
-import { FilterData, FilterType, SelectedData, VersionScope, DepNameData, ActivityRange } from '../types';
+import { FilterData, FilterType, SelectedData, VersionScope, DepNameData, ActivityRange, InputState } from '../types';
 
 import filterlogo from '../../assets/filter.svg';
 import './Filter.less';
@@ -24,12 +24,15 @@ interface FilterProps {
 
 const Filter: FC<FilterProps> = (props: FilterProps) => {
     const { className = '', onFilterChange = () => null } = props;
-    let presets = ["React", "DS Komponenter", "DS Komponenter-styles"];
-
+    let presets = ['React', 'DS Komponenter', 'DS Komponenter-styles'];
 
     const [namedDeps, setNamedDeps] = useState<DepNameData[]>([]);
     const [activity, setActivity] = useState<SelectedData>({ type: FilterType.ACTIVITY, value: ActivityRange.ALL });
-    const [depPresets, setDepPresets] = useState<SelectedData[]>([]);
+    const [depPresets, setDepPresets] = useState<SelectedData[]>(
+        presets.map((name) => {
+            return { type: FilterType.DEPPRESET, value: name, state: InputState.OFF };
+        })
+    );
 
     const [depName, setDepName] = useState('');
     const [version, setVersion] = useState('');
@@ -43,26 +46,16 @@ const Filter: FC<FilterProps> = (props: FilterProps) => {
 
     useEffect(() => {
         if (filterOptions) onFilterChange(filterOptions);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterOptions]);
 
-    useEffect(() => {}, [namedDeps, activity, depPresets]);
-
-    const handleClick = (data: SelectedData) => {
-        switch (data.type) {
-            case FilterType.ACTIVITY:
-                setActivity(data);
-                break;
-            case FilterType.DEPPRESET:
-                //setDepPresets();
-                break;
-            default:
-                break;
-        }
-    };
-
-    const handleCheckbox = (data: SelectedData[]) => {
-        return;
-    }
+    useEffect(() => {
+        setFilterOptions({
+            activity: activity,
+            preset: depPresets,
+            depFilters: namedDeps
+        });
+    }, [namedDeps, activity, depPresets]);
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -88,11 +81,7 @@ const Filter: FC<FilterProps> = (props: FilterProps) => {
         };
 
         setNamedDeps([...namedDeps, data]);
-    };
-
-    const handleRemove = (data: DepNameData[]) => {
-        setNamedDeps([...data]);
-    };
+    }
 
     return (
         <div className={classnames(className, 'filter')}>
@@ -111,7 +100,7 @@ const Filter: FC<FilterProps> = (props: FilterProps) => {
                                 bredde="S"
                                 onChange={(e) => setVersion(e.target.value)}
                             />
-                            <Select defaultValue="spesific" bredde="s" onChange={(e) => setScope(+e.target.value)}>
+                            <Select defaultValue={VersionScope.SPESIFIC} bredde="s" onChange={(e) => setScope(+e.target.value)}>
                                 <option value={VersionScope.SPESIFIC}>Spesifikk</option>
                                 <option value={VersionScope.UP}>Over</option>
                                 <option value={VersionScope.DOWN}>Under</option>
@@ -123,36 +112,15 @@ const Filter: FC<FilterProps> = (props: FilterProps) => {
                     </SkjemaGruppe>
                 </form>
 
-                <FilterButton onClick={handleRemove} data={namedDeps} />
-
-                <RadioGruppe legend="Siste aktivitet" className="filter--toppadding">
-                    <Radio
-                        onClick={() => handleClick({ type: FilterType.ACTIVITY, value: ActivityRange.ALL })}
-                        label={'Alle'}
-                        name="aktivitet"
-                    />
-                    <Radio
-                        onClick={() => handleClick({ type: FilterType.ACTIVITY, value: ActivityRange.ONE })}
-                        label={'En månede'}
-                        name="aktivitet"
-                    />
-                    <Radio
-                        onClick={() => handleClick({ type: FilterType.ACTIVITY, value: ActivityRange.THREE })}
-                        label={'Tre måneder'}
-                        name="aktivitet"
-                    />
-                    <Radio
-                        onClick={() => handleClick({ type: FilterType.ACTIVITY, value: ActivityRange.SIX })}
-                        label={'Seks Måneder'}
-                        name="aktivitet"
-                    />
-                    <Radio
-                        onClick={() => handleClick({ type: FilterType.ACTIVITY, value: ActivityRange.YEAR })}
-                        label={'Siste år'}
-                        name="aktivitet"
-                    />
-                </RadioGruppe>
-                <PresetCheckbox onInputChange={handleCheckbox} presets={presets} />
+                <FilterButton onClick={(data) => setNamedDeps([...data])} data={namedDeps} />
+                <Select label="Siste aktivitet" defaultValue={ActivityRange.ALL} bredde="m" onChange={(e) => setActivity({type: FilterType.ACTIVITY, value: +e.target.value})}>
+                    <option value={ActivityRange.ALL}>Alle</option>
+                    <option value={ActivityRange.ONE}>En Månede</option>
+                    <option value={ActivityRange.THREE}>Tre Måneder</option>
+                    <option value={ActivityRange.SIX}>Seks Måneder</option>
+                    <option value={ActivityRange.YEAR}>Ett År</option>
+                </Select>
+                <PresetCheckbox onInputChange={(data) => setDepPresets([...data])} presets={depPresets} />
             </div>
         </div>
     );
