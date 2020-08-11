@@ -47,11 +47,9 @@ const PresetCheckbox: FC<PresetCheckboxProps> = (props: PresetCheckboxProps) => 
 
         boxes[index] = box;
         setCheckboxState([...boxes]);
-        console.log(box.state);
     };
 
     const checkboxes = checkboxState.map((box, i) => {
-        // return <input type="checkbox" className={cls(checkboxState[i].state)} key={i} onChange={() => handleCheckbox(name, i)} />;
         return (
             <Fragment>
                 <label className={cls(checkboxState[i].state)} htmlFor={i + (box.value as string)}>
