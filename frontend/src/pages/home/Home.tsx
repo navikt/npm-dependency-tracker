@@ -25,7 +25,6 @@ const Home = () => {
     }, [result]);
 
     useEffect( () => {
-        filtration.init();
         setResult([...filtration.getFilteredData()]);
     }, [filtration]);
 
