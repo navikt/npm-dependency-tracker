@@ -43,3 +43,8 @@ export type FilterData = {
     preset: SelectedData[];
     depFilters: DepNameData[];
 }
+
+export type Stats = {
+    name: string;
+    data: any;
+}

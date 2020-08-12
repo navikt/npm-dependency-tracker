@@ -1,7 +1,7 @@
 import React, { FC, useState, FormEvent, useEffect } from 'react';
 import classnames from 'classnames';
 import { Undertittel } from 'nav-frontend-typografi';
-import { SkjemaGruppe, RadioGruppe, Radio, CheckboxGruppe, Checkbox, Input, Select } from 'nav-frontend-skjema';
+import { SkjemaGruppe, Input, Select } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import { FilterData, FilterType, SelectedData, VersionScope, DepNameData, ActivityRange, InputState } from '../types';
 
@@ -24,7 +24,7 @@ interface FilterProps {
 
 const Filter: FC<FilterProps> = (props: FilterProps) => {
     const { className = '', onFilterChange = () => null } = props;
-    let presets = ['React', 'DS Komponenter', 'DS Komponenter-styles'];
+    let presets = ['React', 'DS Komponenter', 'DS Komponenter-styles', 'DS-Styles men ikke DS-komponent'];
 
     const [namedDeps, setNamedDeps] = useState<DepNameData[]>([]);
     const [activity, setActivity] = useState<SelectedData>({ type: FilterType.ACTIVITY, value: ActivityRange.ALL });

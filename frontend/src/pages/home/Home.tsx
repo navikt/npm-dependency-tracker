@@ -8,51 +8,30 @@ import Filter from '../../components/filter/Filter';
 import Results from '../../components/results/Results';
 import DataFilter from '../../ts/dataFilter';
 import { RepoData } from 'crawler/src/dataHandling/repo';
-import { FilterData } from '../../components/types';
+import { FilterData, Stats } from '../../components/types';
 
 // import { Sidetittel } from 'nav-frontend-typografi';
 
 const Home = () => {
 
-    const filter = useMemo(() => new DataFilter(), []);
-
-    const [activeFilter, setActiveFilter] = useState('all');
-    const [versionFilter, setVersionFilter] = useState('spesific');
-    const [depFilter, setDepFilter] = useState('');
-    const [changeTracker, setChangeTracker] = useState('allspesific');
-    
+    const filtration = useMemo(() => new DataFilter(), []);    
     const [result, setResult] = useState<RepoData[]>([]);
+    const [stats, setStats] = useState<Stats[]>([]);
 
+    useEffect(() => {
+        filtration.generateStats();
+        setStats(filtration.getStats());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [result]);
 
     useEffect( () => {
-        filter.init();
-        filter.filterData();
-        setResult(filter.getFilteredData());
-    }, [filter])
+        filtration.init();
+        setResult([...filtration.getFilteredData()]);
+    }, [filtration]);
 
-    const filterResults = () => {
-        filter.filterData(activeFilter, versionFilter, depFilter);
-    }
-
-    const handleClick = (info:FilterData):void => {
-        // console.log(info);
-        // if(info.type === 'activity') {
-        //     setActiveFilter(info.value);
-        // }
-        // else if(info.type === 'version') {
-        //     setVersionFilter(info.value);
-        // }
-        // else if(info.type === 'dep') {
-        //     setDepFilter(info.value);
-        // }
-        // else return;
-
-        // if(changeTracker !== (activeFilter + versionFilter + depFilter)) {
-        //     setChangeTracker(activeFilter + versionFilter + depFilter);
-        //     filterResults();
-        // }
-
-
+    const handleFilter = (data:FilterData):void => {
+        filtration.runFilter(data);
+        setResult([...filtration.getFilteredData()]);
     }
 
     return (
@@ -60,8 +39,8 @@ const Home = () => {
             <Header />
             <main className={classnames('main', 'mdc-layout-grid')}>
                 <div className="mdc-layout-grid__inner">
-                    <Filter onFilterChange={handleClick} className={classnames('mdc-layout-grid__cell', 'mdc-layout-grid__cell--span-4')} />
-                    <Results error={filter.error} data={result} className={classnames('mdc-layout-grid__cell', 'mdc-layout-grid__cell--span-8')} />
+                    <Filter onFilterChange={handleFilter} className={classnames('mdc-layout-grid__cell', 'mdc-layout-grid__cell--span-4')} />
+                    <Results error={filtration.error} repos={result} stats={stats} className={classnames('mdc-layout-grid__cell', 'mdc-layout-grid__cell--span-8')} />
                 </div>
             </main>
         </Fragment>

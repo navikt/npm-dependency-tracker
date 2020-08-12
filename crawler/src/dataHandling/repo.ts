@@ -5,6 +5,9 @@ export interface RepoData {
         url: string;
         size: number;
         activity: string;
+        branch:string;
+        language:string;
+        processTime:number;
         packages: {
             name: string;
             dependencies: {};
@@ -56,7 +59,7 @@ export default class Repo {
         this.processTime = time;
     }
 
-    getData = () => {
+    getData = ():RepoData => {
         return {
             name: this.fullName,
             url: this.url,

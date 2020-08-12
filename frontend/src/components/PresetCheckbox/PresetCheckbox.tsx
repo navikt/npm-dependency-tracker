@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect, Fragment } from 'react';
-import { SelectedData, FilterType, InputState } from '../types';
-import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
+import { SelectedData, InputState } from '../types';
+import { CheckboxGruppe } from 'nav-frontend-skjema';
 import classnames from 'classnames';
 import './PresetCheckbox.less';
 
@@ -43,7 +43,7 @@ const PresetCheckbox: FC<PresetCheckboxProps> = (props: PresetCheckboxProps) => 
 
         if (box.state === InputState.ADD) box.state = InputState.REMOVE;
         else if (box.state === InputState.OFF) box.state = InputState.ADD;
-        else if (box.state === InputState.REMOVE) box.state = InputState.OFF;
+        else box.state = InputState.OFF;
 
         boxes[index] = box;
         setCheckboxState([...boxes]);
@@ -51,7 +51,7 @@ const PresetCheckbox: FC<PresetCheckboxProps> = (props: PresetCheckboxProps) => 
 
     const checkboxes = checkboxState.map((box, i) => {
         return (
-            <Fragment>
+            <Fragment key={box.value as string + i}>
                 <label className={cls(checkboxState[i].state)} htmlFor={i + (box.value as string)}>
                     <input
                         tabIndex={-1}

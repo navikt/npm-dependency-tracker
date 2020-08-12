@@ -7626,10 +7626,25 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
+nav-frontend-chevron-style@^0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/nav-frontend-chevron-style/-/nav-frontend-chevron-style-0.3.5.tgz#778d814ccf98825da744b7fb95a6e7dfb3ff7f4e"
+  integrity sha512-RahSZnJ+R/GtSHy4I15omGUyLawqswb3xgIG7Zcc88pbLH1x4Z1UHyqRShbsf1yKklXCgHzhx+JneZKYb2av/w==
+
 nav-frontend-core@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/nav-frontend-core/-/nav-frontend-core-5.0.1.tgz#f59d79da9342434cc89046bc289c90e2a5d53ea8"
   integrity sha512-wPcKfXcXvmqA3MPQwlU+nMvB3plJtxLBew4bNmcw5CJNIMtGPwGXEvcexVEIeEdCpJCvOZvwcWxaTc57x16eDA==
+
+nav-frontend-ekspanderbartpanel-style@^1.0.19:
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-1.0.19.tgz#e336ffdfdbb829808c79f36bf004f869aeb31a2b"
+  integrity sha512-3QOwwWHOv9gqvtLK22j8WfSCrXfgG9snJIc6DBoGpCBxsVJpbZttQ0pAFRyLwA5ejPM/KPGq/MfIFSiCkv2mdA==
+
+nav-frontend-ekspanderbartpanel@^3.0.23:
+  version "3.0.23"
+  resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel/-/nav-frontend-ekspanderbartpanel-3.0.23.tgz#504eee1a744526d68c4469eac8937e16b6faff15"
+  integrity sha512-lZisCsKIg5jCz4P93jZHwCsUm4ACunQ0Xuo3IcV1NnfC/X7NGvTuB1ElY4z+sIqxDGC9TRwR/uSua4zUaOHg+w==
 
 nav-frontend-js-utils@^1.0.9:
   version "1.0.9"
@@ -7661,6 +7676,11 @@ nav-frontend-paneler-style@^0.3.21:
   resolved "https://registry.yarnpkg.com/nav-frontend-paneler-style/-/nav-frontend-paneler-style-0.3.21.tgz#bc9f39f8fe6d947a226d5147048cc45ab09e4f13"
   integrity sha512-bo3pmByEHH3Hnl8OphcCEcz23nqs3VK05xF+f3m9quzi+TcPHpYSe+V6NrBzFAA6UB6clRo7b8l5j/ANY7prDg==
 
+nav-frontend-paneler@^2.0.10:
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/nav-frontend-paneler/-/nav-frontend-paneler-2.0.10.tgz#5b87b19a24fa45cf192bc0cb3d11ff140d736a9e"
+  integrity sha512-HTQi6UgpZDN3ARD98uZJGwp0Jf1ypQw/v2lpvMGsXBqOuGoiUaSIUCrhwlaYzw6dDIfGAK5POPmuaDitdEuX+A==
+
 nav-frontend-skjema-style@^2.0.9:
   version "2.0.9"
   resolved "https://registry.yarnpkg.com/nav-frontend-skjema-style/-/nav-frontend-skjema-style-2.0.9.tgz#afaa3e98db78834726c606e23d3b5ee61c86e9e9"
@@ -7678,10 +7698,10 @@ nav-frontend-typografi-style@^1.0.22:
   dependencies:
     nav-frontend-core "^5.0.1"
 
-nav-frontend-typografi@^2.0.25:
-  version "2.0.25"
-  resolved "https://registry.yarnpkg.com/nav-frontend-typografi/-/nav-frontend-typografi-2.0.25.tgz#0c23eab354857e225e6f614bb53448710ee01fd3"
-  integrity sha512-TFqUtFufNrw4Ps63+e5xiCTO/Oc/aU598vccz8NInmTadKFmT76yhGkptYa9ondboYSiIu83siDpGsoywkVABw==
+nav-frontend-typografi@^2.0.26:
+  version "2.0.26"
+  resolved "https://registry.yarnpkg.com/nav-frontend-typografi/-/nav-frontend-typografi-2.0.26.tgz#a7701af21ddbdc6bdc0259549e398b36afb46835"
+  integrity sha512-GZ4WcQ0H4HBw7GHcVJtuDihSyrzPQ+df5dls4h60oOV3zNiedarMMGy43xFPxvPZnI0LTYlOX7rDGVxLBR9NBg==
 
 negotiator@0.6.2:
   version "0.6.2"
@@ -9400,6 +9420,11 @@ react-app-polyfill@^1.0.6:
     raf "^3.4.1"
     regenerator-runtime "^0.13.3"
     whatwg-fetch "^3.0.0"
+
+react-collapse@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-collapse/-/react-collapse-5.0.1.tgz#f763b7207aee73baa1ff778b2d0b4ffb49d900a0"
+  integrity sha512-cN2tkxBWizhPQ2JHfe0aUSJtmMthKA17NZkTElpiQ2snQAAi1hssXZ2fv88rAPNNvG5ss4t0PbOZT0TIl9Lk3Q==
 
 react-dev-utils@^10.2.1:
   version "10.2.1"
