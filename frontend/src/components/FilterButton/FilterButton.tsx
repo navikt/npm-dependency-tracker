@@ -48,7 +48,7 @@ const FilterButton = (props: FilterButtonProps) => {
             <li key={i}>
                 <Knapp className="filterButton" onClick={() => handleClick(i)} kompakt mini>
                     <div className="filterButton__scope">{getIcon(dep.scope)}</div>
-                    {dep.scope ? dep.version + ' | ' : null}
+                    {dep.scope || dep.scope === VersionScope.UP ? dep.version + ' | ' : null}
                     {dep.name}
                     <CloseIcon />
                 </Knapp>

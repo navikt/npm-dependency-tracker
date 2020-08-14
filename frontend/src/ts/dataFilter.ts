@@ -1,5 +1,14 @@
 import { RepoData } from 'crawler/src/dataHandling/repo';
-import { FilterData, Stats, SelectedData, DepNameData, ActivityRange, FilterType } from '../components/types';
+import {
+    FilterData,
+    Stats,
+    SelectedData,
+    DepNameData,
+    ActivityRange,
+    FilterType,
+    VersionScope
+} from '../components/types';
+const semver = require('semver');
 const data = require('crawler/output.json');
 
 class DataFilter {
@@ -59,13 +68,67 @@ class DataFilter {
                 return;
         }
     };
+
+    __checkVersion = (packV: string, depV: string, scope: VersionScope) => {
+
+        if(packV === 'latest' && scope === VersionScope.UP)return true;
+        else if(packV === 'latest' && scope !== VersionScope.UP) return false;
+
+        packV = semver.minVersion(packV).raw;
+        depV = semver.minVersion(depV).raw;
+
+        switch (scope) {
+            case VersionScope.DOWN:
+                if (semver.lt(packV, depV)) return true;
+                else return false;
+            case VersionScope.UP:
+                if (semver.gt(packV, depV)) return true;
+                else return false;
+            case VersionScope.SPESIFIC:
+                if (semver.eq(packV, depV)) return true;
+                else return false;
+            default:
+                return false;
+        }
+    };
+
+    __findDep = (pack: { [key: string]: string }, dep: DepNameData[]) => {
+        for (let i = 0; i < dep.length; i++) {
+            if (pack.hasOwnProperty(dep[i].name)) {
+                if (dep[i].version !== '') {
+                    if(this.__checkVersion(pack[dep[i].name], dep[i].version, dep[i].scope)){
+                        return true
+                    }
+                    else return false;
+                }
+                return true;
+            }
+        }
+        return false;
+    };
+
+    __filterDep = (dep: DepNameData[]) => {
+        if (dep.length === 0) return;
+        this.filteredData = this.filteredData.filter((repo) => {
+            const end = repo.packages.length;
+            for (let i = 0; i < end; i++) {
+                if (
+                    this.__findDep(repo.packages[i].dependencies, dep) ||
+                    this.__findDep(repo.packages[i].devDependencies, dep) ||
+                    this.__findDep(repo.packages[i].peerDependencies, dep)
+                ) {
+                    return true;
+                }
+            }
+            return false;
+        });
+    };
+
     __filterPreset = (preset: SelectedData[]) => {};
-    __filterDep = (preset: DepNameData[]) => {};
     runFilter = (data: FilterData) => {
         this.__filterActivity(data.activity);
         this.__filterDep(data.depFilters);
         this.__filterPreset(data.preset);
-
         this.generateStats();
     };
 

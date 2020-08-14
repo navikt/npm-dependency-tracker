@@ -1,4 +1,4 @@
-import Packagejson from './package';
+import Packagejson, { PackageData } from './package';
 
 export interface RepoData {
         name: string;
@@ -8,12 +8,7 @@ export interface RepoData {
         branch:string;
         language:string;
         processTime:number;
-        packages: {
-            name: string;
-            dependencies: {};
-            devDependencies: {};
-            peerDependencies: {};
-        }[]
+        packages: PackageData[]
 }
 
 export default class Repo {

@@ -3140,6 +3140,13 @@ clean-css@^4.2.3:
   dependencies:
     source-map "~0.6.0"
 
+clean-semver@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/clean-semver/-/clean-semver-2.1.0.tgz#05ee0f85a5f6d2a83b058ea2d23722becff63996"
+  integrity sha512-a5sIRLwP078fc3/AEDfSxD8GmMBJlxYCUnRfXjldyy9RjwXxNVuK9hLwDar4sceJhZp6G+66ukNZsVFIqN28jg==
+  dependencies:
+    semver "^7.3.2"
+
 clean-stack@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/clean-stack/-/clean-stack-2.2.0.tgz#ee8472dbb129e727b31e8a10a427dee9dfe4008b"
@@ -7006,6 +7013,13 @@ last-call-webpack-plugin@^3.0.0:
     lodash "^4.17.5"
     webpack-sources "^1.1.0"
 
+latest-semver@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/latest-semver/-/latest-semver-3.0.0.tgz#d3ba7fdfb618183389849b30226d50fe084a8440"
+  integrity sha512-e7oJ4X2ZRmLOHXiysxfaONdo837vFRW5XRam5XdhRaqkyONNTDEej8DQts5XoIl72cGlbKukrj39DhkpT5KRQA==
+  dependencies:
+    to-semver "^3.0.0"
+
 lazy-cache@^0.2.3:
   version "0.2.7"
   resolved "https://registry.yarnpkg.com/lazy-cache/-/lazy-cache-0.2.7.tgz#7feddf2dcb6edb77d11ef1d117ab5ffdf0ab1b65"
@@ -10094,6 +10108,13 @@ selfsigned@^1.10.7:
   dependencies:
     node-forge "0.9.0"
 
+semver-diff@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/semver-diff/-/semver-diff-3.1.1.tgz#05f77ce59f325e00e2706afd67bb506ddb1ca32b"
+  integrity sha512-GX0Ix/CJcHyB8c4ykpHGIAvLyOwOobtM/8d+TQkAd81/bEjgPHrfba41Vpesr7jX/t8Uh+R3EX9eAS5be+jQYg==
+  dependencies:
+    semver "^6.3.0"
+
 semver-regex@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/semver-regex/-/semver-regex-3.1.1.tgz#9a13c93a9ecf2ac7415c0785acc1c7a19199bfd0"
@@ -11003,6 +11024,14 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     extend-shallow "^3.0.2"
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
+
+to-semver@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/to-semver/-/to-semver-3.0.0.tgz#432c637dd031d526fcacf7afa348193f4da07d78"
+  integrity sha512-/e3TUJVC6EvKYBzwcZh7I6OlJD0hAbpHZcISS8RbVwWm5aPEo8HDK9IkgOtnJO0AOGK8GTDrAQEUgZjFHbuk2w==
+  dependencies:
+    clean-semver "^2.1.0"
+    semver "^7.3.2"
 
 toidentifier@1.0.0:
   version "1.0.0"

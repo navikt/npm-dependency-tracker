@@ -1,3 +1,12 @@
+
+export interface PackageData {
+    name: string;
+    dependencies: {[key: string]: string};
+    devDependencies: {[key: string]: string};
+    peerDependencies: {[key: string]: string};
+}
+
+
 export default class Packagejson {
     name: string;
     location: string;
@@ -19,6 +28,6 @@ export default class Packagejson {
             dependencies: this.dependencies,
             devDependencies: this.devDependencies,
             peerDependencies: this.peerDependencies
-        }
+        } as PackageData;
     } 
 }
