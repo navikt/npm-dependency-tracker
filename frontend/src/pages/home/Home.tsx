@@ -6,7 +6,7 @@ import './Home.less';
 import Header from '../../components/header/Header';
 import Filter from '../../components/filter/Filter';
 import Results from '../../components/results/Results';
-import DataFilter from '../../ts/dataFilter';
+import DataFilter from '../../ts/DataFilter';
 import { RepoData } from 'crawler/src/dataHandling/repo';
 import { FilterData, Stats } from '../../components/types';
 

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Knapp } from 'nav-frontend-knapper';
 
 import './FilterButton.less';
-import { DepNameData, VersionScope } from '../types';
+import { DepNameData, VersionScope, BoolOperators } from '../types';
 import { CloseIcon, UpIcon, DownIcon, SpesificIcon } from '../../assets/icons';
 
 interface FilterButtonProps {
@@ -43,12 +43,19 @@ const FilterButton = (props: FilterButtonProps) => {
         elem?.scrollIntoView(false);
     }, [data]);
 
+    const operator = (op: BoolOperators | undefined) => {
+        if (op === undefined) return '';
+        if (op === BoolOperators.AND) return '&&';
+        else if (op === BoolOperators.OR) return '||';
+        else return '!';
+    };
     const buttons = data.map((dep, i) => {
         return (
-            <li key={i}>
+            <li className="filterButton__li" key={i}>
                 <Knapp className="filterButton" onClick={() => handleClick(i)} kompakt mini>
                     <div className="filterButton__scope">{getIcon(dep.scope)}</div>
-                    {dep.scope || dep.scope === VersionScope.UP ? dep.version + ' | ' : null}
+                    {dep.scope || dep.scope === VersionScope.UP ? dep.version : null}
+                    {' ' + operator(dep.operator) + ' '}
                     {dep.name}
                     <CloseIcon />
                 </Knapp>
@@ -57,7 +64,7 @@ const FilterButton = (props: FilterButtonProps) => {
     });
     return (
         <ul className="filterButton__list">
-            {buttons} 
+            {buttons}
             <div id="hidden_scroll" />
         </ul>
     );

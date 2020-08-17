@@ -3,13 +3,13 @@ import classnames from 'classnames';
 import { Undertittel } from 'nav-frontend-typografi';
 import { SkjemaGruppe, Input, Select } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
-import { FilterData, FilterType, SelectedData, VersionScope, DepNameData, ActivityRange, InputState } from '../types';
+import { FilterData, FilterType, SelectedData, VersionScope, DepNameData, ActivityRange, InputState, BoolOperators } from '../types';
 
 import filterlogo from '../../assets/filter.svg';
 import './Filter.less';
-import FilterButton from '../FilterButton/FilterButton';
+import FilterButton from '../filterButton/FilterButton';
 import semverRegex from 'semver-regex';
-import PresetCheckbox from '../PresetCheckbox/PresetCheckbox';
+import PresetCheckbox from '../presetCheckbox/PresetCheckbox';
 
 interface FilterProps {
     /**
@@ -43,6 +43,7 @@ const Filter: FC<FilterProps> = (props: FilterProps) => {
     const [versionError, setVersionError] = useState(false);
 
     const [filterOptions, setFilterOptions] = useState<FilterData>();
+    const [submitButton, setSubmitButton] = useState<BoolOperators>();
 
     useEffect(() => {
         if (filterOptions) onFilterChange(filterOptions);
@@ -59,7 +60,6 @@ const Filter: FC<FilterProps> = (props: FilterProps) => {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-
         setError('');
         if (!depName.length) {
             setError('Må fylle ut dependency navn');
@@ -77,7 +77,8 @@ const Filter: FC<FilterProps> = (props: FilterProps) => {
         const data: DepNameData = {
             name: depName.toLowerCase(),
             version: version,
-            scope: !!version.length ? scope : VersionScope.SPESIFIC
+            scope: !!version.length ? scope : VersionScope.SPESIFIC,
+            operator: submitButton
         };
 
         setNamedDeps([...namedDeps, data]);
@@ -106,8 +107,14 @@ const Filter: FC<FilterProps> = (props: FilterProps) => {
                                 <option value={VersionScope.DOWN}>Under</option>
                             </Select>
                         </div>
-                        <Knapp type="hoved" className="filter__version--margin" kompakt>
-                            Legg til
+                        <Knapp onClick={() => setSubmitButton(BoolOperators.AND)} type="hoved" className="filter__version--margin" kompakt>
+                            AND
+                        </Knapp>
+                        <Knapp onClick={() => setSubmitButton(BoolOperators.OR)}  type="hoved" className="filter__version--margin" kompakt>
+                            OR
+                        </Knapp>
+                        <Knapp onClick={() => setSubmitButton(BoolOperators.NOT)}  type="hoved" className="filter__version--margin" kompakt>
+                            NOT
                         </Knapp>
                     </SkjemaGruppe>
                 </form>

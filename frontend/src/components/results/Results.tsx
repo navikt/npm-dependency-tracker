@@ -70,6 +70,16 @@ const Results: FC<ResultsProps> = (props: ResultsProps) => {
                   );
               })
             : null;
+    let depNStat =
+        stats[2]?.name.toLowerCase() === 'depn'
+            ? stats[2].data.map((dep: [string, number][]) => {
+                  return (
+                      <Fragment key={dep[0].toString()}>
+                          <Element>{dep[0] + ': ' + dep[1]}</Element>
+                      </Fragment>
+                  );
+              })
+            : null;
     let repoStat = stats[0]?.name.toLowerCase() === 'repos' ? <Element>{stats[0].data}</Element> : null;
     return (
         <div className={classnames(className, 'results')}>
@@ -82,6 +92,12 @@ const Results: FC<ResultsProps> = (props: ResultsProps) => {
                         <Undertittel>Antall Repos</Undertittel>
                         {repoStat}
                     </Panel>
+                    <Ekspanderbartpanel
+                        tittel={<Undertittel>Dependencies</Undertittel>}
+                        className={classnames('results__panel')}
+                    >
+                        {depNStat}
+                    </Ekspanderbartpanel>
                 </div>
                 <div className={classnames('results__data--collumn')}>
                     <Panel border className={classnames('results__panel')}>

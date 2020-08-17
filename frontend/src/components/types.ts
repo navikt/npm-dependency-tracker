@@ -25,6 +25,13 @@ export enum InputState {
     OFF
 }
 
+export enum BoolOperators {
+    AND,
+    OR,
+    NOT
+}
+
+
 
 export type SelectedData = {
     type: FilterType;
@@ -36,6 +43,7 @@ export type DepNameData = {
     name: string;
     version: string;
     scope: VersionScope;
+    operator?: BoolOperators;
 }
 
 export type FilterData = {
