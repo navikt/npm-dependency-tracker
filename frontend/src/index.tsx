@@ -1,15 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.less';
-import Home from './pages/home/Home';
-import App from './App.js';
+import Home from './pages/mainPage/MainPage';
+// import App from './App.js';
 import * as serviceWorker from './serviceWorker';
 
+import { Provider } from 'react-redux';
+import store from './redux/store';
+
 ReactDOM.render(
-    <React.StrictMode>
-        <div className="app"><Home /></div>
-        {/* <App /> */}
-    </React.StrictMode>,
+    <Provider store={store}>
+        <React.StrictMode>
+            <div className="app"><Home /></div>
+            {/* <App /> */}
+        </React.StrictMode>
+    </Provider>,
     document.getElementById('root')
 );
 
