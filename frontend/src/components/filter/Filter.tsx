@@ -1,31 +1,22 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React from 'react';
+import {
+    useSelector,
+    useDispatch
+} from 'react-redux';
 
 import './Filter.less';
 
-interface FilterProps {
-    
-}
-interface FilterState {
-    
-}
+interface FilterProps {}
+interface FilterState {}
 
-export const Filter = <FilterProps, FilterState>(props:FilterProps, state:FilterState) => {
+export const Filter = <FilterProps, FilterState>(
+    props: FilterProps,
+    state: FilterState
+) => {
+    const dispatch = useDispatch();
+    const fill = useSelector((state:FilterState) => state);
 
-    return (
-        <div>
-            
-        </div>
-    )
+    return <div></div>;
+};
 
-}
-
-const mapStateToProps = (state:FilterState) => ({
-    
-})
-
-const mapDispatchToProps = {
-    
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Filter)
+export default Filter;
