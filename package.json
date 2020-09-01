@@ -5,14 +5,14 @@
     "scripts": {
         "website": "yarn workspace frontend run start",
         "website:build": "yarn workspace frontend run workspace-build",
-        "crawler": "yarn workspace crawler run workspace-start"
+        "crawler": "yarn workspace package-crawler-backend run workspace-start"
     },
     "author": "NAV",
     "license": "MIT",
     "private": true,
     "workspaces": [
-        "crawler",
-        "frontend"
+        "frontend",
+        "backend"
     ],
     "dependencies": {
     }
