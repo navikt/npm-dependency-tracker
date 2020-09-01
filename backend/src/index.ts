@@ -7,7 +7,6 @@ const { gitToJs, gitDiff } = require('git-parse');
 const fs = require('fs');
 const path = require('path');
 const process = require('process');
-import pLimit from 'p-limit';
 
 const gitBlame = require('git-blame');
 import gitlog, { GitlogOptions } from 'gitlog';
@@ -18,52 +17,14 @@ const nodeCmd = require('node-cmd');
 const log = require('why-is-node-running'); // should be your first require
 
 import Repo from './types/repo';
-import Imports from './types/imports';
-import Package from './types/packages';
-import Git from './types/githubApi';
-import fetchRepos from './github/fetch';
-import Load from './fileHandler/loader';
-import Clone from './github/clone';
 
 const run = async () => {
-    const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-
     const repos: Repo[] | undefined = await Repo.getAllRepos();
 
-    if (repos === undefined) {
-        return -1;
-    }
+    if (repos === undefined) return -1;
 
-    const limiter = pLimit(config.concurrent);
-
-    let promisess: Promise<unknown>[] = repos.map((repo: Repo) => {
-        return limiter(() =>
-            Clone(
-                util.generateCloneUrl(repo.cloneUrl),
-                util.generateOutputDir(repo.name)
-            ).catch((url: string) => console.log(url))
-        );
-    });
-
-    bar1.start(100, 0);
-    await util.trackProgress(promisess, (p: number) => {
-        bar1.update(+p.toFixed(1));
-    });
-    bar1.stop();
-
-    // TODO: Parse commits
-
-    // const commitsPromise = gitToJs(`./repoOUT/${name}`);
-    // commitsPromise
-    //     .then((commits: any) => {
-    //         commits.forEach((commit: any) => {
-    //             allHashes.push(commit.hash);
-    //             console.log(commit.filesAdded);
-    //         });
-    //         // console.log(allHashes);
-    //     })
-    //     .then(() => {
-    //         console.log(allHashes);
+    // await Repo.clone(repos);
+    await Repo.parseCommits(repos);
 
     //             let command = `cd repoOUT/${name} && git show ${allHashes[0]}`;
     //             child = exec(command, function (
@@ -89,6 +50,15 @@ const run = async () => {
     //     });
 };
 
+const execute = async () => {
+    const apprunner = await run();
+    if (apprunner === -1) {
+        console.log('Runner failed!');
+    } else {
+        console.log('Runner finished!');
+    }
+};
+
 util.checkEnv();
 
-run();
+execute();
