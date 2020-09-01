@@ -3,6 +3,7 @@ import { stderr } from 'process';
 const fs = require('fs');
 const nodeCmd = require('node-cmd');
 const { exec } = require('child_process');
+import { pull } from './pull';
 
 const clone = (url: string, dir: string) => {
     return new Promise((resolve, reject) => {
@@ -13,7 +14,7 @@ const clone = (url: string, dir: string) => {
                     resolve();
                 });
             } else {
-                resolve();
+                pull(dir, resolve, reject);
             }
         });
     });

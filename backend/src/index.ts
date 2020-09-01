@@ -41,7 +41,7 @@ const run = async () => {
             Clone(
                 util.generateCloneUrl(repo.cloneUrl),
                 util.generateOutputDir(repo.name)
-            ).catch((url: string) => console.log('Could not clone: ' + url))
+            ).catch((url: string) => console.log(url))
         );
     });
 
@@ -51,18 +51,8 @@ const run = async () => {
     });
     bar1.stop();
 
-    // naviktRepos.forEach((repo) => {
-    //     newRepo(localRepos);
-    //     downloadNew(localRepos);
-    //     update(localRepos);
-    //     parseCommits(localRepos);
-    // });
+    // TODO: Parse commits
 
-    // clone(repo, `./repoOUT/${name}`, [], console.log('done'))
-    // .then(() =>
-    // const name = "nav-frontend-icons"
-    // let child;
-    // let allHashes: string[] = [];
     // const commitsPromise = gitToJs(`./repoOUT/${name}`);
     // commitsPromise
     //     .then((commits: any) => {
