@@ -1,0 +1,46 @@
+{
+    "name": "package-crawler-backend",
+    "version": "0.0.1",
+    "license": "MIT",
+    "main": "./src/index.js",
+    "scripts": {
+        "start": "node --max-old-space-size=8192 ./build/index.js",
+        "start:log": "node ./build/index.js > OUTPUT.md",
+        "watch": "tsc -w",
+        "build": "tsc",
+        "workspace-start": "tsc && node ./build/index.js"
+    },
+    "engines": {
+        "node": "^13.12.0",
+        "npm": "^6.14.5"
+    },
+    "dependencies": {
+        "git-blame": "^1.4.0",
+        "git-clone": "^0.1.0",
+        "git-parse": "^1.0.4",
+        "gitlog": "^4.0.0",
+        "isomorphic-git": "^1.7.4",
+        "node-cmd": "^3.0.0",
+        "parse-diff": "^0.7.0",
+        "why-is-node-running": "^2.2.0"
+    },
+    "devDependencies": {
+        "@types/node": "^14.0.25",
+        "@types/request": "^2.48.5",
+        "@types/rimraf": "^3.0.0",
+        "@types/underscore": "^1.10.14",
+        "chalk": "4.1.0",
+        "cli-progress": "^3.8.2",
+        "dotenv": "^8.2.0",
+        "download-git-repo": "^3.0.2",
+        "fast-glob": "^3.2.4",
+        "git-clone": "^0.1.0",
+        "glob": "^7.1.6",
+        "p-limit": "^3.0.2",
+        "prettier": "2.0.5",
+        "request": "^2.88.0",
+        "rimraf": "^3.0.2",
+        "typescript": "^3.9.7",
+        "underscore": "^1.10.2"
+    }
+}
