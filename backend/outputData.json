@@ -1,0 +1,2710 @@
+[
+    {
+        "name": "navikt/nav-frontend-icons",
+        "lastCommit": "",
+        "cloneUrl": "https://github.com/navikt/nav-frontend-icons.git",
+        "imports": [],
+        "packages": [],
+        "commits": [
+            {
+                "hash": "477962de33bed25e0710b3c19c86ffa639b6fc5e",
+                "authorName": "KenAJoh",
+                "authorEmail": "ken.aleksander.johansen@nav.no",
+                "date": "Wed, 26 Aug 2020 11:17:50 +0200",
+                "message": "First commit",
+                "filesAdded": [
+                    {
+                        "path": ".gitignore"
+                    },
+                    {
+                        "path": ".prettierrc.json"
+                    },
+                    {
+                        "path": "CODEOWNERS"
+                    },
+                    {
+                        "path": "README.md"
+                    },
+                    {
+                        "path": "builder/package.json"
+                    },
+                    {
+                        "path": "builder/reactTemplate.js"
+                    },
+                    {
+                        "path": "craco.config.js"
+                    },
+                    {
+                        "path": "package.json"
+                    },
+                    {
+                        "path": "package/package.json"
+                    },
+                    {
+                        "path": "public/favicon.ico"
+                    },
+                    {
+                        "path": "public/index.html"
+                    },
+                    {
+                        "path": "public/logo192.png"
+                    },
+                    {
+                        "path": "public/logo512.png"
+                    },
+                    {
+                        "path": "public/manifest.json"
+                    },
+                    {
+                        "path": "public/robots.txt"
+                    },
+                    {
+                        "path": "src/App.less"
+                    },
+                    {
+                        "path": "src/App.tsx"
+                    },
+                    {
+                        "path": "src/index.css"
+                    },
+                    {
+                        "path": "src/index.js"
+                    },
+                    {
+                        "path": "src/logo.svg"
+                    },
+                    {
+                        "path": "src/react-app-env.d.ts"
+                    },
+                    {
+                        "path": "src/serviceWorker.js"
+                    },
+                    {
+                        "path": "src/setupTests.js"
+                    },
+                    {
+                        "path": "svg/lib/Bookmark-1.svg"
+                    },
+                    {
+                        "path": "svg/lib/Bookmark.svg"
+                    },
+                    {
+                        "path": "svg/lib/Data-1.svg"
+                    },
+                    {
+                        "path": "svg/lib/Data.svg"
+                    },
+                    {
+                        "path": "svg/lib/List-1.svg"
+                    },
+                    {
+                        "path": "svg/lib/List.svg"
+                    },
+                    {
+                        "path": "svg/lib/file"
+                    },
+                    {
+                        "path": "svg/lib/file"
+                    },
+                    {
+                        "path": "svg/lib/file-1.svg"
+                    },
+                    {
+                        "path": "svg/lib/file.svg"
+                    },
+                    {
+                        "path": "svg/lib/files-1.svg"
+                    },
+                    {
+                        "path": "svg/lib/files.svg"
+                    },
+                    {
+                        "path": "svg/lib/folder-1.svg"
+                    },
+                    {
+                        "path": "svg/lib/folder.svg"
+                    },
+                    {
+                        "path": "tsconfig.json"
+                    },
+                    {
+                        "path": "yarn.lock"
+                    }
+                ],
+                "filesDeleted": [],
+                "filesModified": [
+                    {
+                        "path": ".gitignore"
+                    }
+                ],
+                "filesRenamed": [],
+                "packages": [
+                    {
+                        "name": "icons",
+                        "version": "0.1.0",
+                        "private": true,
+                        "dependencies": {
+                            "@nav-frontend/icons": "^0.1.5",
+                            "@testing-library/jest-dom": "^4.2.4",
+                            "@testing-library/react": "^9.3.2",
+                            "@testing-library/user-event": "^7.1.2",
+                            "classnames": "^2.2.6",
+                            "craco": "^0.0.3",
+                            "craco-less": "^1.17.0",
+                            "nav-frontend-core": "^5.0.1",
+                            "nav-frontend-etiketter": "^2.0.8",
+                            "nav-frontend-etiketter-style": "^1.0.3",
+                            "nav-frontend-typografi": "^2.0.26",
+                            "nav-frontend-typografi-style": "^1.0.22",
+                            "peer": "^0.5.3",
+                            "prop-types": "^15.7.2",
+                            "react": "^16.13.1",
+                            "react-dom": "^16.13.1",
+                            "react-scripts": "3.4.3",
+                            "typescript": "^4.0.2"
+                        },
+                        "scripts": {
+                            "start": "craco start",
+                            "build": "react-scripts build",
+                            "test": "react-scripts test",
+                            "eject": "react-scripts eject",
+                            "postinstall": "npx @svgr/cli --template ./builder/reactTemplate.js -d ./package/src ./svg/lib --icon --typescript --ref --replace-attr-values '#3E3832=currentColor'",
+                            "createpack": "tsc && cp ./builder/package.json package/"
+                        },
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        },
+                        "browserslist": {
+                            "production": [
+                                ">0.2%",
+                                "not dead",
+                                "not op_mini all"
+                            ],
+                            "development": [
+                                "last 1 chrome version",
+                                "last 1 firefox version",
+                                "last 1 safari version"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "@nav-frontend/icons",
+                        "version": "0.1.1",
+                        "main": "lib/index.js",
+                        "files": [
+                            "/lib",
+                            "/src"
+                        ],
+                        "private": false,
+                        "repository": {
+                            "type": "git",
+                            "url": "git+https://github.com/navikt/nav-frontend-ikoner.git"
+                        },
+                        "peerDependencies": {
+                            "react": "^16.13.1"
+                        },
+                        "devDependencies": {
+                            "react": "^16.13.1"
+                        }
+                    },
+                    {
+                        "name": "@nav-frontend/icons",
+                        "version": "0.1.5",
+                        "main": "lib/index.js",
+                        "files": [
+                            "/lib",
+                            "/src"
+                        ],
+                        "private": false,
+                        "repository": {
+                            "type": "git",
+                            "url": "git+https://github.com/navikt/nav-frontend-ikoner.git"
+                        },
+                        "peerDependencies": {
+                            "react": "^16.13.1"
+                        },
+                        "devDependencies": {
+                            "react": "^16.13.1"
+                        }
+                    }
+                ]
+            },
+            {
+                "hash": "fc700b4fb9afb44fd342a337f3b3ad6e1384f2dc",
+                "authorName": "KenAJoh",
+                "authorEmail": "ken.aleksander.johansen@nav.no",
+                "date": "Wed, 26 Aug 2020 15:10:12 +0200",
+                "message": "La til package-lock, rename builder -> template",
+                "filesAdded": [
+                    {
+                        "path": "package-lock.json"
+                    }
+                ],
+                "filesDeleted": [
+                    {
+                        "path": ".gitignore"
+                    },
+                    {
+                        "path": "yarn.lock"
+                    }
+                ],
+                "filesModified": [
+                    {
+                        "path": "package.json"
+                    },
+                    {
+                        "path": "package/package.json"
+                    },
+                    {
+                        "path": "tsconfig.json"
+                    }
+                ],
+                "filesRenamed": [
+                    {
+                        "oldPath": "builder/package.json",
+                        "newPath": "template/package.json"
+                    },
+                    {
+                        "oldPath": "builder/reactTemplate.js",
+                        "newPath": "template/reactTemplate.js"
+                    }
+                ],
+                "packages": [
+                    {
+                        "name": "icons",
+                        "version": "0.1.0",
+                        "private": true,
+                        "dependencies": {
+                            "@nav-frontend/icons": "latest",
+                            "@testing-library/jest-dom": "^4.2.4",
+                            "@testing-library/react": "^9.3.2",
+                            "@testing-library/user-event": "^7.1.2",
+                            "classnames": "^2.2.6",
+                            "craco": "^0.0.3",
+                            "craco-less": "^1.17.0",
+                            "peer": "^0.5.3",
+                            "prop-types": "^15.7.2",
+                            "react": "^16.13.1",
+                            "react-dom": "^16.13.1",
+                            "react-scripts": "3.4.3",
+                            "typescript": "^4.0.2"
+                        },
+                        "scripts": {
+                            "start": "craco start",
+                            "build": "react-scripts build",
+                            "test": "react-scripts test",
+                            "eject": "react-scripts eject",
+                            "postinstall": "npx @svgr/cli --template ./builder/reactTemplate.js -d ./package/src ./svg/lib --icon --typescript --ref --replace-attr-values '#3E3832=currentColor'",
+                            "createpack": "tsc && cp ./builder/package.json package/"
+                        },
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        },
+                        "browserslist": {
+                            "production": [
+                                ">0.2%",
+                                "not dead",
+                                "not op_mini all"
+                            ],
+                            "development": [
+                                "last 1 chrome version",
+                                "last 1 firefox version",
+                                "last 1 safari version"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "@nav-frontend/icons",
+                        "version": "0.1.5",
+                        "main": "lib/index.js",
+                        "files": [
+                            "/lib",
+                            "/src"
+                        ],
+                        "private": false,
+                        "repository": {
+                            "type": "git",
+                            "url": "git+https://github.com/navikt/nav-frontend-icons.git"
+                        },
+                        "peerDependencies": {
+                            "react": "^16.13.1"
+                        },
+                        "devDependencies": {
+                            "react": "^16.13.1"
+                        }
+                    },
+                    {
+                        "name": "@nav-frontend/icons",
+                        "version": "0.1.0",
+                        "main": "lib/index.js",
+                        "files": [
+                            "/lib",
+                            "/src"
+                        ],
+                        "private": false,
+                        "repository": {
+                            "type": "git",
+                            "url": "git+https://github.com/navikt/nav-frontend-ikoner.git"
+                        },
+                        "peerDependencies": {
+                            "react": "^16.13.1"
+                        },
+                        "devDependencies": {
+                            "react": "^16.13.1"
+                        }
+                    }
+                ]
+            },
+            {
+                "hash": "040e173168139be46e9af9247aeeaf3a60f800a9",
+                "authorName": "KenAJoh",
+                "authorEmail": "ken.aleksander.johansen@nav.no",
+                "date": "Wed, 26 Aug 2020 15:15:13 +0200",
+                "message": "Koderestrukturering",
+                "filesAdded": [],
+                "filesDeleted": [
+                    {
+                        "path": "package/package.json"
+                    }
+                ],
+                "filesModified": [
+                    {
+                        "path": ".gitignore"
+                    },
+                    {
+                        "path": "package.json"
+                    },
+                    {
+                        "path": "template/package.json"
+                    }
+                ],
+                "filesRenamed": [
+                    {
+                        "oldPath": "svg/lib/Bookmark-1.svg",
+                        "newPath": "svg-icons/Bookmark-1.svg"
+                    },
+                    {
+                        "oldPath": "svg/lib/Bookmark.svg",
+                        "newPath": "svg-icons/Bookmark.svg"
+                    },
+                    {
+                        "oldPath": "svg/lib/Data-1.svg",
+                        "newPath": "svg-icons/Data-1.svg"
+                    },
+                    {
+                        "oldPath": "svg/lib/Data.svg",
+                        "newPath": "svg-icons/Data.svg"
+                    },
+                    {
+                        "oldPath": "svg/lib/List-1.svg",
+                        "newPath": "svg-icons/List-1.svg"
+                    },
+                    {
+                        "oldPath": "svg/lib/List.svg",
+                        "newPath": "svg-icons/List.svg"
+                    },
+                    {
+                        "oldPath": "svg/lib/file content-1.svg\tsvg-icons/file",
+                        "newPath": "content-1.svg"
+                    },
+                    {
+                        "oldPath": "svg/lib/file content.svg\tsvg-icons/file",
+                        "newPath": "content.svg"
+                    },
+                    {
+                        "oldPath": "svg/lib/file-1.svg",
+                        "newPath": "svg-icons/file-1.svg"
+                    },
+                    {
+                        "oldPath": "svg/lib/file.svg",
+                        "newPath": "svg-icons/file.svg"
+                    },
+                    {
+                        "oldPath": "svg/lib/files-1.svg",
+                        "newPath": "svg-icons/files-1.svg"
+                    },
+                    {
+                        "oldPath": "svg/lib/files.svg",
+                        "newPath": "svg-icons/files.svg"
+                    },
+                    {
+                        "oldPath": "svg/lib/folder-1.svg",
+                        "newPath": "svg-icons/folder-1.svg"
+                    },
+                    {
+                        "oldPath": "svg/lib/folder.svg",
+                        "newPath": "svg-icons/folder.svg"
+                    }
+                ],
+                "packages": [
+                    {
+                        "name": "icons",
+                        "version": "0.1.0",
+                        "private": true,
+                        "dependencies": {
+                            "@nav-frontend/icons": "latest",
+                            "@testing-library/jest-dom": "^4.2.4",
+                            "@testing-library/react": "^9.3.2",
+                            "@testing-library/user-event": "^7.1.2",
+                            "classnames": "^2.2.6",
+                            "craco": "^0.0.3",
+                            "craco-less": "^1.17.0",
+                            "peer": "^0.5.3",
+                            "prop-types": "^15.7.2",
+                            "react": "^16.13.1",
+                            "react-dom": "^16.13.1",
+                            "react-scripts": "3.4.3",
+                            "typescript": "^4.0.2"
+                        },
+                        "scripts": {
+                            "start": "craco start",
+                            "build": "react-scripts build",
+                            "test": "react-scripts test",
+                            "eject": "react-scripts eject",
+                            "postinstall": "npx @svgr/cli --template template/reactTemplate.js -d package/src svg-icons --icon --typescript --ref --replace-attr-values '#3E3832=currentColor'",
+                            "createpack": "tsc && cp ./builder/package.json package/"
+                        },
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        },
+                        "browserslist": {
+                            "production": [
+                                ">0.2%",
+                                "not dead",
+                                "not op_mini all"
+                            ],
+                            "development": [
+                                "last 1 chrome version",
+                                "last 1 firefox version",
+                                "last 1 safari version"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "@nav-frontend/icons",
+                        "version": "0.1.5",
+                        "main": "lib/index.js",
+                        "files": [
+                            "/lib",
+                            "/src"
+                        ],
+                        "private": false,
+                        "repository": {
+                            "type": "git",
+                            "url": "git+https://github.com/navikt/nav-frontend-icons.git"
+                        },
+                        "peerDependencies": {
+                            "react": "^16.13.1"
+                        },
+                        "devDependencies": {
+                            "react": "^16.13.1"
+                        }
+                    }
+                ]
+            },
+            {
+                "hash": "1cbd9f88c73271dd9fc8e4790fa52206e152c7e8",
+                "authorName": "KenAJoh",
+                "authorEmail": "ken.aleksander.johansen@nav.no",
+                "date": "Wed, 26 Aug 2020 16:17:48 +0200",
+                "message": "Storybook bootstrap lagt til",
+                "filesAdded": [
+                    {
+                        "path": ".storybook/main.js"
+                    },
+                    {
+                        "path": ".storybook/preview.js"
+                    },
+                    {
+                        "path": "src/stories/Button.stories.tsx"
+                    },
+                    {
+                        "path": "src/stories/Button.tsx"
+                    },
+                    {
+                        "path": "src/stories/Header.stories.tsx"
+                    },
+                    {
+                        "path": "src/stories/Header.tsx"
+                    },
+                    {
+                        "path": "src/stories/Introduction.stories.mdx"
+                    },
+                    {
+                        "path": "src/stories/Page.stories.tsx"
+                    },
+                    {
+                        "path": "src/stories/Page.tsx"
+                    },
+                    {
+                        "path": "src/stories/assets/code-brackets.svg"
+                    },
+                    {
+                        "path": "src/stories/assets/colors.svg"
+                    },
+                    {
+                        "path": "src/stories/assets/comments.svg"
+                    },
+                    {
+                        "path": "src/stories/assets/direction.svg"
+                    },
+                    {
+                        "path": "src/stories/assets/flow.svg"
+                    },
+                    {
+                        "path": "src/stories/assets/plugin.svg"
+                    },
+                    {
+                        "path": "src/stories/assets/repo.svg"
+                    },
+                    {
+                        "path": "src/stories/assets/stackalt.svg"
+                    },
+                    {
+                        "path": "src/stories/button.css"
+                    },
+                    {
+                        "path": "src/stories/header.css"
+                    },
+                    {
+                        "path": "src/stories/page.css"
+                    }
+                ],
+                "filesDeleted": [],
+                "filesModified": [
+                    {
+                        "path": "package-lock.json"
+                    },
+                    {
+                        "path": "package.json"
+                    }
+                ],
+                "filesRenamed": [],
+                "packages": [
+                    {
+                        "name": "icons",
+                        "version": "0.1.0",
+                        "private": true,
+                        "dependencies": {
+                            "@nav-frontend/icons": "latest",
+                            "@testing-library/jest-dom": "^4.2.4",
+                            "@testing-library/react": "^9.3.2",
+                            "@testing-library/user-event": "^7.1.2",
+                            "classnames": "^2.2.6",
+                            "craco": "^0.0.3",
+                            "craco-less": "^1.17.0",
+                            "peer": "^0.5.3",
+                            "prop-types": "^15.7.2",
+                            "react": "^16.13.1",
+                            "react-dom": "^16.13.1",
+                            "react-scripts": "3.4.3",
+                            "typescript": "^4.0.2"
+                        },
+                        "scripts": {
+                            "start": "craco start",
+                            "build": "react-scripts build",
+                            "test": "react-scripts test",
+                            "eject": "react-scripts eject",
+                            "postinstall": "npx @svgr/cli --template template/reactTemplate.js -d package/src svg-icons --icon --typescript --ref --replace-attr-values '#3E3832=currentColor'",
+                            "createpack": "tsc && cp ./builder/package.json package/",
+                            "storybook": "start-storybook -p 6006 -s public",
+                            "build-storybook": "build-storybook -s public"
+                        },
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        },
+                        "browserslist": {
+                            "production": [
+                                ">0.2%",
+                                "not dead",
+                                "not op_mini all"
+                            ],
+                            "development": [
+                                "last 1 chrome version",
+                                "last 1 firefox version",
+                                "last 1 safari version"
+                            ]
+                        },
+                        "devDependencies": {
+                            "@babel/core": "^7.11.4",
+                            "@storybook/addon-actions": "^6.0.18",
+                            "@storybook/addon-essentials": "^6.0.18",
+                            "@storybook/addon-links": "^6.0.18",
+                            "@storybook/node-logger": "^6.0.18",
+                            "@storybook/preset-create-react-app": "^3.1.4",
+                            "@storybook/react": "^6.0.18",
+                            "babel-loader": "^8.1.0",
+                            "react-is": "^16.13.1"
+                        }
+                    },
+                    {
+                        "name": "@nav-frontend/icons",
+                        "version": "0.1.5",
+                        "main": "lib/index.js",
+                        "files": [
+                            "/lib",
+                            "/src"
+                        ],
+                        "private": false,
+                        "repository": {
+                            "type": "git",
+                            "url": "git+https://github.com/navikt/nav-frontend-icons.git"
+                        },
+                        "peerDependencies": {
+                            "react": "^16.13.1"
+                        },
+                        "devDependencies": {
+                            "react": "^16.13.1"
+                        }
+                    }
+                ]
+            },
+            {
+                "hash": "a82307f740ad7dbd020edc2a170867c70c8d4f31",
+                "authorName": "KenAJoh",
+                "authorEmail": "ken.aleksander.johansen@nav.no",
+                "date": "Thu, 27 Aug 2020 10:17:49 +0200",
+                "message": "Generering av ikoner for storybook, build scripts",
+                "filesAdded": [
+                    {
+                        "path": "src/stories/Icons.css"
+                    },
+                    {
+                        "path": "src/stories/Icons.stories.tsx"
+                    }
+                ],
+                "filesDeleted": [
+                    {
+                        "path": "src/stories/Button.stories.tsx"
+                    },
+                    {
+                        "path": "src/stories/Button.tsx"
+                    },
+                    {
+                        "path": "src/stories/Header.stories.tsx"
+                    },
+                    {
+                        "path": "src/stories/Header.tsx"
+                    },
+                    {
+                        "path": "src/stories/Introduction.stories.mdx"
+                    },
+                    {
+                        "path": "src/stories/Page.stories.tsx"
+                    },
+                    {
+                        "path": "src/stories/Page.tsx"
+                    },
+                    {
+                        "path": "src/stories/assets/code-brackets.svg"
+                    },
+                    {
+                        "path": "src/stories/assets/colors.svg"
+                    },
+                    {
+                        "path": "src/stories/assets/comments.svg"
+                    },
+                    {
+                        "path": "src/stories/assets/direction.svg"
+                    },
+                    {
+                        "path": "src/stories/assets/flow.svg"
+                    },
+                    {
+                        "path": "src/stories/assets/plugin.svg"
+                    },
+                    {
+                        "path": "src/stories/assets/repo.svg"
+                    },
+                    {
+                        "path": "src/stories/assets/stackalt.svg"
+                    },
+                    {
+                        "path": "src/stories/button.css"
+                    },
+                    {
+                        "path": "src/stories/header.css"
+                    },
+                    {
+                        "path": "src/stories/page.css"
+                    }
+                ],
+                "filesModified": [
+                    {
+                        "path": "package-lock.json"
+                    },
+                    {
+                        "path": "package.json"
+                    }
+                ],
+                "filesRenamed": [],
+                "packages": [
+                    {
+                        "name": "icons",
+                        "version": "0.1.0",
+                        "private": true,
+                        "dependencies": {
+                            "@nav-frontend/icons": "latest",
+                            "@testing-library/jest-dom": "^4.2.4",
+                            "@testing-library/react": "^9.3.2",
+                            "@testing-library/user-event": "^7.1.2",
+                            "classnames": "^2.2.6",
+                            "craco": "^0.0.3",
+                            "craco-less": "^1.17.0",
+                            "peer": "^0.5.3",
+                            "prop-types": "^15.7.2",
+                            "react": "^16.13.1",
+                            "react-dom": "^16.13.1",
+                            "react-scripts": "3.4.3",
+                            "typescript": "^4.0.2"
+                        },
+                        "scripts": {
+                            "start": "craco start",
+                            "build": "react-scripts build",
+                            "test": "react-scripts test",
+                            "eject": "react-scripts eject",
+                            "create-icons": "svgr --template template/reactTemplate.js -d package/src svg-icons --icon --typescript --ref --replace-attr-values '#3E3832=currentColor'",
+                            "create-pack": "tsc && cp ./template/package.json package/ && mkdir -p package/svg && cp -r ./svg-icons/*.svg package/svg/",
+                            "build-pack": "rm -rf package && npm run create-icons && npm run create-pack",
+                            "storybook": "npm run build-pack && rm -rf src/package && cp -vr package src && start-storybook -p 6006 -s public",
+                            "build-storybook": "npm run build-pack && rm -rf src/package && cp -vr package src && build-storybook -s public"
+                        },
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        },
+                        "browserslist": {
+                            "production": [
+                                ">0.2%",
+                                "not dead",
+                                "not op_mini all"
+                            ],
+                            "development": [
+                                "last 1 chrome version",
+                                "last 1 firefox version",
+                                "last 1 safari version"
+                            ]
+                        },
+                        "devDependencies": {
+                            "@babel/core": "^7.11.4",
+                            "@storybook/addon-actions": "^6.0.18",
+                            "@storybook/addon-essentials": "^6.0.18",
+                            "@storybook/addon-links": "^6.0.18",
+                            "@storybook/node-logger": "^6.0.18",
+                            "@storybook/preset-create-react-app": "^3.1.4",
+                            "@storybook/react": "^6.0.18",
+                            "@svgr/cli": "^5.4.0",
+                            "babel-loader": "^8.1.0",
+                            "react-is": "^16.13.1"
+                        }
+                    },
+                    {
+                        "name": "@nav-frontend/icons",
+                        "version": "0.1.5",
+                        "main": "lib/index.js",
+                        "files": [
+                            "/lib",
+                            "/src"
+                        ],
+                        "private": false,
+                        "repository": {
+                            "type": "git",
+                            "url": "git+https://github.com/navikt/nav-frontend-icons.git"
+                        },
+                        "peerDependencies": {
+                            "react": "^16.13.1"
+                        },
+                        "devDependencies": {
+                            "react": "^16.13.1"
+                        }
+                    }
+                ]
+            },
+            {
+                "hash": "8df8550e5d72d89c682eab675dda32b85aba10b4",
+                "authorName": "KenAJoh",
+                "authorEmail": "ken.aleksander.johansen@nav.no",
+                "date": "Thu, 27 Aug 2020 10:25:37 +0200",
+                "message": "fjernet @nav-frontend/icons",
+                "filesAdded": [],
+                "filesDeleted": [],
+                "filesModified": [
+                    {
+                        "path": "package.json"
+                    }
+                ],
+                "filesRenamed": [],
+                "packages": [
+                    {
+                        "name": "icons",
+                        "version": "0.1.0",
+                        "private": true,
+                        "dependencies": {
+                            "@testing-library/jest-dom": "^4.2.4",
+                            "@testing-library/react": "^9.3.2",
+                            "@testing-library/user-event": "^7.1.2",
+                            "classnames": "^2.2.6",
+                            "craco": "^0.0.3",
+                            "craco-less": "^1.17.0",
+                            "peer": "^0.5.3",
+                            "prop-types": "^15.7.2",
+                            "react": "^16.13.1",
+                            "react-dom": "^16.13.1",
+                            "react-scripts": "3.4.3",
+                            "typescript": "^4.0.2"
+                        },
+                        "scripts": {
+                            "start": "craco start",
+                            "build": "react-scripts build",
+                            "test": "react-scripts test",
+                            "eject": "react-scripts eject",
+                            "create-icons": "svgr --template template/reactTemplate.js -d package/src svg-icons --icon --typescript --ref --replace-attr-values '#3E3832=currentColor'",
+                            "create-pack": "tsc && cp ./template/package.json package/ && mkdir -p package/svg && cp -r ./svg-icons/*.svg package/svg/",
+                            "build-pack": "rm -rf package && npm run create-icons && npm run create-pack",
+                            "storybook": "npm run build-pack && rm -rf src/package && cp -vr package src && start-storybook -p 6006 -s public",
+                            "build-storybook": "npm run build-pack && rm -rf src/package && cp -vr package src && build-storybook -s public"
+                        },
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        },
+                        "browserslist": {
+                            "production": [
+                                ">0.2%",
+                                "not dead",
+                                "not op_mini all"
+                            ],
+                            "development": [
+                                "last 1 chrome version",
+                                "last 1 firefox version",
+                                "last 1 safari version"
+                            ]
+                        },
+                        "devDependencies": {
+                            "@babel/core": "^7.11.4",
+                            "@storybook/addon-actions": "^6.0.18",
+                            "@storybook/addon-essentials": "^6.0.18",
+                            "@storybook/addon-links": "^6.0.18",
+                            "@storybook/node-logger": "^6.0.18",
+                            "@storybook/preset-create-react-app": "^3.1.4",
+                            "@storybook/react": "^6.0.18",
+                            "@svgr/cli": "^5.4.0",
+                            "babel-loader": "^8.1.0",
+                            "react-is": "^16.13.1"
+                        }
+                    },
+                    {
+                        "name": "@nav-frontend/icons",
+                        "version": "0.1.5",
+                        "main": "lib/index.js",
+                        "files": [
+                            "/lib",
+                            "/src"
+                        ],
+                        "private": false,
+                        "repository": {
+                            "type": "git",
+                            "url": "git+https://github.com/navikt/nav-frontend-icons.git"
+                        },
+                        "peerDependencies": {
+                            "react": "^16.13.1"
+                        },
+                        "devDependencies": {
+                            "react": "^16.13.1"
+                        }
+                    }
+                ]
+            },
+            {
+                "hash": "766311a4566c62183d5c8b02755ad72fc82cfb22",
+                "authorName": "KenAJoh",
+                "authorEmail": "ken.aleksander.johansen@nav.no",
+                "date": "Thu, 27 Aug 2020 10:26:31 +0200",
+                "message": "Fjernet eject script",
+                "filesAdded": [],
+                "filesDeleted": [],
+                "filesModified": [
+                    {
+                        "path": "package.json"
+                    }
+                ],
+                "filesRenamed": [],
+                "packages": [
+                    {
+                        "name": "icons",
+                        "version": "0.1.0",
+                        "private": true,
+                        "dependencies": {
+                            "@testing-library/jest-dom": "^4.2.4",
+                            "@testing-library/react": "^9.3.2",
+                            "@testing-library/user-event": "^7.1.2",
+                            "classnames": "^2.2.6",
+                            "craco": "^0.0.3",
+                            "craco-less": "^1.17.0",
+                            "peer": "^0.5.3",
+                            "prop-types": "^15.7.2",
+                            "react": "^16.13.1",
+                            "react-dom": "^16.13.1",
+                            "react-scripts": "3.4.3",
+                            "typescript": "^4.0.2"
+                        },
+                        "scripts": {
+                            "start": "craco start",
+                            "build": "react-scripts build",
+                            "test": "react-scripts test",
+                            "create-icons": "svgr --template template/reactTemplate.js -d package/src svg-icons --icon --typescript --ref --replace-attr-values '#3E3832=currentColor'",
+                            "create-pack": "tsc && cp ./template/package.json package/ && mkdir -p package/svg && cp -r ./svg-icons/*.svg package/svg/",
+                            "build-pack": "rm -rf package && npm run create-icons && npm run create-pack",
+                            "storybook": "npm run build-pack && rm -rf src/package && cp -vr package src && start-storybook -p 6006 -s public",
+                            "build-storybook": "npm run build-pack && rm -rf src/package && cp -vr package src && build-storybook -s public"
+                        },
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        },
+                        "browserslist": {
+                            "production": [
+                                ">0.2%",
+                                "not dead",
+                                "not op_mini all"
+                            ],
+                            "development": [
+                                "last 1 chrome version",
+                                "last 1 firefox version",
+                                "last 1 safari version"
+                            ]
+                        },
+                        "devDependencies": {
+                            "@babel/core": "^7.11.4",
+                            "@storybook/addon-actions": "^6.0.18",
+                            "@storybook/addon-essentials": "^6.0.18",
+                            "@storybook/addon-links": "^6.0.18",
+                            "@storybook/node-logger": "^6.0.18",
+                            "@storybook/preset-create-react-app": "^3.1.4",
+                            "@storybook/react": "^6.0.18",
+                            "@svgr/cli": "^5.4.0",
+                            "babel-loader": "^8.1.0",
+                            "react-is": "^16.13.1"
+                        }
+                    },
+                    {
+                        "name": "@nav-frontend/icons",
+                        "version": "0.1.5",
+                        "main": "lib/index.js",
+                        "files": [
+                            "/lib",
+                            "/src"
+                        ],
+                        "private": false,
+                        "repository": {
+                            "type": "git",
+                            "url": "git+https://github.com/navikt/nav-frontend-icons.git"
+                        },
+                        "peerDependencies": {
+                            "react": "^16.13.1"
+                        },
+                        "devDependencies": {
+                            "react": "^16.13.1"
+                        }
+                    }
+                ]
+            },
+            {
+                "hash": "97b894ea5e3e68c3ea725dcfb7e55402cff2b02a",
+                "authorName": "KenAJoh",
+                "authorEmail": "ken.aleksander.johansen@nav.no",
+                "date": "Thu, 27 Aug 2020 11:25:21 +0200",
+                "message": "Bruker nå yarn workspaces for pakken og storybook",
+                "filesAdded": [
+                    {
+                        "path": ".npmrc"
+                    },
+                    {
+                        "path": "icons/lib/Bookmark.d.ts"
+                    },
+                    {
+                        "path": "icons/lib/Bookmark.js"
+                    },
+                    {
+                        "path": "icons/lib/Bookmark1.d.ts"
+                    },
+                    {
+                        "path": "icons/lib/Bookmark1.js"
+                    },
+                    {
+                        "path": "icons/lib/Data.d.ts"
+                    },
+                    {
+                        "path": "icons/lib/Data.js"
+                    },
+                    {
+                        "path": "icons/lib/Data1.d.ts"
+                    },
+                    {
+                        "path": "icons/lib/Data1.js"
+                    },
+                    {
+                        "path": "icons/lib/File.d.ts"
+                    },
+                    {
+                        "path": "icons/lib/File.js"
+                    },
+                    {
+                        "path": "icons/lib/File1.d.ts"
+                    },
+                    {
+                        "path": "icons/lib/File1.js"
+                    },
+                    {
+                        "path": "icons/lib/FileContent.d.ts"
+                    },
+                    {
+                        "path": "icons/lib/FileContent.js"
+                    },
+                    {
+                        "path": "icons/lib/FileContent1.d.ts"
+                    },
+                    {
+                        "path": "icons/lib/FileContent1.js"
+                    },
+                    {
+                        "path": "icons/lib/Files.d.ts"
+                    },
+                    {
+                        "path": "icons/lib/Files.js"
+                    },
+                    {
+                        "path": "icons/lib/Files1.d.ts"
+                    },
+                    {
+                        "path": "icons/lib/Files1.js"
+                    },
+                    {
+                        "path": "icons/lib/Folder.d.ts"
+                    },
+                    {
+                        "path": "icons/lib/Folder.js"
+                    },
+                    {
+                        "path": "icons/lib/Folder1.d.ts"
+                    },
+                    {
+                        "path": "icons/lib/Folder1.js"
+                    },
+                    {
+                        "path": "icons/lib/List.d.ts"
+                    },
+                    {
+                        "path": "icons/lib/List.js"
+                    },
+                    {
+                        "path": "icons/lib/List1.d.ts"
+                    },
+                    {
+                        "path": "icons/lib/List1.js"
+                    },
+                    {
+                        "path": "icons/lib/index.d.ts"
+                    },
+                    {
+                        "path": "icons/lib/index.js"
+                    },
+                    {
+                        "path": "icons/package.json"
+                    },
+                    {
+                        "path": "icons/src/Bookmark.tsx"
+                    },
+                    {
+                        "path": "icons/src/Bookmark1.tsx"
+                    },
+                    {
+                        "path": "icons/src/Data.tsx"
+                    },
+                    {
+                        "path": "icons/src/Data1.tsx"
+                    },
+                    {
+                        "path": "icons/src/File.tsx"
+                    },
+                    {
+                        "path": "icons/src/File1.tsx"
+                    },
+                    {
+                        "path": "icons/src/FileContent.tsx"
+                    },
+                    {
+                        "path": "icons/src/FileContent1.tsx"
+                    },
+                    {
+                        "path": "icons/src/Files.tsx"
+                    },
+                    {
+                        "path": "icons/src/Files1.tsx"
+                    },
+                    {
+                        "path": "icons/src/Folder.tsx"
+                    },
+                    {
+                        "path": "icons/src/Folder1.tsx"
+                    },
+                    {
+                        "path": "icons/src/List.tsx"
+                    },
+                    {
+                        "path": "icons/src/List1.tsx"
+                    },
+                    {
+                        "path": "icons/src/index.tsx"
+                    },
+                    {
+                        "path": "storybook/package.json"
+                    },
+                    {
+                        "path": "yarn.lock"
+                    }
+                ],
+                "filesDeleted": [
+                    {
+                        "path": "package-lock.json"
+                    },
+                    {
+                        "path": "template/package.json"
+                    }
+                ],
+                "filesModified": [
+                    {
+                        "path": "package.json"
+                    }
+                ],
+                "filesRenamed": [
+                    {
+                        "oldPath": "svg-icons/Bookmark-1.svg",
+                        "newPath": "icons/svg/Bookmark-1.svg"
+                    },
+                    {
+                        "oldPath": "svg-icons/Bookmark.svg",
+                        "newPath": "icons/svg/Bookmark.svg"
+                    },
+                    {
+                        "oldPath": "svg-icons/Data-1.svg",
+                        "newPath": "icons/svg/Data-1.svg"
+                    },
+                    {
+                        "oldPath": "svg-icons/Data.svg",
+                        "newPath": "icons/svg/Data.svg"
+                    },
+                    {
+                        "oldPath": "svg-icons/List-1.svg",
+                        "newPath": "icons/svg/List-1.svg"
+                    },
+                    {
+                        "oldPath": "svg-icons/List.svg",
+                        "newPath": "icons/svg/List.svg"
+                    },
+                    {
+                        "oldPath": "svg-icons/file content-1.svg\ticons/svg/file",
+                        "newPath": "content-1.svg"
+                    },
+                    {
+                        "oldPath": "svg-icons/file content.svg\ticons/svg/file",
+                        "newPath": "content.svg"
+                    },
+                    {
+                        "oldPath": "svg-icons/file-1.svg",
+                        "newPath": "icons/svg/file-1.svg"
+                    },
+                    {
+                        "oldPath": "svg-icons/file.svg",
+                        "newPath": "icons/svg/file.svg"
+                    },
+                    {
+                        "oldPath": "svg-icons/files-1.svg",
+                        "newPath": "icons/svg/files-1.svg"
+                    },
+                    {
+                        "oldPath": "svg-icons/files.svg",
+                        "newPath": "icons/svg/files.svg"
+                    },
+                    {
+                        "oldPath": "svg-icons/folder-1.svg",
+                        "newPath": "icons/svg/folder-1.svg"
+                    },
+                    {
+                        "oldPath": "svg-icons/folder.svg",
+                        "newPath": "icons/svg/folder.svg"
+                    },
+                    {
+                        "oldPath": "template/reactTemplate.js",
+                        "newPath": "icons/template/reactTemplate.js"
+                    },
+                    {
+                        "oldPath": "tsconfig.json",
+                        "newPath": "icons/tsconfig.json"
+                    },
+                    {
+                        "oldPath": ".storybook/main.js",
+                        "newPath": "storybook/.storybook/main.js"
+                    },
+                    {
+                        "oldPath": ".storybook/preview.js",
+                        "newPath": "storybook/.storybook/preview.js"
+                    },
+                    {
+                        "oldPath": "craco.config.js",
+                        "newPath": "storybook/craco.config.js"
+                    },
+                    {
+                        "oldPath": "public/favicon.ico",
+                        "newPath": "storybook/public/favicon.ico"
+                    },
+                    {
+                        "oldPath": "public/index.html",
+                        "newPath": "storybook/public/index.html"
+                    },
+                    {
+                        "oldPath": "public/logo192.png",
+                        "newPath": "storybook/public/logo192.png"
+                    },
+                    {
+                        "oldPath": "public/logo512.png",
+                        "newPath": "storybook/public/logo512.png"
+                    },
+                    {
+                        "oldPath": "public/manifest.json",
+                        "newPath": "storybook/public/manifest.json"
+                    },
+                    {
+                        "oldPath": "public/robots.txt",
+                        "newPath": "storybook/public/robots.txt"
+                    },
+                    {
+                        "oldPath": "src/App.less",
+                        "newPath": "storybook/src/App.less"
+                    },
+                    {
+                        "oldPath": "src/App.tsx",
+                        "newPath": "storybook/src/App.tsx"
+                    },
+                    {
+                        "oldPath": "src/index.css",
+                        "newPath": "storybook/src/index.css"
+                    },
+                    {
+                        "oldPath": "src/index.js",
+                        "newPath": "storybook/src/index.js"
+                    },
+                    {
+                        "oldPath": "src/logo.svg",
+                        "newPath": "storybook/src/logo.svg"
+                    },
+                    {
+                        "oldPath": "src/react-app-env.d.ts",
+                        "newPath": "storybook/src/react-app-env.d.ts"
+                    },
+                    {
+                        "oldPath": "src/serviceWorker.js",
+                        "newPath": "storybook/src/serviceWorker.js"
+                    },
+                    {
+                        "oldPath": "src/setupTests.js",
+                        "newPath": "storybook/src/setupTests.js"
+                    },
+                    {
+                        "oldPath": "src/stories/Icons.css",
+                        "newPath": "storybook/src/stories/Icons.css"
+                    },
+                    {
+                        "oldPath": "src/stories/Icons.stories.tsx",
+                        "newPath": "storybook/src/stories/Icons.stories.tsx"
+                    }
+                ],
+                "packages": [
+                    {
+                        "name": "icons",
+                        "version": "0.1.0",
+                        "private": true,
+                        "npmClient": "yarn",
+                        "scripts": {
+                            "build-icons": "yarn workspace @nav-frontend/icons run build-pack",
+                            "storybook": "yarn run build-icons && yarn workspace storybook run run-storybook",
+                            "build-storybook": "yarn run build-icons && yarn workspace storybook run build-storybook"
+                        },
+                        "workspaces": [
+                            "./*"
+                        ],
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        }
+                    },
+                    {
+                        "name": "@nav-frontend/icons",
+                        "version": "0.1.5",
+                        "license": "MIT",
+                        "author": "NAV",
+                        "main": "lib/index.js",
+                        "files": [
+                            "/lib",
+                            "/src",
+                            "/svg"
+                        ],
+                        "scripts": {
+                            "create-icons": "svgr --template template/reactTemplate.js -d src svg --icon --typescript --ref --replace-attr-values '#3E3832=currentColor'",
+                            "create-pack": "tsc",
+                            "build-pack": "rm -rf src && rm -rf lib && npm run create-icons && npm run create-pack"
+                        },
+                        "private": false,
+                        "repository": {
+                            "type": "git",
+                            "url": "git+https://github.com/navikt/nav-frontend-icons.git"
+                        },
+                        "peerDependencies": {
+                            "react": "^16.13.1"
+                        },
+                        "devDependencies": {
+                            "react": "^16.13.1",
+                            "@svgr/cli": "^5.4.0",
+                            "typescript": "^4.0.2"
+                        }
+                    },
+                    {
+                        "name": "storybook",
+                        "version": "0.1.0",
+                        "private": true,
+                        "npmClient": "yarn",
+                        "scripts": {
+                            "run-storybook": "start-storybook -p 6006 -s public",
+                            "build-storybook": "yarn run build-storybook -s public"
+                        },
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        },
+                        "dependencies": {
+                            "@testing-library/jest-dom": "^4.2.4",
+                            "@testing-library/react": "^9.3.2",
+                            "@testing-library/user-event": "^7.1.2",
+                            "classnames": "^2.2.6",
+                            "peer": "^0.5.3",
+                            "prop-types": "^15.7.2",
+                            "react": "^16.13.1",
+                            "react-dom": "^16.13.1",
+                            "react-scripts": "3.4.3",
+                            "typescript": "^4.0.2"
+                        },
+                        "devDependencies": {
+                            "@babel/core": "^7.11.4",
+                            "@storybook/addon-actions": "^6.0.18",
+                            "@storybook/addon-essentials": "^6.0.18",
+                            "@storybook/addon-links": "^6.0.18",
+                            "@storybook/node-logger": "^6.0.18",
+                            "@storybook/preset-create-react-app": "^3.1.4",
+                            "@storybook/react": "^6.0.18",
+                            "babel-loader": "^8.1.0",
+                            "react-is": "^16.13.1",
+                            "@nav-frontend/icons": "./icons"
+                        }
+                    }
+                ]
+            },
+            {
+                "hash": "ffe1fe93d01d1e9e55fd9e7cc216ea6e9fe3cac8",
+                "authorName": "KenAJoh",
+                "authorEmail": "ken.aleksander.johansen@nav.no",
+                "date": "Thu, 27 Aug 2020 13:46:58 +0200",
+                "message": "La til types i package.json for pakken",
+                "filesAdded": [],
+                "filesDeleted": [],
+                "filesModified": [
+                    {
+                        "path": "icons/package.json"
+                    }
+                ],
+                "filesRenamed": [],
+                "packages": [
+                    {
+                        "name": "icons",
+                        "version": "0.1.0",
+                        "private": true,
+                        "npmClient": "yarn",
+                        "scripts": {
+                            "build-icons": "yarn workspace @nav-frontend/icons run build-pack",
+                            "storybook": "yarn run build-icons && yarn workspace storybook run run-storybook",
+                            "build-storybook": "yarn run build-icons && yarn workspace storybook run build-storybook"
+                        },
+                        "workspaces": [
+                            "./*"
+                        ],
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        }
+                    },
+                    {
+                        "name": "@nav-frontend/icons",
+                        "version": "0.1.5",
+                        "license": "MIT",
+                        "author": "NAV",
+                        "main": "lib/index.js",
+                        "types": "lib/index.d.ts",
+                        "files": [
+                            "/lib",
+                            "/src",
+                            "/svg"
+                        ],
+                        "scripts": {
+                            "create-icons": "svgr --template template/reactTemplate.js -d src svg --icon --typescript --ref --replace-attr-values '#3E3832=currentColor'",
+                            "create-pack": "tsc",
+                            "build-pack": "rm -rf src && rm -rf lib && npm run create-icons && npm run create-pack"
+                        },
+                        "private": false,
+                        "repository": {
+                            "type": "git",
+                            "url": "git+https://github.com/navikt/nav-frontend-icons.git"
+                        },
+                        "peerDependencies": {
+                            "react": "^16.13.1"
+                        },
+                        "devDependencies": {
+                            "react": "^16.13.1",
+                            "@svgr/cli": "^5.4.0",
+                            "typescript": "^4.0.2"
+                        }
+                    },
+                    {
+                        "name": "storybook",
+                        "version": "0.1.0",
+                        "private": true,
+                        "npmClient": "yarn",
+                        "scripts": {
+                            "run-storybook": "start-storybook -p 6006 -s public",
+                            "build-storybook": "yarn run build-storybook -s public"
+                        },
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        },
+                        "dependencies": {
+                            "@testing-library/jest-dom": "^4.2.4",
+                            "@testing-library/react": "^9.3.2",
+                            "@testing-library/user-event": "^7.1.2",
+                            "classnames": "^2.2.6",
+                            "peer": "^0.5.3",
+                            "prop-types": "^15.7.2",
+                            "react": "^16.13.1",
+                            "react-dom": "^16.13.1",
+                            "react-scripts": "3.4.3",
+                            "typescript": "^4.0.2"
+                        },
+                        "devDependencies": {
+                            "@babel/core": "^7.11.4",
+                            "@storybook/addon-actions": "^6.0.18",
+                            "@storybook/addon-essentials": "^6.0.18",
+                            "@storybook/addon-links": "^6.0.18",
+                            "@storybook/node-logger": "^6.0.18",
+                            "@storybook/preset-create-react-app": "^3.1.4",
+                            "@storybook/react": "^6.0.18",
+                            "babel-loader": "^8.1.0",
+                            "react-is": "^16.13.1",
+                            "@nav-frontend/icons": "./icons"
+                        }
+                    }
+                ]
+            },
+            {
+                "hash": "57bd3d9fd5a4497c353c8224270fe8e9dbbc258c",
+                "authorName": "KenAJoh",
+                "authorEmail": "ken.aleksander.johansen@nav.no",
+                "date": "Thu, 27 Aug 2020 15:39:05 +0200",
+                "message": "Reinstaller node_modules når storybook starter",
+                "filesAdded": [],
+                "filesDeleted": [],
+                "filesModified": [
+                    {
+                        "path": "package.json"
+                    }
+                ],
+                "filesRenamed": [],
+                "packages": [
+                    {
+                        "name": "icons",
+                        "version": "0.1.0",
+                        "private": true,
+                        "npmClient": "yarn",
+                        "scripts": {
+                            "build-icons": "yarn workspace @nav-frontend/icons run build-pack",
+                            "clean": "rm -rf node_modules && rm -rf icons/node_modules && rm -rf storybook/node_modules",
+                            "storybook": "yarn run clean && yarn install && yarn run build-icons && yarn workspace storybook run run-storybook",
+                            "build-storybook": "yarn run build-icons && yarn workspace storybook run build-storybook"
+                        },
+                        "workspaces": [
+                            "./*"
+                        ],
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        }
+                    },
+                    {
+                        "name": "@nav-frontend/icons",
+                        "version": "0.1.5",
+                        "license": "MIT",
+                        "author": "NAV",
+                        "main": "lib/index.js",
+                        "types": "lib/index.d.ts",
+                        "files": [
+                            "/lib",
+                            "/src",
+                            "/svg"
+                        ],
+                        "scripts": {
+                            "create-icons": "svgr --template template/reactTemplate.js -d src svg --icon --typescript --ref --replace-attr-values '#3E3832=currentColor'",
+                            "create-pack": "tsc",
+                            "build-pack": "rm -rf src && rm -rf lib && npm run create-icons && npm run create-pack"
+                        },
+                        "private": false,
+                        "repository": {
+                            "type": "git",
+                            "url": "git+https://github.com/navikt/nav-frontend-icons.git"
+                        },
+                        "peerDependencies": {
+                            "react": "^16.13.1"
+                        },
+                        "devDependencies": {
+                            "react": "^16.13.1",
+                            "@svgr/cli": "^5.4.0",
+                            "typescript": "^4.0.2"
+                        }
+                    },
+                    {
+                        "name": "storybook",
+                        "version": "0.1.0",
+                        "private": true,
+                        "npmClient": "yarn",
+                        "scripts": {
+                            "run-storybook": "start-storybook -p 6006 -s public",
+                            "build-storybook": "yarn run build-storybook -s public"
+                        },
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        },
+                        "dependencies": {
+                            "@testing-library/jest-dom": "^4.2.4",
+                            "@testing-library/react": "^9.3.2",
+                            "@testing-library/user-event": "^7.1.2",
+                            "classnames": "^2.2.6",
+                            "peer": "^0.5.3",
+                            "prop-types": "^15.7.2",
+                            "react": "^16.13.1",
+                            "react-dom": "^16.13.1",
+                            "react-scripts": "3.4.3",
+                            "typescript": "^4.0.2"
+                        },
+                        "devDependencies": {
+                            "@babel/core": "^7.11.4",
+                            "@storybook/addon-actions": "^6.0.18",
+                            "@storybook/addon-essentials": "^6.0.18",
+                            "@storybook/addon-links": "^6.0.18",
+                            "@storybook/node-logger": "^6.0.18",
+                            "@storybook/preset-create-react-app": "^3.1.4",
+                            "@storybook/react": "^6.0.18",
+                            "babel-loader": "^8.1.0",
+                            "react-is": "^16.13.1",
+                            "@nav-frontend/icons": "./icons"
+                        }
+                    }
+                ]
+            },
+            {
+                "hash": "0e29ff2399330806446b2e49d24af68724a4b105",
+                "authorName": "Ken",
+                "authorEmail": "26967723+KenAJoh@users.noreply.github.com",
+                "date": "Fri, 28 Aug 2020 15:14:00 +0200",
+                "message": "La til alle ikonene (#2)\n* Oppdatert scripts\n* La til alle ikonene\n* Fjernet chromatic token\n* La til Readme og License i pakken",
+                "filesAdded": [
+                    {
+                        "path": "icons/LICENSE"
+                    },
+                    {
+                        "path": "icons/README.md"
+                    },
+                    {
+                        "path": "icons/svg/Baggage.svg"
+                    },
+                    {
+                        "path": "icons/svg/Bowl.svg"
+                    },
+                    {
+                        "path": "icons/svg/Braille"
+                    },
+                    {
+                        "path": "icons/svg/Braille"
+                    },
+                    {
+                        "path": "icons/svg/Braille-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/Braille.svg"
+                    },
+                    {
+                        "path": "icons/svg/Cantine"
+                    },
+                    {
+                        "path": "icons/svg/Cantine"
+                    },
+                    {
+                        "path": "icons/svg/Combifridge"
+                    },
+                    {
+                        "path": "icons/svg/Combifridge"
+                    },
+                    {
+                        "path": "icons/svg/Combined"
+                    },
+                    {
+                        "path": "icons/svg/Dish.svg"
+                    },
+                    {
+                        "path": "icons/svg/Dishwasher.svg"
+                    },
+                    {
+                        "path": "icons/svg/Exclude.svg"
+                    },
+                    {
+                        "path": "icons/svg/Freezer.svg"
+                    },
+                    {
+                        "path": "icons/svg/Guide"
+                    },
+                    {
+                        "path": "icons/svg/Guide"
+                    },
+                    {
+                        "path": "icons/svg/Hanger-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/Hanger.svg"
+                    },
+                    {
+                        "path": "icons/svg/Mute"
+                    },
+                    {
+                        "path": "icons/svg/Mute"
+                    },
+                    {
+                        "path": "icons/svg/No"
+                    },
+                    {
+                        "path": "icons/svg/Parking.svg"
+                    },
+                    {
+                        "path": "icons/svg/Path.svg"
+                    },
+                    {
+                        "path": "icons/svg/Recycle1-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/Recycle1.svg"
+                    },
+                    {
+                        "path": "icons/svg/Recycle2-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/Recycle2.svg"
+                    },
+                    {
+                        "path": "icons/svg/Shape-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/Shape-2.svg"
+                    },
+                    {
+                        "path": "icons/svg/Shape-3.svg"
+                    },
+                    {
+                        "path": "icons/svg/Shape-4.svg"
+                    },
+                    {
+                        "path": "icons/svg/Shape.svg"
+                    },
+                    {
+                        "path": "icons/svg/Union.svg"
+                    },
+                    {
+                        "path": "icons/svg/Video-room.svg"
+                    },
+                    {
+                        "path": "icons/svg/Volume"
+                    },
+                    {
+                        "path": "icons/svg/Volume"
+                    },
+                    {
+                        "path": "icons/svg/Volume"
+                    },
+                    {
+                        "path": "icons/svg/Volume"
+                    },
+                    {
+                        "path": "icons/svg/Washing.svg"
+                    },
+                    {
+                        "path": "icons/svg/add-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/add.svg"
+                    },
+                    {
+                        "path": "icons/svg/baby-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/baby.svg"
+                    },
+                    {
+                        "path": "icons/svg/bag.svg"
+                    },
+                    {
+                        "path": "icons/svg/bandage"
+                    },
+                    {
+                        "path": "icons/svg/bandage-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/bandage.svg"
+                    },
+                    {
+                        "path": "icons/svg/bell.svg"
+                    },
+                    {
+                        "path": "icons/svg/bike.svg"
+                    },
+                    {
+                        "path": "icons/svg/boy-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/boy.svg"
+                    },
+                    {
+                        "path": "icons/svg/building"
+                    },
+                    {
+                        "path": "icons/svg/building"
+                    },
+                    {
+                        "path": "icons/svg/building"
+                    },
+                    {
+                        "path": "icons/svg/building"
+                    },
+                    {
+                        "path": "icons/svg/calculator.svg"
+                    },
+                    {
+                        "path": "icons/svg/calender.svg"
+                    },
+                    {
+                        "path": "icons/svg/camera-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/camera.svg"
+                    },
+                    {
+                        "path": "icons/svg/cancel-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/cancel.svg"
+                    },
+                    {
+                        "path": "icons/svg/car.svg"
+                    },
+                    {
+                        "path": "icons/svg/clock.svg"
+                    },
+                    {
+                        "path": "icons/svg/close-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/close.svg"
+                    },
+                    {
+                        "path": "icons/svg/coronavirus-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/coronavirus.svg"
+                    },
+                    {
+                        "path": "icons/svg/cup.svg"
+                    },
+                    {
+                        "path": "icons/svg/customer"
+                    },
+                    {
+                        "path": "icons/svg/customer"
+                    },
+                    {
+                        "path": "icons/svg/delete-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/delete.svg"
+                    },
+                    {
+                        "path": "icons/svg/dialog"
+                    },
+                    {
+                        "path": "icons/svg/dialog"
+                    },
+                    {
+                        "path": "icons/svg/dialog"
+                    },
+                    {
+                        "path": "icons/svg/dialog"
+                    },
+                    {
+                        "path": "icons/svg/dialog"
+                    },
+                    {
+                        "path": "icons/svg/dialog"
+                    },
+                    {
+                        "path": "icons/svg/dialog-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/dialog.svg"
+                    },
+                    {
+                        "path": "icons/svg/disability-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/disability.svg"
+                    },
+                    {
+                        "path": "icons/svg/down-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/down.svg"
+                    },
+                    {
+                        "path": "icons/svg/edit-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/edit.svg"
+                    },
+                    {
+                        "path": "icons/svg/email"
+                    },
+                    {
+                        "path": "icons/svg/email"
+                    },
+                    {
+                        "path": "icons/svg/email-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/email.svg"
+                    },
+                    {
+                        "path": "icons/svg/error.svg"
+                    },
+                    {
+                        "path": "icons/svg/external"
+                    },
+                    {
+                        "path": "icons/svg/external"
+                    },
+                    {
+                        "path": "icons/svg/eye"
+                    },
+                    {
+                        "path": "icons/svg/eye.svg"
+                    },
+                    {
+                        "path": "icons/svg/family-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/family.svg"
+                    },
+                    {
+                        "path": "icons/svg/feeding"
+                    },
+                    {
+                        "path": "icons/svg/feeding"
+                    },
+                    {
+                        "path": "icons/svg/female-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/female.svg"
+                    },
+                    {
+                        "path": "icons/svg/fill"
+                    },
+                    {
+                        "path": "icons/svg/fill"
+                    },
+                    {
+                        "path": "icons/svg/filter-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/filter.svg"
+                    },
+                    {
+                        "path": "icons/svg/fork--spoon--knife.svg"
+                    },
+                    {
+                        "path": "icons/svg/girl-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/girl.svg"
+                    },
+                    {
+                        "path": "icons/svg/glass.svg"
+                    },
+                    {
+                        "path": "icons/svg/globe.svg"
+                    },
+                    {
+                        "path": "icons/svg/hamburger.svg"
+                    },
+                    {
+                        "path": "icons/svg/hand"
+                    },
+                    {
+                        "path": "icons/svg/hand"
+                    },
+                    {
+                        "path": "icons/svg/hand"
+                    },
+                    {
+                        "path": "icons/svg/health"
+                    },
+                    {
+                        "path": "icons/svg/health"
+                    },
+                    {
+                        "path": "icons/svg/heart-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/heart.svg"
+                    },
+                    {
+                        "path": "icons/svg/helmet.svg"
+                    },
+                    {
+                        "path": "icons/svg/helptext.svg"
+                    },
+                    {
+                        "path": "icons/svg/home-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/home.svg"
+                    },
+                    {
+                        "path": "icons/svg/infants-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/infants.svg"
+                    },
+                    {
+                        "path": "icons/svg/information.svg"
+                    },
+                    {
+                        "path": "icons/svg/laptop.svg"
+                    },
+                    {
+                        "path": "icons/svg/law.svg"
+                    },
+                    {
+                        "path": "icons/svg/left-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/left.svg"
+                    },
+                    {
+                        "path": "icons/svg/light"
+                    },
+                    {
+                        "path": "icons/svg/like.svg"
+                    },
+                    {
+                        "path": "icons/svg/locked.svg"
+                    },
+                    {
+                        "path": "icons/svg/login-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/login.svg"
+                    },
+                    {
+                        "path": "icons/svg/logout-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/logout.svg"
+                    },
+                    {
+                        "path": "icons/svg/male-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/male.svg"
+                    },
+                    {
+                        "path": "icons/svg/man-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/man.svg"
+                    },
+                    {
+                        "path": "icons/svg/minus-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/minus.svg"
+                    },
+                    {
+                        "path": "icons/svg/mobile-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/mobile.svg"
+                    },
+                    {
+                        "path": "icons/svg/money-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/money.svg"
+                    },
+                    {
+                        "path": "icons/svg/monitor-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/monitor.svg"
+                    },
+                    {
+                        "path": "icons/svg/motorcycle.svg"
+                    },
+                    {
+                        "path": "icons/svg/neutral-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/neutral.svg"
+                    },
+                    {
+                        "path": "icons/svg/passport-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/passport.svg"
+                    },
+                    {
+                        "path": "icons/svg/pension"
+                    },
+                    {
+                        "path": "icons/svg/pension"
+                    },
+                    {
+                        "path": "icons/svg/pension"
+                    },
+                    {
+                        "path": "icons/svg/pension"
+                    },
+                    {
+                        "path": "icons/svg/pension.svg"
+                    },
+                    {
+                        "path": "icons/svg/picture-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/picture.svg"
+                    },
+                    {
+                        "path": "icons/svg/place.svg"
+                    },
+                    {
+                        "path": "icons/svg/plane-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/plane.svg"
+                    },
+                    {
+                        "path": "icons/svg/pregnant-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/pregnant.svg"
+                    },
+                    {
+                        "path": "icons/svg/print-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/print.svg"
+                    },
+                    {
+                        "path": "icons/svg/profile.svg"
+                    },
+                    {
+                        "path": "icons/svg/receipt-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/receipt.svg"
+                    },
+                    {
+                        "path": "icons/svg/refrigerator.svg"
+                    },
+                    {
+                        "path": "icons/svg/right-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/right.svg"
+                    },
+                    {
+                        "path": "icons/svg/sandglass.svg"
+                    },
+                    {
+                        "path": "icons/svg/save-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/save.svg"
+                    },
+                    {
+                        "path": "icons/svg/save2-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/save2.svg"
+                    },
+                    {
+                        "path": "icons/svg/saving-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/saving.svg"
+                    },
+                    {
+                        "path": "icons/svg/search-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/search.svg"
+                    },
+                    {
+                        "path": "icons/svg/selection-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/selection.svg"
+                    },
+                    {
+                        "path": "icons/svg/send-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/send.svg"
+                    },
+                    {
+                        "path": "icons/svg/settings.svg"
+                    },
+                    {
+                        "path": "icons/svg/shake"
+                    },
+                    {
+                        "path": "icons/svg/shake"
+                    },
+                    {
+                        "path": "icons/svg/shredding.svg"
+                    },
+                    {
+                        "path": "icons/svg/sign"
+                    },
+                    {
+                        "path": "icons/svg/sign"
+                    },
+                    {
+                        "path": "icons/svg/social"
+                    },
+                    {
+                        "path": "icons/svg/star-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/star.svg"
+                    },
+                    {
+                        "path": "icons/svg/stick-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/stick.svg"
+                    },
+                    {
+                        "path": "icons/svg/stroller-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/stroller.svg"
+                    },
+                    {
+                        "path": "icons/svg/success.svg"
+                    },
+                    {
+                        "path": "icons/svg/system.svg"
+                    },
+                    {
+                        "path": "icons/svg/telephone.svg"
+                    },
+                    {
+                        "path": "icons/svg/traning.svg"
+                    },
+                    {
+                        "path": "icons/svg/unlocked.svg"
+                    },
+                    {
+                        "path": "icons/svg/up-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/up.svg"
+                    },
+                    {
+                        "path": "icons/svg/upload-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/upload.svg"
+                    },
+                    {
+                        "path": "icons/svg/vacation-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/vacation.svg"
+                    },
+                    {
+                        "path": "icons/svg/warning.svg"
+                    },
+                    {
+                        "path": "icons/svg/woman-1.svg"
+                    },
+                    {
+                        "path": "icons/svg/woman.svg"
+                    }
+                ],
+                "filesDeleted": [],
+                "filesModified": [
+                    {
+                        "path": ".gitignore"
+                    },
+                    {
+                        "path": "package.json"
+                    },
+                    {
+                        "path": "storybook/package.json"
+                    },
+                    {
+                        "path": "storybook/src/stories/Icons.stories.tsx"
+                    }
+                ],
+                "filesRenamed": [],
+                "packages": [
+                    {
+                        "name": "icons",
+                        "version": "0.1.0",
+                        "private": true,
+                        "npmClient": "yarn",
+                        "scripts": {
+                            "build-icons": "yarn workspace @nav-frontend/icons run build-pack",
+                            "clean": "rm -rf node_modules && rm -rf icons/node_modules && rm -rf storybook/node_modules",
+                            "storybook": "yarn run build-icons && yarn run clean && yarn install && yarn workspace storybook run run-storybook",
+                            "build-storybook": "yarn run build-icons && yarn run clean && yarn install && yarn workspace storybook run build-storybook"
+                        },
+                        "workspaces": [
+                            "./*"
+                        ],
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        }
+                    },
+                    {
+                        "name": "@nav-frontend/icons",
+                        "version": "0.1.5",
+                        "license": "MIT",
+                        "author": "NAV",
+                        "main": "lib/index.js",
+                        "types": "lib/index.d.ts",
+                        "files": [
+                            "/lib",
+                            "/src",
+                            "/svg"
+                        ],
+                        "scripts": {
+                            "create-icons": "svgr --template template/reactTemplate.js -d src svg --icon --typescript --ref --replace-attr-values '#3E3832=currentColor'",
+                            "create-pack": "tsc",
+                            "build-pack": "rm -rf src && rm -rf lib && npm run create-icons && npm run create-pack"
+                        },
+                        "private": false,
+                        "repository": {
+                            "type": "git",
+                            "url": "git+https://github.com/navikt/nav-frontend-icons.git"
+                        },
+                        "peerDependencies": {
+                            "react": "^16.13.1"
+                        },
+                        "devDependencies": {
+                            "react": "^16.13.1",
+                            "@svgr/cli": "^5.4.0",
+                            "typescript": "^4.0.2"
+                        }
+                    },
+                    {
+                        "name": "storybook",
+                        "version": "0.1.0",
+                        "private": true,
+                        "npmClient": "yarn",
+                        "scripts": {
+                            "run-storybook": "start-storybook -p 6006 -s public",
+                            "build-storybook": "build-storybook -s public"
+                        },
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        },
+                        "dependencies": {
+                            "@testing-library/jest-dom": "^4.2.4",
+                            "@testing-library/react": "^9.3.2",
+                            "@testing-library/user-event": "^7.1.2",
+                            "classnames": "^2.2.6",
+                            "peer": "^0.5.3",
+                            "prop-types": "^15.7.2",
+                            "react": "^16.13.1",
+                            "react-dom": "^16.13.1",
+                            "react-scripts": "3.4.3",
+                            "typescript": "^4.0.2"
+                        },
+                        "devDependencies": {
+                            "@babel/core": "^7.11.4",
+                            "@storybook/addon-actions": "^6.0.18",
+                            "@storybook/addon-essentials": "^6.0.18",
+                            "@storybook/addon-links": "^6.0.18",
+                            "@storybook/node-logger": "^6.0.18",
+                            "@storybook/preset-create-react-app": "^3.1.4",
+                            "@storybook/react": "^6.0.18",
+                            "babel-loader": "^8.1.0",
+                            "react-is": "^16.13.1",
+                            "@nav-frontend/icons": "./icons"
+                        }
+                    }
+                ]
+            },
+            {
+                "hash": "a38823329682c3bb17c60c34e8d3e1e624fb3d3f",
+                "authorName": "Andreas Nordahl",
+                "authorEmail": "andnorda@gmail.com",
+                "date": "Tue, 1 Sep 2020 14:24:15 +0200",
+                "message": "Add GitHub publish workflow (#3)\n* Create node.js.yml\n* add placeholder npm test script\n* remove node versions stategy\n* add back matrix\n* update token refs\n* split tasks\n* package.json cleanup\n* fix workflow?\n* break build",
+                "filesAdded": [
+                    {
+                        "path": ".github/workflows/node.js.yml"
+                    }
+                ],
+                "filesDeleted": [],
+                "filesModified": [
+                    {
+                        "path": "icons/svg/Braille.svg"
+                    },
+                    {
+                        "path": "package.json"
+                    }
+                ],
+                "filesRenamed": [],
+                "packages": [
+                    {
+                        "name": "icons",
+                        "version": "0.1.0",
+                        "private": true,
+                        "npmClient": "yarn",
+                        "scripts": {
+                            "build": "yarn workspace @nav-frontend/icons run build-pack",
+                            "clean": "rm -rf node_modules && rm -rf icons/node_modules && rm -rf storybook/node_modules",
+                            "storybook": "yarn run build && yarn run clean && yarn install && yarn workspace storybook run run-storybook",
+                            "build-storybook": "yarn run build && yarn run clean && yarn install && yarn workspace storybook run build-storybook"
+                        },
+                        "workspaces": [
+                            "./*"
+                        ],
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        }
+                    },
+                    {
+                        "name": "@nav-frontend/icons",
+                        "version": "0.1.5",
+                        "license": "MIT",
+                        "author": "NAV",
+                        "main": "lib/index.js",
+                        "types": "lib/index.d.ts",
+                        "files": [
+                            "/lib",
+                            "/src",
+                            "/svg"
+                        ],
+                        "scripts": {
+                            "create-icons": "svgr --template template/reactTemplate.js -d src svg --icon --typescript --ref --replace-attr-values '#3E3832=currentColor'",
+                            "create-pack": "tsc",
+                            "build-pack": "rm -rf src && rm -rf lib && npm run create-icons && npm run create-pack"
+                        },
+                        "private": false,
+                        "repository": {
+                            "type": "git",
+                            "url": "git+https://github.com/navikt/nav-frontend-icons.git"
+                        },
+                        "peerDependencies": {
+                            "react": "^16.13.1"
+                        },
+                        "devDependencies": {
+                            "react": "^16.13.1",
+                            "@svgr/cli": "^5.4.0",
+                            "typescript": "^4.0.2"
+                        }
+                    },
+                    {
+                        "name": "storybook",
+                        "version": "0.1.0",
+                        "private": true,
+                        "npmClient": "yarn",
+                        "scripts": {
+                            "run-storybook": "start-storybook -p 6006 -s public",
+                            "build-storybook": "build-storybook -s public"
+                        },
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        },
+                        "dependencies": {
+                            "@testing-library/jest-dom": "^4.2.4",
+                            "@testing-library/react": "^9.3.2",
+                            "@testing-library/user-event": "^7.1.2",
+                            "classnames": "^2.2.6",
+                            "peer": "^0.5.3",
+                            "prop-types": "^15.7.2",
+                            "react": "^16.13.1",
+                            "react-dom": "^16.13.1",
+                            "react-scripts": "3.4.3",
+                            "typescript": "^4.0.2"
+                        },
+                        "devDependencies": {
+                            "@babel/core": "^7.11.4",
+                            "@storybook/addon-actions": "^6.0.18",
+                            "@storybook/addon-essentials": "^6.0.18",
+                            "@storybook/addon-links": "^6.0.18",
+                            "@storybook/node-logger": "^6.0.18",
+                            "@storybook/preset-create-react-app": "^3.1.4",
+                            "@storybook/react": "^6.0.18",
+                            "babel-loader": "^8.1.0",
+                            "react-is": "^16.13.1",
+                            "@nav-frontend/icons": "./icons"
+                        }
+                    }
+                ]
+            },
+            {
+                "hash": "a9425ae842dc49edad7691cbddf16bf51337bbd8",
+                "authorName": "Andreas Nordahl",
+                "authorEmail": "andnorda@gmail.com",
+                "date": "Tue, 1 Sep 2020 15:19:08 +0200",
+                "message": "set placeholder version",
+                "filesAdded": [],
+                "filesDeleted": [],
+                "filesModified": [
+                    {
+                        "path": "icons/package.json"
+                    },
+                    {
+                        "path": "package.json"
+                    }
+                ],
+                "filesRenamed": [],
+                "packages": [
+                    {
+                        "name": "icons",
+                        "version": "0.0.0-dev",
+                        "private": true,
+                        "npmClient": "yarn",
+                        "scripts": {
+                            "build": "yarn workspace @nav-frontend/icons run build-pack",
+                            "clean": "rm -rf node_modules && rm -rf icons/node_modules && rm -rf storybook/node_modules",
+                            "storybook": "yarn run build && yarn run clean && yarn install && yarn workspace storybook run run-storybook",
+                            "build-storybook": "yarn run build && yarn run clean && yarn install && yarn workspace storybook run build-storybook"
+                        },
+                        "workspaces": [
+                            "./*"
+                        ],
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        }
+                    },
+                    {
+                        "name": "@nav-frontend/icons",
+                        "version": "0.0.0-dev",
+                        "license": "MIT",
+                        "author": "NAV",
+                        "main": "lib/index.js",
+                        "types": "lib/index.d.ts",
+                        "files": [
+                            "/lib",
+                            "/src",
+                            "/svg"
+                        ],
+                        "scripts": {
+                            "create-icons": "svgr --template template/reactTemplate.js -d src svg --icon --typescript --ref --replace-attr-values '#3E3832=currentColor'",
+                            "create-pack": "tsc",
+                            "build-pack": "rm -rf src && rm -rf lib && npm run create-icons && npm run create-pack"
+                        },
+                        "private": false,
+                        "repository": {
+                            "type": "git",
+                            "url": "git+https://github.com/navikt/nav-frontend-icons.git"
+                        },
+                        "peerDependencies": {
+                            "react": "^16.13.1"
+                        },
+                        "devDependencies": {
+                            "react": "^16.13.1",
+                            "@svgr/cli": "^5.4.0",
+                            "typescript": "^4.0.2"
+                        }
+                    },
+                    {
+                        "name": "storybook",
+                        "version": "0.1.0",
+                        "private": true,
+                        "npmClient": "yarn",
+                        "scripts": {
+                            "run-storybook": "start-storybook -p 6006 -s public",
+                            "build-storybook": "build-storybook -s public"
+                        },
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        },
+                        "dependencies": {
+                            "@testing-library/jest-dom": "^4.2.4",
+                            "@testing-library/react": "^9.3.2",
+                            "@testing-library/user-event": "^7.1.2",
+                            "classnames": "^2.2.6",
+                            "peer": "^0.5.3",
+                            "prop-types": "^15.7.2",
+                            "react": "^16.13.1",
+                            "react-dom": "^16.13.1",
+                            "react-scripts": "3.4.3",
+                            "typescript": "^4.0.2"
+                        },
+                        "devDependencies": {
+                            "@babel/core": "^7.11.4",
+                            "@storybook/addon-actions": "^6.0.18",
+                            "@storybook/addon-essentials": "^6.0.18",
+                            "@storybook/addon-links": "^6.0.18",
+                            "@storybook/node-logger": "^6.0.18",
+                            "@storybook/preset-create-react-app": "^3.1.4",
+                            "@storybook/react": "^6.0.18",
+                            "babel-loader": "^8.1.0",
+                            "react-is": "^16.13.1",
+                            "@nav-frontend/icons": "./icons"
+                        }
+                    }
+                ]
+            },
+            {
+                "hash": "203d10de99fd170ef289e975d853f678f95f28b5",
+                "authorName": "Andreas Nordahl",
+                "authorEmail": "andnorda@gmail.com",
+                "date": "Tue, 1 Sep 2020 16:08:08 +0200",
+                "message": "fix braile color (#5)\n* fix braile color\n* change to local chromatic\n* add chromatic token to ci env and auto accept for master",
+                "filesAdded": [],
+                "filesDeleted": [],
+                "filesModified": [
+                    {
+                        "path": ".github/workflows/node.js.yml"
+                    },
+                    {
+                        "path": "icons/svg/Braille.svg"
+                    },
+                    {
+                        "path": "package.json"
+                    },
+                    {
+                        "path": "storybook/package.json"
+                    },
+                    {
+                        "path": "yarn.lock"
+                    }
+                ],
+                "filesRenamed": [],
+                "packages": [
+                    {
+                        "name": "nav-frontend-icons",
+                        "version": "0.0.0-dev",
+                        "private": true,
+                        "npmClient": "yarn",
+                        "scripts": {
+                            "build": "yarn workspace @nav-frontend/icons run build-pack",
+                            "clean": "rm -rf node_modules && rm -rf icons/node_modules && rm -rf storybook/node_modules",
+                            "storybook": "yarn run build && yarn run clean && yarn install && yarn workspace storybook run run-storybook",
+                            "build-storybook": "yarn run build && yarn run clean && yarn install && yarn workspace storybook run build-storybook",
+                            "chromatic": "yarn workspace storybook chromatic"
+                        },
+                        "workspaces": [
+                            "icons",
+                            "storybook"
+                        ],
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        }
+                    },
+                    {
+                        "name": "@nav-frontend/icons",
+                        "version": "0.0.0-dev",
+                        "license": "MIT",
+                        "author": "NAV",
+                        "main": "lib/index.js",
+                        "types": "lib/index.d.ts",
+                        "files": [
+                            "/lib",
+                            "/src",
+                            "/svg"
+                        ],
+                        "scripts": {
+                            "create-icons": "svgr --template template/reactTemplate.js -d src svg --icon --typescript --ref --replace-attr-values '#3E3832=currentColor'",
+                            "create-pack": "tsc",
+                            "build-pack": "rm -rf src && rm -rf lib && npm run create-icons && npm run create-pack"
+                        },
+                        "private": false,
+                        "repository": {
+                            "type": "git",
+                            "url": "git+https://github.com/navikt/nav-frontend-icons.git"
+                        },
+                        "peerDependencies": {
+                            "react": "^16.13.1"
+                        },
+                        "devDependencies": {
+                            "react": "^16.13.1",
+                            "@svgr/cli": "^5.4.0",
+                            "typescript": "^4.0.2"
+                        }
+                    },
+                    {
+                        "name": "storybook",
+                        "version": "0.0.0-dev",
+                        "private": true,
+                        "npmClient": "yarn",
+                        "scripts": {
+                            "run-storybook": "start-storybook -p 6006 -s public",
+                            "build-storybook": "build-storybook -s public",
+                            "chromatic": "chromatic --project-token $CHROMATIC_TOKEN --auto-accept-changes master"
+                        },
+                        "eslintConfig": {
+                            "extends": "react-app"
+                        },
+                        "dependencies": {
+                            "@testing-library/jest-dom": "^4.2.4",
+                            "@testing-library/react": "^9.3.2",
+                            "@testing-library/user-event": "^7.1.2",
+                            "classnames": "^2.2.6",
+                            "peer": "^0.5.3",
+                            "prop-types": "^15.7.2",
+                            "react": "^16.13.1",
+                            "react-dom": "^16.13.1",
+                            "react-scripts": "3.4.3",
+                            "typescript": "^4.0.2"
+                        },
+                        "devDependencies": {
+                            "@babel/core": "^7.11.4",
+                            "@nav-frontend/icons": "0.0.0-dev",
+                            "@storybook/addon-actions": "^6.0.18",
+                            "@storybook/addon-essentials": "^6.0.18",
+                            "@storybook/addon-links": "^6.0.18",
+                            "@storybook/node-logger": "^6.0.18",
+                            "@storybook/preset-create-react-app": "^3.1.4",
+                            "@storybook/react": "^6.0.18",
+                            "babel-loader": "^8.1.0",
+                            "chromatic": "^5.1.0",
+                            "react-is": "^16.13.1"
+                        }
+                    }
+                ]
+            }
+        ],
+        "branch": "master"
+    }
+]

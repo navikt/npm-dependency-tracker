@@ -6,6 +6,7 @@ import fetchRepos from '../github/fetch';
 import Git from '../types/githubApi';
 import Clone from '../github/clone';
 import Parse from '../fileHandler/parser';
+import { writeData } from '../fileHandler/writer';
 
 import * as util from '../util';
 import * as config from '../config';
@@ -106,6 +107,10 @@ namespace Repo {
             bar.increment();
         });
         multiBar.stop();
+    };
+
+    export const save = (repos: Repo[]) => {
+        writeData(repos);
     };
 }
 

@@ -29,8 +29,10 @@ const run = async () => {
     //     else return false;
     // });
 
-    // await Repo.clone(repos);
+    await Repo.clone(repos);
     await Repo.parseCommits(repos);
+    Repo.save(repos);
+
     let x = 0,
         y = 0;
 
