@@ -15,6 +15,7 @@ declare module CommitData {
         filesDeleted: FilePaths[];
         filesModified: FilePaths[];
         filesRenamed: FilePaths[];
+        diffs: any[];
     }
 }
 

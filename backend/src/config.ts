@@ -11,4 +11,12 @@ export const outputFile = 'outputData.json';
 export const blacklistDir = ['node_modules'];
 export const blacklistFiles = ['package-lock.json', 'yarn.lock'];
 
+export const blacklistRepos = [
+    'navikt/sosialhjelp-soknad-api',
+    'navikt/pesys',
+    'navikt/stelvio',
+    'navikt/spsak',
+    'navikt/modiapersonoversikt-api'
+];
+export const files = ['package.json'];
 export const repoDirName = 'tmp_repos';

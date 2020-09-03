@@ -71,7 +71,7 @@ namespace Repo {
 
     export const clone = async (repos: Repo[]) => {
         console.log('Starting cloning/updating process');
-        const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+        const bar = util.progressBar('Cloner');
         const limiter = pLimit(config.concurrent);
 
         let promisess: Promise<unknown>[] = repos.map((repo: Repo) => {
@@ -83,30 +83,28 @@ namespace Repo {
             );
         });
 
-        bar1.start(100, 0);
+        bar.start(100, 0);
         await util.trackProgress(promisess, (p: number) => {
-            bar1.update(+p.toFixed(1));
+            bar.update(+p.toFixed(1));
         });
-        bar1.stop();
-        console.log('Finished cloning/updating process');
     };
 
     export const parseCommits = async (repos: Repo[]) => {
-        console.log('Starting commit parsing');
-        const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-        const limiter = pLimit(config.concurrent);
-
+        const limiter = pLimit(10);
+        const multiBar = util.multiProgressBar();
+        const bar = multiBar.create(100, 0);
         let promisess: Promise<unknown>[] = repos.map((repo: Repo) => {
-            return limiter(() => Parse(repo).catch((url: string) => console.log(url)));
+            return limiter(
+                async () => await Parse(repo, multiBar).catch((url: string) => console.log(url))
+            );
         });
 
-        bar1.start(100, 0);
+        bar.update(0, { dir: 'Parser' });
         await util.trackProgress(promisess, (p: number) => {
-            bar1.update(+p.toFixed(1));
+            bar.update(+p.toFixed(1));
         });
-        bar1.stop();
-
-        console.log('Finished commit parsing');
+        multiBar.remove(bar);
+        multiBar.stop();
     };
 }
 
