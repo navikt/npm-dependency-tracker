@@ -7,6 +7,7 @@ const { gitToJs } = require('git-parse');
 const gitDiff = require('parse-diff');
 const { exec, execSync } = require('child_process');
 const gitDiff2 = require('gitdiff-parser');
+const glob = require('fast-glob');
 
 const filterCommits = (commits: CommitData.Root[]) => {
     return commits.filter((commit) => {
@@ -58,14 +59,27 @@ const getAllDiffs = async (commits: CommitData.Root[], dir: string) => {
     return commits;
 };
 
+const hasFile = async (dir: string) => {
+    let files = await glob(`${dir}/**/package.json`);
+    if (files.length === 0) return false;
+    else return true;
+};
+
 const parse = (repo: Repo, multiBar: any) => {
     const dir = util.generateOutputDir(repo.name);
     let bar = multiBar.create(10, 0);
-    bar.update(2, { dir: repo.name.replace('navikt/', '') });
+    bar.update(1, { dir: repo.name.replace('navikt/', '') });
+
     return new Promise(async (resolve, reject) => {
-        const commits = await gitToJs(dir)
+        const f = await hasFile(dir);
+        if (!f) {
+            multiBar.remove(bar);
+            resolve();
+        }
+        bar.update(2);
+        await gitToJs(dir)
             .then((commits: CommitData.Root[]) => {
-                bar.update(6);
+                bar.update(3);
                 // want the first commits to be at the start
                 repo.commits = commits.reverse();
                 return commits;
@@ -74,25 +88,15 @@ const parse = (repo: Repo, multiBar: any) => {
                 // Filters out commits that doesn't change a set of files
                 const fc = filterCommits(repo.commits);
                 repo.commits = fc;
+                return fc;
+            })
+            .then((commits: CommitData.Root[]) => {})
+            .then(() => {
                 multiBar.remove(bar);
                 resolve();
-                return fc;
             })
             .catch((e: Error) => {
                 reject(repo.name);
-            });
-
-        const diffs = await getAllDiffs(commits, dir)
-            .then((commits: CommitData.Root[]) => {
-                commits.forEach((com) => {
-                    com.diffs.forEach(() => {
-                        // console.count('Diff ');
-                    });
-                });
-                resolve();
-            })
-            .catch((e: Error) => {
-                reject();
             });
     });
 };

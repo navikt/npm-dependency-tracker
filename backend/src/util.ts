@@ -65,7 +65,7 @@ export const generateCloneUrl = (cloneUrl: string) => {
 };
 
 export const generateOutputDir = (name: string) => {
-    return `./${config.repoDirName}/${name}`;
+    return `${config.repoDirName}/${name}`;
 };
 
 export const stringsInText = (strings: string[], text: string, spesific?: boolean) => {
@@ -90,10 +90,11 @@ export const progressBar = (text: string) => {
     );
 };
 
-export const multiProgressBar = () => {
+export const multiProgressBar = (format?: string) => {
+    const f = format ? format : '{bar} {percentage}% | {duration}s | {dir}';
     return new cliProgress.MultiBar(
         {
-            format: '{bar} {percentage}% | {duration}s | {dir}',
+            format: f,
             clearOnComplete: true,
             hideCursor: true,
             forceRedraw: true,
@@ -108,7 +109,6 @@ export const multiProgressBar = () => {
 export const filterBlacklisted = (repos: Repo[]) => {
     return repos.filter((repo) => {
         if (stringsInText(config.blacklistRepos, repo.name, true)) {
-            console.log(repo.name);
             return false;
         } else return true;
     });

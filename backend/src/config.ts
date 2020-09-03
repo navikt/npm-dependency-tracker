@@ -5,7 +5,7 @@ export const userAgent = process.env['AGENT'];
 export const userName = process.env['NAME'];
 
 export const gitApi = 'https://api.github.com/';
-export const concurrent = 20;
+export const concurrent = 50;
 export const outputFile = 'outputData.json';
 // Directories we want to ignore looking into
 export const blacklistDir = ['node_modules'];
@@ -16,7 +16,8 @@ export const blacklistRepos = [
     'navikt/pesys',
     'navikt/stelvio',
     'navikt/spsak',
-    'navikt/modiapersonoversikt-api'
+    'navikt/modiapersonoversikt-api',
+    'navikt/EESSI-RINA-5.6.2-opensource'
 ];
 export const files = ['package.json'];
 export const repoDirName = 'tmp_repos';

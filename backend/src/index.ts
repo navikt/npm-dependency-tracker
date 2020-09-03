@@ -1,4 +1,5 @@
 require('dotenv').config();
+const log = require('why-is-node-running'); // should be your first require
 import * as util from './util';
 import * as config from './config';
 const clone = require('git-clone');
@@ -13,7 +14,6 @@ const exec = require('child_process').exec;
 const parse = require('parse-diff');
 
 const nodeCmd = require('node-cmd');
-const log = require('why-is-node-running'); // should be your first require
 
 import Repo from './types/repo';
 
@@ -31,12 +31,16 @@ const run = async () => {
 
     // await Repo.clone(repos);
     await Repo.parseCommits(repos);
-    let x = 0;
+    let x = 0,
+        y = 0;
 
     repos.forEach((repo) => {
         x += repo.commits.length;
+        if (repo.commits.length === 0) y++;
     });
     console.log('Commits: ' + x);
+    console.log('With package ' + (repos.length - y));
+    console.log('Without package ' + y);
     return 1;
 };
 
@@ -46,6 +50,8 @@ const execute = async () => {
         console.log('Runner failed!');
     }
     console.log('Should be completed');
+
+    // log();
 };
 
 util.checkEnv();

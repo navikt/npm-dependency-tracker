@@ -70,7 +70,6 @@ namespace Repo {
     };
 
     export const clone = async (repos: Repo[]) => {
-        console.log('Starting cloning/updating process');
         const bar = util.progressBar('Cloner');
         const limiter = pLimit(config.concurrent);
 
@@ -90,9 +89,9 @@ namespace Repo {
     };
 
     export const parseCommits = async (repos: Repo[]) => {
-        const limiter = pLimit(10);
-        const multiBar = util.multiProgressBar();
-        const bar = multiBar.create(100, 0);
+        const limiter = pLimit(config.concurrent);
+        const multiBar = util.multiProgressBar('{bar} {value}/{total} | {duration}s | {dir}');
+        const bar = multiBar.create(repos.length, 0);
         let promisess: Promise<unknown>[] = repos.map((repo: Repo) => {
             return limiter(
                 async () => await Parse(repo, multiBar).catch((url: string) => console.log(url))
@@ -101,9 +100,8 @@ namespace Repo {
 
         bar.update(0, { dir: 'Parser' });
         await util.trackProgress(promisess, (p: number) => {
-            bar.update(+p.toFixed(1));
+            bar.increment();
         });
-        multiBar.remove(bar);
         multiBar.stop();
     };
 }
