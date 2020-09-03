@@ -21,6 +21,7 @@ interface Repo {
     imports: Imports[];
     packages: Package[];
     commits: CommitData.Root[];
+    branch: string;
 }
 function Repo(
     name: string = '',
@@ -28,7 +29,8 @@ function Repo(
     cloneUrl: string = '',
     imports: Imports[] = [],
     packages: Package[] = [],
-    commits: CommitData.Root[] = []
+    commits: CommitData.Root[] = [],
+    branch: string = ''
 ): Repo {
     return {
         name: name,
@@ -36,7 +38,8 @@ function Repo(
         cloneUrl: cloneUrl,
         imports: imports,
         packages: packages,
-        commits: commits
+        commits: commits,
+        branch: branch
     };
 }
 

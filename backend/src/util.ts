@@ -2,6 +2,7 @@ import chalk from 'chalk';
 import Repo from './types/repo';
 const config = require('./config.js');
 const cliProgress = require('cli-progress');
+const branchName = require('current-git-branch');
 
 export const finished = chalk.cyan('\nFinished OK');
 export const tokenError = chalk.redBright(
@@ -112,4 +113,8 @@ export const filterBlacklisted = (repos: Repo[]) => {
             return false;
         } else return true;
     });
+};
+
+export const getBranchName = (dir: string) => {
+    return branchName({ altPath: dir });
 };

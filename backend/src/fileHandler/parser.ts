@@ -90,6 +90,13 @@ const parse = (repo: Repo, multiBar: any) => {
                 repo.commits = fc;
                 return fc;
             })
+            .then((commits: CommitData.Root[]) => {
+                let branch = util.getBranchName(dir);
+                if (!branch) {
+                    reject('Could not get branch name of: ' + dir);
+                }
+                repo.branch = branch;
+            })
             .then((commits: CommitData.Root[]) => {})
             .then(() => {
                 multiBar.remove(bar);
