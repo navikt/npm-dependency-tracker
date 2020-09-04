@@ -43,7 +43,7 @@ const commitParsing = async (dir: string, bar: any, multiBar: any, repo: Repo, r
         .then((commits: CommitData.Root[]) => {
             let filtered = util.filterCommits(commits).reverse();
             filtered = util.removeOldCommits(filtered, repo.lastCommit);
-            repo.commits = filtered;
+            repo.commits = repo.commits ? [...repo.commits, ...filtered] : filtered;
         })
         .catch(() => {
             multiBar.remove(bar);

@@ -5,10 +5,8 @@ import * as util from './util';
 import Repo from './types/repo';
 
 /**
- * Todo: read repos from outputRepos if avaliable
- * Todo: Only check commits for new commits
- * Todo: make sure branch is more accurate/stable
- * Todo: Refactor code placement/structure
+ * Todo: Make sure commits is in correct order before filtering out by last commit old->new
+ * Todo: Makre sure old packages is saved to when only parsing new commits, currently only writes the new, deleting the old
  */
 const run = async () => {
     let repos: Repo[] | undefined = await Repo.loadRepos();
