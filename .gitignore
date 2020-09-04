@@ -5,4 +5,5 @@ build
 .env
 tmp_repos
 output.json
+backend/output/**
 .vscode

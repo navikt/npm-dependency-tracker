@@ -1,8 +1,10 @@
 import chalk from 'chalk';
 import Repo from './types/repo';
+import CommitData from './types/commits';
+import { filter } from 'underscore';
 const config = require('./config.js');
 const cliProgress = require('cli-progress');
-const branchName = require('current-git-branch');
+const glob = require('fast-glob');
 
 export const finished = chalk.cyan('\nFinished OK');
 export const tokenError = chalk.redBright(
@@ -14,6 +16,9 @@ export const agentError = chalk.redBright(
 export const orgError = chalk.redBright(
     'ERROR: Please add a github org with the command `export ORG=ORG_NAME` or add a .env file with ORG=ORG_NAME before running.\n'
 );
+export const nameError = chalk.redBright(
+    'ERROR: Please add a name with the command `export NAME=NAME` or add a .env file with NAME=NAME before running.\n'
+);
 
 export const xrateError = (wait: string) => {
     return chalk.redBright(
@@ -21,16 +26,6 @@ export const xrateError = (wait: string) => {
             wait +
             '\nProgram can not be executed until then, so time for a coffee!'
     );
-};
-
-export const repoProgress = (index: string, batch: number, length: number) => {
-    return chalk.whiteBright(
-        'Processed ' + index + '% in batch ' + batch + ' of ' + Math.ceil(length / config.batchSize)
-    );
-};
-
-export const repoProgressComplete = (index: string, length: number) => {
-    return chalk.whiteBright('Progress ' + index + '%');
 };
 
 export const trackProgress = (proms: Promise<any>[], progress_cb: Function) => {
@@ -56,6 +51,10 @@ export const checkEnv = () => {
     }
     if (!config.org) {
         console.log(orgError);
+        process.exit(0);
+    }
+    if (!config.userName) {
+        console.log(nameError);
         process.exit(0);
     }
 };
@@ -115,6 +114,52 @@ export const filterBlacklisted = (repos: Repo[]) => {
     });
 };
 
-export const getBranchName = (dir: string) => {
-    return branchName({ altPath: dir });
+export const getPackagePaths = async (dir: string) => {
+    let files = await glob(`${dir}/**/package.json`);
+    return files;
+};
+
+export const hasPackages = async (dir: string) => {
+    let files = await glob(`${dir}/**/package.json`);
+    if (files.length === 0) return false;
+    else return true;
+};
+
+export const filterCommits = (commits: CommitData.Root[]) => {
+    return commits.filter((commit) => {
+        let fileChanges = [
+            ...commit.filesAdded,
+            ...commit.filesDeleted,
+            ...commit.filesModified,
+            ...commit.filesRenamed
+        ];
+        for (let x = 0; x < fileChanges.length; x++) {
+            let path = fileChanges[x].path ? fileChanges[x].path : fileChanges[x].newPath;
+            if (!path) return false;
+            if (path.indexOf('package.json') !== -1) return true;
+        }
+        return false;
+    });
+};
+
+/**
+ * Filters out old commits based on the last parsed commit
+ * Assumes that commits is sorted from [old -> new]
+ */
+export const removeOldCommits = (commits: CommitData.Root[], lastCommit: string) => {
+    let hashes: string[] = [];
+    let filtered = commits;
+    commits.forEach((commit) => {
+        hashes.push(commit.hash);
+    });
+
+    const i = hashes.findIndex((hash) => {
+        return hash === lastCommit;
+    });
+
+    if (i === -1) return commits;
+    else {
+        filtered.splice(0, i + 1);
+        return filtered;
+    }
 };

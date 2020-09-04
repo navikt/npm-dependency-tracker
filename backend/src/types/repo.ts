@@ -4,14 +4,13 @@ import GithubApi from './githubApi';
 import Load from '../fileHandler/loader';
 import fetchRepos from '../github/fetch';
 import Git from '../types/githubApi';
-import Clone from '../github/clone';
+import Clone from '../github/commands';
 import Parse from '../fileHandler/parser';
 import { writeData } from '../fileHandler/writer';
 
 import * as util from '../util';
 import * as config from '../config';
 
-const cliProgress = require('cli-progress');
 import pLimit from 'p-limit';
 import CommitData from './commits';
 
@@ -19,10 +18,10 @@ interface Repo {
     name: string;
     lastCommit: string;
     cloneUrl: string;
+    branch: string;
     imports: Imports[];
     packages: Package[];
     commits: CommitData.Root[];
-    branch: string;
 }
 function Repo(
     name: string = '',
@@ -37,31 +36,42 @@ function Repo(
         name: name,
         lastCommit: lastCommit,
         cloneUrl: cloneUrl,
+        branch: branch,
         imports: imports,
         packages: packages,
-        commits: commits,
-        branch: branch
+        commits: commits
     };
 }
 
 namespace Repo {
-    export const json = (repo: Partial<Repo>) => {
-        return JSON.stringify(repo, null, 4);
-    };
     export const contains = (repo: string, repos: Repo[]) => {
         return repos.filter((x: Repo) => x.name === repo).length;
     };
+
     export const generateNewRepos = (gitRepos: GithubApi.Root[], localRepos: Repo[]) => {
         const newRepos: Repo[] = [];
         gitRepos.forEach((orgRepo) => {
-            if (!Repo.contains(orgRepo.full_name, localRepos)) {
-                newRepos.push(Repo(orgRepo.full_name, '', orgRepo.clone_url, [], [], []));
+            if (
+                !Repo.contains(orgRepo.full_name, localRepos) &&
+                !config.blacklistRepos.includes(orgRepo.full_name)
+            ) {
+                newRepos.push(
+                    Repo(
+                        orgRepo.full_name,
+                        '',
+                        orgRepo.clone_url,
+                        [],
+                        [],
+                        [],
+                        orgRepo.default_branch
+                    )
+                );
             }
         });
         return [...localRepos, ...newRepos];
     };
-    export const getAllRepos = async () => {
-        const localRepos: Repo[] = await Load.ReposFromFile();
+    export const loadRepos = async () => {
+        const localRepos: Repo[] = await Load.reposFromFile();
         const repos = await fetchRepos()
             .then((repos: Git.Root[]) => {
                 return Repo.generateNewRepos(repos, localRepos);
@@ -92,7 +102,7 @@ namespace Repo {
         });
     };
 
-    export const parseCommits = async (repos: Repo[]) => {
+    export const parse = async (repos: Repo[]) => {
         const limiter = pLimit(config.concurrent);
         const multiBar = util.multiProgressBar('{bar} {value}/{total} | {duration}s | {dir}');
         const bar = multiBar.create(repos.length, 0);

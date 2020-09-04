@@ -2,21 +2,28 @@ const fs = require('fs');
 const config = require('../config');
 import Repo from '../types/repo';
 
-const util = require('util');
-const fsPromises = fs.promises;
-namespace Load {
+namespace LoadRepos {
     const fetchJson = () => {
         try {
-            const data = fs.readFileSync(`../../${config.outputFile}`, 'utf8');
+            const data = fs.readFileSync(`${config.outputRepos}`, 'utf8');
             return JSON.parse(data);
-        } catch(e) {
+        } catch (e) {
             return [];
         }
-    }
+    };
 
-    export const ReposFromFile = () => {
+    export const reposFromFile = () => {
         return fetchJson() as Repo[];
+    };
+
+    export const fetchPackage = (filename: string): object => {
+        let jsonData = {};
+        const contents = fs.readFileSync(filename, 'utf8');
+        try {
+            jsonData = JSON.parse(contents);
+        } catch (error) {}
+        return jsonData;
     };
 }
 
-export default Load;
+export default LoadRepos;
