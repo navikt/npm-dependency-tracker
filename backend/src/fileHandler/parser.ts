@@ -11,25 +11,30 @@ const { gitToJs } = require('git-parse');
 const fetchCommitPackages = async (repo: Repo, dir: string, bar: any) => {
     return new Promise(async (resolve, reject) => {
         // Reset branch
-        await checkOut(dir, repo.branch);
+        await checkOut(dir, repo.branch).catch(() => reject(repo.name));
 
-        for (const commit of repo.commits) {
+        const newCommits = util.removeOldCommits(repo.commits, repo.lastCommit);
+        // console.log('\nTO PARSE B ' + repo.commits.length);
+        // console.log('\nTO PARSE A ' + newCommits.length);
+        // console.log('\n\n');
+        bar.setTotal(newCommits.length);
+        for (const commit of newCommits) {
             let pack = [];
 
-            await checkOut(dir, commit.hash);
+            await checkOut(dir, commit.hash).catch(() => reject(repo.name));
             const files = await util.getPackagePaths(dir);
 
             for (const path of files) {
                 const pa = Load.fetchPackage(path);
                 pack.push(pa);
             }
-            commit.packages = commit.packages ? [...commit.packages, ...pack] : pack;
+            commit.packages = pack;
             repo.lastCommit = commit.hash;
             bar.increment();
         }
 
         // Resets branch
-        await checkOut(dir, repo.branch);
+        await checkOut(dir, repo.branch).catch(() => reject(repo.name));
 
         resolve();
     });
@@ -39,11 +44,16 @@ const fetchCommitPackages = async (repo: Repo, dir: string, bar: any) => {
  * Gets all the commits from a given repo and filters out unwanted commit instances
  */
 const commitParsing = async (dir: string, bar: any, multiBar: any, repo: Repo, reject: any) => {
-    await gitToJs(dir)
+    await gitToJs(dir, { sinceCommit: repo.lastCommit ? repo.lastCommit : undefined })
         .then((commits: CommitData.Root[]) => {
+            // console.log('\nRaw: ' + repo.commits.length);
             let filtered = util.filterCommits(commits).reverse();
+
             filtered = util.removeOldCommits(filtered, repo.lastCommit);
+            //console.log('\nFILTERED: ' + filtered.length);
+            //console.log('\nBEFORE: ' + repo.commits.length);
             repo.commits = repo.commits ? [...repo.commits, ...filtered] : filtered;
+            //console.log('\nAFTER: ' + repo.commits.length);
         })
         .catch(() => {
             multiBar.remove(bar);
@@ -74,7 +84,6 @@ const parse = (repo: Repo, multiBar: any) => {
             // Gets a [] of all commits
             await commitParsing(dir, bar, multiBar, repo, reject);
 
-            bar.setTotal(repo.commits.length);
             // Fetches each package.json instance in each commit that it was changed in
             await fetchCommitPackages(repo, dir, bar)
                 .then(() => {
@@ -82,7 +91,6 @@ const parse = (repo: Repo, multiBar: any) => {
                     resolve();
                 })
                 .catch((e: any) => {
-                    console.log(e);
                     multiBar.remove(bar);
                     reject(repo.name);
                 });

@@ -97,7 +97,7 @@ export const multiProgressBar = (format?: string) => {
             format: f,
             clearOnComplete: true,
             hideCursor: true,
-            forceRedraw: true,
+            forceRedraw: false,
             stream: process.stdout,
             barsize: 65,
             position: 'center'
@@ -148,18 +148,21 @@ export const filterCommits = (commits: CommitData.Root[]) => {
  */
 export const removeOldCommits = (commits: CommitData.Root[], lastCommit: string) => {
     let hashes: string[] = [];
-    let filtered = commits;
+
+    let filtered: CommitData.Root[] = [];
     commits.forEach((commit) => {
         hashes.push(commit.hash);
     });
 
-    const i = hashes.findIndex((hash) => {
+    let i = hashes.findIndex((hash) => {
         return hash === lastCommit;
     });
 
     if (i === -1) return commits;
     else {
-        filtered.splice(0, i + 1);
+        for (i = i + 1; i < commits.length; i++) {
+            filtered.push(commits[i]);
+        }
         return filtered;
     }
 };

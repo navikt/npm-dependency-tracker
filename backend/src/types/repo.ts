@@ -13,6 +13,7 @@ import * as config from '../config';
 
 import pLimit from 'p-limit';
 import CommitData from './commits';
+import { url } from 'inspector';
 
 interface Repo {
     name: string;
@@ -84,6 +85,7 @@ namespace Repo {
     };
 
     export const clone = async (repos: Repo[]) => {
+        let errors: string[] = [];
         const bar = util.progressBar('Cloner');
         const limiter = pLimit(config.concurrent);
 
@@ -92,7 +94,7 @@ namespace Repo {
                 Clone(
                     util.generateCloneUrl(repo.cloneUrl),
                     util.generateOutputDir(repo.name)
-                ).catch((url: string) => console.log(url))
+                ).catch((url: string) => errors.push(url))
             );
         });
 
@@ -100,15 +102,17 @@ namespace Repo {
         await util.trackProgress(promisess, (p: number) => {
             bar.update(+p.toFixed(1));
         });
+        return errors;
     };
 
     export const parse = async (repos: Repo[]) => {
+        let errors: string[] = [];
         const limiter = pLimit(config.concurrent);
         const multiBar = util.multiProgressBar('{bar} {value}/{total} | {duration}s | {dir}');
         const bar = multiBar.create(repos.length, 0);
         let promisess: Promise<unknown>[] = repos.map((repo: Repo) => {
             return limiter(
-                async () => await Parse(repo, multiBar).catch((url: string) => console.log(url))
+                async () => await Parse(repo, multiBar).catch((url: string) => errors.push(url))
             );
         });
 
@@ -117,6 +121,7 @@ namespace Repo {
             bar.increment();
         });
         multiBar.stop();
+        return errors;
     };
 
     export const save = (repos: Repo[]) => {

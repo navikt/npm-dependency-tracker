@@ -16,17 +16,32 @@ const run = async () => {
     repos = util.filterBlacklisted(repos);
     //    Lets just check the data for one repo for testings sake
     // repos = repos.filter((repo) => {
-    //     if (repo.name.indexOf('nav-frontend-icons') !== -1) return true;
+    //     if (repo.name === 'navikt/bidrag-dokument-ui') return true;
     //     else return false;
     // });
 
-    await Repo.clone(repos);
-    await Repo.parse(repos);
-    Repo.save(repos);
+    const update = await Repo.clone(repos);
+    const parsing = await Repo.parse(repos);
+
+    console.log('Cloning/updating errors');
+    update.forEach((url: string) => {
+        console.log(url);
+    });
+    console.log('Parser errors');
+    parsing.forEach((url: string) => {
+        console.log(url);
+    });
+    //    Repo.save(repos);
 
     return 1;
 };
 
+/**
+ * Todo: Better error handling when promise fails.
+ * ? Add repo to reject and run them after?
+ * ? Add reponame to reject and rum them again?
+ * ? Only when X repos fail?
+ */
 const execute = async () => {
     const apprunner = await run();
     if (apprunner === -1) {
