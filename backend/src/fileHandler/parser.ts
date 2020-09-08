@@ -8,16 +8,12 @@ const { gitToJs } = require('git-parse');
 /**
  * Checkout hash each commit then reads each package.json into commit.packages
  */
-const fetchCommitPackages = async (repo: Repo, dir: string, bar: any) => {
+const fetchCommitPackages = async (repo: Repo, dir: string) => {
     return new Promise(async (resolve, reject) => {
         // Reset branch
         await checkOut(dir, repo.branch).catch(() => reject(repo.name));
 
         const newCommits = util.removeOldCommits(repo.commits, repo.lastCommit);
-        // console.log('\nTO PARSE B ' + repo.commits.length);
-        // console.log('\nTO PARSE A ' + newCommits.length);
-        // console.log('\n\n');
-        bar.setTotal(newCommits.length);
         for (const commit of newCommits) {
             let pack = [];
 
@@ -30,7 +26,6 @@ const fetchCommitPackages = async (repo: Repo, dir: string, bar: any) => {
             }
             commit.packages = pack;
             repo.lastCommit = commit.hash;
-            bar.increment();
         }
 
         // Resets branch
@@ -43,7 +38,7 @@ const fetchCommitPackages = async (repo: Repo, dir: string, bar: any) => {
 /**
  * Gets all the commits from a given repo and filters out unwanted commit instances
  */
-const commitParsing = async (dir: string, bar: any, multiBar: any, repo: Repo, reject: any) => {
+const commitParsing = async (dir: string, repo: Repo, reject: any) => {
     await gitToJs(dir, { sinceCommit: repo.lastCommit ? repo.lastCommit : undefined })
         .then((commits: CommitData.Root[]) => {
             // console.log('\nRaw: ' + repo.commits.length);
@@ -56,7 +51,6 @@ const commitParsing = async (dir: string, bar: any, multiBar: any, repo: Repo, r
             //console.log('\nAFTER: ' + repo.commits.length);
         })
         .catch(() => {
-            multiBar.remove(bar);
             reject(repo.name);
         });
 };
@@ -66,32 +60,26 @@ const commitParsing = async (dir: string, bar: any, multiBar: any, repo: Repo, r
  * file for each of them when it was to be made/modified.
  *
  * @param repo A spesific repo[] obj
- * @param multiBar a cli-progress multibar instance
  */
-const parse = (repo: Repo, multiBar: any) => {
+const parse = (repo: Repo) => {
     const dir = util.generateOutputDir(repo.name);
-    let bar = multiBar.create(9999, 0);
-    bar.update(0, { dir: repo.name.replace('navikt/', '') });
 
     return new Promise(async (resolve, reject) => {
         const containsPackage = await util.hasPackages(dir);
 
         // Filters out each repo that doesn´t currently contain a package.json file
         if (!containsPackage) {
-            multiBar.remove(bar);
             resolve();
         } else {
             // Gets a [] of all commits
-            await commitParsing(dir, bar, multiBar, repo, reject);
+            await commitParsing(dir, repo, reject);
 
             // Fetches each package.json instance in each commit that it was changed in
-            await fetchCommitPackages(repo, dir, bar)
+            await fetchCommitPackages(repo, dir)
                 .then(() => {
-                    multiBar.remove(bar);
                     resolve();
                 })
                 .catch((e: any) => {
-                    multiBar.remove(bar);
                     reject(repo.name);
                 });
         }

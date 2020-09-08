@@ -86,7 +86,6 @@ namespace Repo {
 
     export const clone = async (repos: Repo[]) => {
         let errors: string[] = [];
-        const bar = util.progressBar('Cloner');
         const limiter = pLimit(config.concurrent);
 
         let promisess: Promise<unknown>[] = repos.map((repo: Repo) => {
@@ -98,29 +97,18 @@ namespace Repo {
             );
         });
 
-        bar.start(100, 0);
-        await util.trackProgress(promisess, (p: number) => {
-            bar.update(+p.toFixed(1));
-        });
+        await util.trackProgress(promisess, (p: number) => {});
         return errors;
     };
 
     export const parse = async (repos: Repo[]) => {
         let errors: string[] = [];
         const limiter = pLimit(config.concurrent);
-        const multiBar = util.multiProgressBar('{bar} {value}/{total} | {duration}s | {dir}');
-        const bar = multiBar.create(repos.length, 0);
         let promisess: Promise<unknown>[] = repos.map((repo: Repo) => {
-            return limiter(
-                async () => await Parse(repo, multiBar).catch((url: string) => errors.push(url))
-            );
+            return limiter(async () => await Parse(repo).catch((url: string) => errors.push(url)));
         });
 
-        bar.update(0, { dir: 'Parser' });
-        await util.trackProgress(promisess, (p: number) => {
-            bar.increment();
-        });
-        multiBar.stop();
+        await util.trackProgress(promisess, (p: number) => {});
         return errors;
     };
 
