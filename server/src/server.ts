@@ -1,9 +1,11 @@
 import express = require('express');
-// Create a new express app instance
 const app: express.Application = express();
+
+const PORT = 3001;
+
 app.get('/', function (req, res) {
     res.send('Hello World!');
 });
-app.listen(3001, function () {
-    console.log('App is listening on port 3001!');
+app.listen(PORT, function () {
+    console.log('Server is listening on port' + PORT);
 });
