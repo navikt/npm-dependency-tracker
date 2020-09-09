@@ -1,5 +1,4 @@
 import Imports from './imports';
-import Package from './packages';
 import GithubApi from './githubApi';
 import Load from '../fileHandler/loader';
 import fetchRepos from '../github/fetch';
@@ -21,7 +20,7 @@ interface Repo {
     cloneUrl: string;
     branch: string;
     imports: Imports[];
-    packages: Package[];
+    packages: any[];
     commits: CommitData.Root[];
 }
 function Repo(
@@ -29,7 +28,7 @@ function Repo(
     lastCommit: string = '',
     cloneUrl: string = '',
     imports: Imports[] = [],
-    packages: Package[] = [],
+    packages: any[] = [],
     commits: CommitData.Root[] = [],
     branch: string = ''
 ): Repo {
@@ -47,6 +46,16 @@ function Repo(
 namespace Repo {
     export const contains = (repo: string, repos: Repo[]) => {
         return repos.filter((x: Repo) => x.name === repo).length;
+    };
+    export const cleanCommits = (repos: Repo[]) => {
+        repos.forEach((repo) => {
+            repo.commits.forEach((commit) => {
+                commit.filesAdded = [];
+                commit.filesDeleted = [];
+                commit.filesRenamed = [];
+                commit.filesModified = [];
+            });
+        });
     };
 
     export const generateNewRepos = (gitRepos: GithubApi.Root[], localRepos: Repo[]) => {
@@ -112,8 +121,21 @@ namespace Repo {
         return errors;
     };
 
+    const cleanPackages = (repos: Repo[]) => {
+        repos.forEach((repo) => {
+            repo.commits.forEach((commit) => {
+                commit.packages = [];
+            });
+        });
+    };
+
     export const save = (repos: Repo[]) => {
-        writeData(repos);
+        writeData(repos, config.outputRepos);
+    };
+
+    export const saveCurrent = (repos: Repo[]) => {
+        cleanPackages(repos);
+        writeData(repos, config.outputPackages);
     };
 }
 

@@ -13,11 +13,14 @@ const run = async () => {
 
     const update = await Repo.clone(repos);
     const parsing = await Repo.parse(repos);
-    update.concat(parsing);
+    let errors = update.concat(parsing);
 
-    update.length > 0 ? console.log('Errors: ' + parsing) : null;
+    errors.length > 0 ? console.log('Errors: ' + errors) : null;
 
+    Repo.cleanCommits(repos);
     Repo.save(repos);
+
+    Repo.saveCurrent(repos);
 
     return 1;
 };

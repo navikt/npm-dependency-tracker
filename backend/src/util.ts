@@ -136,7 +136,14 @@ export const filterCommits = (commits: CommitData.Root[]) => {
         for (let x = 0; x < fileChanges.length; x++) {
             let path = fileChanges[x].path ? fileChanges[x].path : fileChanges[x].newPath;
             if (!path) return false;
-            if (path.indexOf('package.json') !== -1) return true;
+            if (path.indexOf('package.json') !== -1 && path.indexOf('node_modules') === -1)
+                return true;
+            // fix to allow 'nav-frontend-moduler' past
+            else if (
+                path.indexOf('package.json') !== -1 &&
+                path.indexOf('packages/node_modules') !== -1
+            )
+                return true;
         }
         return false;
     });

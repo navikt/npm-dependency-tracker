@@ -6,12 +6,14 @@ import Home from './pages/mainPage/MainPage';
 import * as serviceWorker from './serviceWorker';
 
 import { Provider } from 'react-redux';
-import store from './redux/store';
+import store from './redux/create';
 
 ReactDOM.render(
     <Provider store={store}>
         <React.StrictMode>
-            <div className="app"><Home /></div>
+            <div className="app">
+                <Home />
+            </div>
             {/* <App /> */}
         </React.StrictMode>
     </Provider>,

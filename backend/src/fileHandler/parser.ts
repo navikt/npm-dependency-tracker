@@ -19,8 +19,10 @@ const fetchCommitPackages = async (repo: Repo, dir: string) => {
 
             await checkOut(dir, commit.hash).catch(() => reject(repo.name));
             const files = await util.getPackagePaths(dir);
-
             for (const path of files) {
+                if (path.indexOf('node_modules') !== -1) {
+                    if (repo.name !== 'navikt/nav-frontend-moduler') continue;
+                }
                 const pa = Load.fetchPackage(path);
                 pack.push(pa);
             }
@@ -41,14 +43,10 @@ const fetchCommitPackages = async (repo: Repo, dir: string) => {
 const commitParsing = async (dir: string, repo: Repo, reject: any) => {
     await gitToJs(dir, { sinceCommit: repo.lastCommit ? repo.lastCommit : undefined })
         .then((commits: CommitData.Root[]) => {
-            // console.log('\nRaw: ' + repo.commits.length);
             let filtered = util.filterCommits(commits).reverse();
 
             filtered = util.removeOldCommits(filtered, repo.lastCommit);
-            //console.log('\nFILTERED: ' + filtered.length);
-            //console.log('\nBEFORE: ' + repo.commits.length);
             repo.commits = repo.commits ? [...repo.commits, ...filtered] : filtered;
-            //console.log('\nAFTER: ' + repo.commits.length);
         })
         .catch(() => {
             reject(repo.name);
@@ -76,7 +74,14 @@ const parse = (repo: Repo) => {
 
             // Fetches each package.json instance in each commit that it was changed in
             await fetchCommitPackages(repo, dir)
-                .then(() => {
+                .then(async () => {
+                    const files = await util.getPackagePaths(dir);
+                    let pack = [];
+                    for (const path of files) {
+                        const pa = Load.fetchPackage(path);
+                        pack.push(pa);
+                    }
+                    repo.packages = pack;
                     resolve();
                 })
                 .catch((e: any) => {
