@@ -8,3 +8,4 @@ output.json
 backend/output/**
 .vscode
 frontend/src/output
+output

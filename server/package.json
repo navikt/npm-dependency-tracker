@@ -1,0 +1,16 @@
+{
+    "name": "crawler-server",
+    "version": "0.1.0",
+    "description": "Server for Package-crawler",
+    "main": "server.ts",
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "ts": "tsc",
+        "start-server": "yarn run ts && node build/server.js"
+    },
+    "dependencies": {
+        "@types/express": "^4.17.8",
+        "express": "^4.17.1"
+    }
+}

@@ -3,16 +3,22 @@
     "version": "0.0.1",
     "npmClient": "yarn",
     "scripts": {
-        "cp-files": "cp -R backend/output frontend/src",
+        "cp-files": "cp -R backend/output frontend/public",
         "website": "yarn run cp-files && yarn workspace frontend run start",
         "website:build": "yarn workspace frontend run workspace-build",
-        "crawler": "yarn workspace package-crawler-backend run workspace-start"
+        "crawler": "yarn workspace package-crawler-backend run workspace-start",
+        "server": "yarn workspace crawler-server run start-server",
+        "dev": "concurrently \"yarn run server\" \"yarn run website\""
     },
     "author": "NAV",
     "license": "MIT",
     "private": true,
     "workspaces": [
         "frontend",
-        "backend"
-    ]
+        "backend",
+        "server"
+    ],
+    "devDependencies": {
+        "concurrently": "5.3.0"
+    }
 }

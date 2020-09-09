@@ -123,9 +123,7 @@ namespace Repo {
 
     const cleanPackages = (repos: Repo[]) => {
         repos.forEach((repo) => {
-            repo.commits.forEach((commit) => {
-                commit.packages = [];
-            });
+            repo.commits = [];
         });
     };
 
@@ -135,7 +133,11 @@ namespace Repo {
 
     export const saveCurrent = (repos: Repo[]) => {
         cleanPackages(repos);
-        writeData(repos, config.outputPackages);
+        let tmpRepos: Repo[] = [];
+        repos.forEach((repo) => {
+            if (repo.packages.length !== 0) tmpRepos.push(repo);
+        });
+        writeData(tmpRepos, config.outputPackages);
     };
 }
 

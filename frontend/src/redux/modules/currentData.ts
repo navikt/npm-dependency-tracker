@@ -20,7 +20,9 @@ export function initialLoad(): DataAction {
 
 function* fetchJson(action: DataAction) {
     try {
-        const user = yield call(() => fetch('outputPackages.json').then((res) => res.json()));
+        const user = yield call(() =>
+            fetch('output/outputPackages.json').then((res) => res.json())
+        );
         yield put({ type: Actions.SUCCESS_LOAD, data: user as Repo[] });
     } catch (e) {
         yield put({ type: Actions.ERROR_LOAD, error: e });
