@@ -1,8 +1,7 @@
 import Imports from './imports';
-import GithubApi from './githubApi';
+import { GithubApi } from '@nav-frontend/shared-types';
 import Load from '../fileHandler/loader';
 import fetchRepos from '../github/fetch';
-import Git from '../types/githubApi';
 import Clone from '../github/commands';
 import Parse from '../fileHandler/parser';
 import { writeData } from '../fileHandler/writer';
@@ -22,6 +21,7 @@ interface Repo {
     imports: Imports[];
     packages: any[];
     commits: CommitData.Root[];
+    rawFetch: GithubApi.Root | undefined;
 }
 function Repo(
     name: string = '',
@@ -30,7 +30,8 @@ function Repo(
     imports: Imports[] = [],
     packages: any[] = [],
     commits: CommitData.Root[] = [],
-    branch: string = ''
+    branch: string = '',
+    rawFetch: GithubApi.Root | undefined = undefined
 ): Repo {
     return {
         name: name,
@@ -39,7 +40,8 @@ function Repo(
         branch: branch,
         imports: imports,
         packages: packages,
-        commits: commits
+        commits: commits,
+        rawFetch: rawFetch
     };
 }
 
@@ -73,7 +75,8 @@ namespace Repo {
                         [],
                         [],
                         [],
-                        orgRepo.default_branch
+                        orgRepo.default_branch,
+                        orgRepo
                     )
                 );
             }
@@ -83,7 +86,7 @@ namespace Repo {
     export const loadRepos = async () => {
         const localRepos: Repo[] = await Load.reposFromFile();
         const repos = await fetchRepos()
-            .then((repos: Git.Root[]) => {
+            .then((repos: GithubApi.Root[]) => {
                 return Repo.generateNewRepos(repos, localRepos);
             })
             .catch((err) => {

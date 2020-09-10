@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.less';
-import Home from './pages/mainPage/MainPage';
+import Home from './pages/home/Home';
 // import App from './App.js';
 import * as serviceWorker from './serviceWorker';
 
@@ -14,7 +14,6 @@ ReactDOM.render(
             <div className="app">
                 <Home />
             </div>
-            {/* <App /> */}
         </React.StrictMode>
     </Provider>,
     document.getElementById('root')
