@@ -4,7 +4,7 @@ import { Repo } from '@nav-frontend/shared-types';
 import * as util from './util';
 
 import { loadRepos, clone, parse, cleanCommits, save, saveCurrent } from './repoHandler';
-//import { Repo } from '@nav-frontend/shared-types';
+
 const run = async () => {
     let repos: Repo[] | undefined = await loadRepos();
 
@@ -12,6 +12,10 @@ const run = async () => {
 
     repos = util.filterBlacklisted(repos);
 
+    repos = repos.filter((repo) => {
+        if (repo.name === 'navikt/nav-frontend-icons') return true;
+        return false;
+    });
     const update = await clone(repos);
     const parsing = await parse(repos);
     let errors = update.concat(parsing);

@@ -6,7 +6,7 @@
         "cp-files": "cp -R crawler/output server",
         "website": "yarn workspace frontend run start",
         "website:build": "yarn workspace frontend run workspace-build",
-        "crawler": "yarn workspace package-crawler-backend run workspace-start",
+        "crawler": "yarn workspace crawler-server run start-crawler",
         "server": "yarn workspace crawler-server run start-server",
         "setup-shared": "yarn workspace @nav-frontend/shared-types run transpile && yarn install",
         "dev": "yarn run setup-shared && yarn run cp-files && concurrently \"yarn run server\" \"yarn run website\""
@@ -16,7 +16,6 @@
     "private": true,
     "workspaces": [
         "frontend",
-        "crawler",
         "server",
         "shared"
     ],

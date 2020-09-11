@@ -5,7 +5,7 @@
         "lib": ["es2017"],
         "allowJs": true,
         "outDir": "./build",
-        "rootDir": "./src",
+        "rootDir": "../server",
         "strict": true,
         "noImplicitAny": true,
         "esModuleInterop": true,
@@ -17,6 +17,6 @@
         "isolatedModules": false,
         "jsx": "react"
     },
-    "include": ["./src"],
-    "exclude": ["./node_modules"]
+    "include": ["../server"],
+    "exclude": ["./node_modules", "../server/build", "./crawler/output", "./crawler/navikt-repos"]
 }

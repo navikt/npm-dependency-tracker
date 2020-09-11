@@ -30,11 +30,10 @@ export const writeData = (data: any, dir: string, fileName: string) => {
     let json: string;
     try {
         json = JSON.stringify(data, null, 4);
-        mkdirp(dir, function (err: Error) {
-            if (err) throw new Error('Cant create dir');
-            fs.writeFileSync(dir + fileName, json, 'utf8');
-        });
-    } catch {
+        mkdirp.sync(dir);
+        fs.writeFileSync(dir + '/' + fileName, json, 'utf8');
+    } catch (e) {
+        console.log(e);
         console.log('Could not write repos to disk');
     }
 };

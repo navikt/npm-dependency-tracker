@@ -9,7 +9,7 @@ export const concurrent = 50;
 export const outputReposName = 'outputRepos.json';
 export const outputDataName = 'outputData.json';
 export const outputPackagesName = 'outputPackages.json';
-export const outputDir = 'output';
+export const outputDir = 'crawler/output';
 // Directories we want to ignore looking into
 export const blacklistDir = ['node_modules'];
 export const blacklistFiles = ['package-lock.json', 'yarn.lock'];
@@ -23,4 +23,4 @@ export const blacklistRepos = [
     'navikt/EESSI-RINA-5.6.2-opensource'
 ];
 export const files = ['package.json'];
-export const repoDirName = 'tmp_repos';
+export const repoDirName = 'crawler/navikt-repos';
