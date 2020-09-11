@@ -7,6 +7,6 @@ declare type Repo = {
     branch: string;
     packages: any[];
     commits: CommitData.Root[];
-    rawFetch: GithubApi.Root | undefined;
+    rawFetch: GithubApi.Root;
 };
 export default Repo;

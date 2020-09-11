@@ -10,3 +10,6 @@ backend/output/**
 frontend/src/output
 output
 navikt-repos
+lib
+shared/lib/**
+shared/lib

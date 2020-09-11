@@ -2,6 +2,7 @@ import express = require('express');
 const app: express.Application = express();
 const packages = require('../crawler/output/outputPackages.json');
 const raw = require('../crawler/output/outputRepos.json');
+import { getRes } from './generateRes';
 const PORT = 3001;
 
 app.use(function (req, res, next) {
@@ -17,8 +18,8 @@ app.listen(PORT, function () {
 app.get('/', function (req, res) {
     res.send('Hello World!');
 });
-app.get('/get-current-packages', function (req, res) {
-    res.json(packages);
+app.get('/get-result', function (req, res) {
+    res.json(getRes(raw));
 });
 app.get('/get-repo-names', function (req, res) {
     let names: string[] = [];

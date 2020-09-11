@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
-import {} from '@nav-frontend/shared-types';
+import { RepoResult } from '@nav-frontend/shared-types';
 
 const url = process.env.REACT_APP_URL ? process.env.REACT_APP_URL : 'http://localhost:3001';
 
@@ -17,7 +17,7 @@ enum Actions {
 
 type DataAction =
     | { type: Actions.INITIAL_LOAD }
-    | { type: Actions.SUCCESS_LOAD; data: any[] }
+    | { type: Actions.SUCCESS_LOAD; data: RepoResult[] }
     | { type: Actions.SUCCESS_GET_NAMES; names: string[] }
     | { type: Actions.ERROR_LOAD; error: Error }
     | { type: Actions.GET_NAMES }
@@ -36,10 +36,8 @@ export function filter(): DataAction {
 
 function* fetchJson(action: DataAction) {
     try {
-        const user = yield call(() =>
-            fetch(url + '/get-current-packages').then((res) => res.json())
-        );
-        yield put({ type: Actions.SUCCESS_LOAD, data: user });
+        const user = yield call(() => fetch(url + '/get-result').then((res) => res.json()));
+        yield put({ type: Actions.SUCCESS_LOAD, data: user as RepoResult[] });
     } catch (e) {
         yield put({ type: Actions.ERROR_LOAD, error: e });
     }
