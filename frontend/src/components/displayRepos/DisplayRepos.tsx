@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import classnames from 'classnames';
 import './DisplayRepos.less';
@@ -9,7 +9,7 @@ import { Søkeknapp } from 'nav-frontend-ikonknapper';
 import { RootState } from '../../redux/create';
 
 import { Data } from '@nav-frontend/icons';
-import { Input } from 'nav-frontend-skjema';
+import { Input, Select } from 'nav-frontend-skjema';
 import { RepoResult } from '@nav-frontend/shared-types';
 import { filterNames } from '../../redux/modules/currentData';
 const clsGrid = (n: number) => {
@@ -18,6 +18,9 @@ const clsGrid = (n: number) => {
 export const DisplayRepos = () => {
     const dispatch = useDispatch();
     const data = useSelector((state: RootState) => state.dataReducer.data as RepoResult[]);
+
+    const [nameFilter, setNameFilter] = useState({ name: '', sortby: '' });
+
     return (
         <Fragment>
             <span className={classnames('repos__headline', clsGrid(12))}>
@@ -26,10 +29,18 @@ export const DisplayRepos = () => {
             </span>
             <span className={classnames('repos__input', clsGrid(7))}>
                 <Input
-                    onChange={(e) => dispatch(filterNames(e.target.value))}
+                    onChange={(e) => setNameFilter((prev) => ({ ...prev, name: e.target.value }))}
                     placeholder="Søk på filtrerte repo-navn"
                     className="repos__sokInput"
                 />
+                <Select bredde="s" className="">
+                    <option value="" disabled selected>
+                        Sorter etter..
+                    </option>
+                    <option value="abc">alfabet</option>
+                    <option value="bcd">antall packages</option>
+                    <option value="cdf">watchers</option>
+                </Select>
                 {/* <Søkeknapp
                     className="repos__sokButton"
                     onClick={() => dispatch(filterNames('nav-frontend'))}

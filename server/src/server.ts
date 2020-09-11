@@ -41,3 +41,11 @@ app.post('/filter-name', function (req, res) {
         res.json([]);
     }
 });
+app.post('/sort-by', function (req, res) {
+    try {
+        let filter = req.body.filter;
+        res.json(getFilteredNameRes(raw, filter));
+    } catch {
+        res.json([]);
+    }
+});

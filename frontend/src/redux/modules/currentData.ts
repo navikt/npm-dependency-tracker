@@ -12,15 +12,17 @@ enum Actions {
     'FILTER_NAMES' = 'FILTER_NAMES',
     'SUCCESS_GET_NAMES' = 'SUCCESS_GET_NAMES',
     'FILTER' = 'FILTER',
-    'SUCCESS_FILTER' = 'SUCCESS_FILTER'
+    'SUCCESS_FILTER' = 'SUCCESS_FILTER',
+    'SORT_BY' = 'SORT_BY'
 }
 
 type DataAction =
-    | { type: Actions.FILTER_NAMES; filter: string }
     | { type: Actions.INITIAL_LOAD }
     | { type: Actions.SUCCESS_LOAD; data: RepoResult[] }
     | { type: Actions.SUCCESS_GET_NAMES; names: string[] }
     | { type: Actions.ERROR_LOAD; error: Error }
+    | { type: Actions.FILTER_NAMES; filter: string }
+    | { type: Actions.SORT_BY; sort: string }
     | { type: Actions.FILTER }
     | { type: Actions.SUCCESS_FILTER };
 
@@ -30,6 +32,18 @@ export function initialLoad(): DataAction {
 export function filterNames(s: string): DataAction {
     return { type: Actions.FILTER_NAMES, filter: s };
 }
+export function sortBy(s: string): DataAction {
+    return { type: Actions.SORT_BY, sort: s };
+}
+
+const postJson = (url: string, data: string) =>
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: data
+    }).then((res) => res.json());
 
 function* fetchJson(action: DataAction) {
     try {
@@ -42,15 +56,16 @@ function* fetchJson(action: DataAction) {
 function* filterName(action: DataAction) {
     const { type, ...rest } = action;
     try {
-        const res = yield call(() =>
-            fetch(url + '/filter-name', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(rest)
-            }).then((res) => res.json())
-        );
+        const res = yield call(() => postJson(url + '/filter-name', JSON.stringify(rest)));
+        yield put({ type: Actions.SUCCESS_LOAD, data: res });
+    } catch (e) {
+        yield put({ type: Actions.ERROR_LOAD, error: e });
+    }
+}
+function* sortNamesBy(action: DataAction) {
+    const { type, ...rest } = action;
+    try {
+        const res = yield call(() => postJson(url + '/sort-by', JSON.stringify(rest)));
         yield put({ type: Actions.SUCCESS_LOAD, data: res });
     } catch (e) {
         yield put({ type: Actions.ERROR_LOAD, error: e });
@@ -59,7 +74,8 @@ function* filterName(action: DataAction) {
 
 export const dataSaga = [
     takeLatest(Actions.INITIAL_LOAD, fetchJson),
-    takeLatest(Actions.FILTER_NAMES, filterName)
+    takeLatest(Actions.FILTER_NAMES, filterName),
+    takeLatest(Actions.SORT_BY, sortNamesBy)
 ];
 
 const data = createReducer([], {
