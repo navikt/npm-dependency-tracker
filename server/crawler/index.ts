@@ -12,10 +12,10 @@ const run = async () => {
 
     repos = util.filterBlacklisted(repos);
 
-    repos = repos.filter((repo) => {
-        if (repo.name === 'navikt/nav-frontend-icons') return true;
-        return false;
-    });
+    // repos = repos.filter((repo) => {
+    //     if (repo.name === 'navikt/nav-frontend-icons') return true;
+    //     return false;
+    // });
     const update = await clone(repos);
     const parsing = await parse(repos);
     let errors = update.concat(parsing);
