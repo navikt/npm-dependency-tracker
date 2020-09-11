@@ -1,11 +1,9 @@
 import React, { Fragment } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import classnames from 'classnames';
 import Panel from 'nav-frontend-paneler';
 import './Stats.less';
 import { Undertittel, Systemtittel } from 'nav-frontend-typografi';
-
-import filterlogo from '../../assets/filter.svg';
 
 import { Data } from '@nav-frontend/icons';
 import { RootState } from '../../redux/create';
@@ -17,8 +15,6 @@ const clsCell = () => {
 };
 
 export const Stats = () => {
-    const dispatch = useDispatch();
-
     const names = useSelector((state: RootState) => state.dataReducer.names);
 
     return (

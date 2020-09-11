@@ -37,7 +37,7 @@ export const getRes = (data: Repo[]): RepoResult[] => {
     data.forEach((repo) => {
         res.push(
             makeRepoResult(
-                repo.name,
+                repo.name.replace('navikt/', ''),
                 repo.rawFetch.html_url,
                 repo.rawFetch.language,
                 repo.packages.length,
@@ -53,5 +53,17 @@ export const getRes = (data: Repo[]): RepoResult[] => {
             )
         );
     });
+    res.sort((a, b) => a.name.localeCompare(b.name));
     return res;
+};
+
+export const getFilteredNameRes = (data: Repo[], str: string) => {
+    let d = getRes(data);
+    d = d.filter((repo) => {
+        if (repo.name.indexOf(str) !== -1) {
+            return true;
+        }
+        return false;
+    });
+    return d;
 };

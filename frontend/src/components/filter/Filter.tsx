@@ -1,10 +1,9 @@
-import React, { Fragment } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+// import { useDispatch } from 'react-redux';
 import classnames from 'classnames';
 import { Input, Select } from 'nav-frontend-skjema';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
-import { Drawer } from 'antd';
 
 import filterlogo from '../../assets/filter.svg';
 import './Filter.less';
@@ -14,8 +13,6 @@ const clsGrid = (n: number) => {
 };
 
 export const Filter = <FilterProps, FilterState>(props: FilterProps, state: FilterState) => {
-    const dispatch = useDispatch();
-
     return (
         <div className={classnames('mdc-layout-grid__inner', 'filter')}>
             <div className={classnames('filter__headline', clsGrid(12))}>

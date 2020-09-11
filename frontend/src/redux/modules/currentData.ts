@@ -9,29 +9,26 @@ enum Actions {
     'INITIAL_LOAD' = 'INITIAL_LOAD',
     'SUCCESS_LOAD' = 'SUCCESS_LOAD',
     'ERROR_LOAD' = 'ERROR_LOAD',
-    'GET_NAMES' = 'GET_NAMES',
+    'FILTER_NAMES' = 'FILTER_NAMES',
     'SUCCESS_GET_NAMES' = 'SUCCESS_GET_NAMES',
     'FILTER' = 'FILTER',
     'SUCCESS_FILTER' = 'SUCCESS_FILTER'
 }
 
 type DataAction =
+    | { type: Actions.FILTER_NAMES; filter: string }
     | { type: Actions.INITIAL_LOAD }
     | { type: Actions.SUCCESS_LOAD; data: RepoResult[] }
     | { type: Actions.SUCCESS_GET_NAMES; names: string[] }
     | { type: Actions.ERROR_LOAD; error: Error }
-    | { type: Actions.GET_NAMES }
     | { type: Actions.FILTER }
     | { type: Actions.SUCCESS_FILTER };
 
 export function initialLoad(): DataAction {
     return { type: Actions.INITIAL_LOAD };
 }
-export function getNames(): DataAction {
-    return { type: Actions.GET_NAMES };
-}
-export function filter(): DataAction {
-    return { type: Actions.GET_NAMES };
+export function filterNames(s: string): DataAction {
+    return { type: Actions.FILTER_NAMES, filter: s };
 }
 
 function* fetchJson(action: DataAction) {
@@ -42,10 +39,19 @@ function* fetchJson(action: DataAction) {
         yield put({ type: Actions.ERROR_LOAD, error: e });
     }
 }
-function* fetchNames(action: DataAction) {
+function* filterName(action: DataAction) {
+    const { type, ...rest } = action;
     try {
-        const names = yield call(() => fetch(url + '/get-repo-names').then((res) => res.json()));
-        yield put({ type: Actions.SUCCESS_GET_NAMES, names: names });
+        const res = yield call(() =>
+            fetch(url + '/filter-name', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(rest)
+            }).then((res) => res.json())
+        );
+        yield put({ type: Actions.SUCCESS_LOAD, data: res });
     } catch (e) {
         yield put({ type: Actions.ERROR_LOAD, error: e });
     }
@@ -53,7 +59,7 @@ function* fetchNames(action: DataAction) {
 
 export const dataSaga = [
     takeLatest(Actions.INITIAL_LOAD, fetchJson),
-    takeLatest(Actions.GET_NAMES, fetchNames)
+    takeLatest(Actions.FILTER_NAMES, filterName)
 ];
 
 const data = createReducer([], {

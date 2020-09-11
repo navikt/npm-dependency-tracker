@@ -1,8 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import classnames from 'classnames';
-import { useDispatch, useSelector } from 'react-redux';
-import { initialLoad, getNames } from '../../redux/modules/currentData';
-import { RootState } from '../../redux/create';
+import { useDispatch } from 'react-redux';
+import { initialLoad } from '../../redux/modules/currentData';
 
 import Header from '../../components/header/Header';
 import Filter from '../../components/filter/Filter';
@@ -19,7 +18,6 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(initialLoad());
-        dispatch(getNames());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch]);
 
