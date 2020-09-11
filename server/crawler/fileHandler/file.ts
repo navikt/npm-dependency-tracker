@@ -5,10 +5,12 @@ const config = require('../config');
 import { Repo } from '@nav-frontend/shared-types';
 
 const fetchJson = () => {
+    const url = `${process.cwd()}/${config.outputDir}/${config.outputReposName}`;
     try {
-        const data = fs.readFileSync(`${config.outputRepos}`, 'utf8');
+        const data = fs.readFileSync(url, 'utf8');
         return JSON.parse(data);
     } catch (e) {
+        console.log('Did not find a previous collection of repos in: ' + url);
         return [];
     }
 };

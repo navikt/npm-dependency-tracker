@@ -1,7 +1,7 @@
 import express = require('express');
 const app: express.Application = express();
-const packages = require('../output/outputPackages.json');
-const raw = require('../output/outputRepos.json');
+const packages = require('../crawler/output/outputPackages.json');
+const raw = require('../crawler/output/outputRepos.json');
 const PORT = 3001;
 
 app.use(function (req, res, next) {
