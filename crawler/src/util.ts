@@ -1,7 +1,5 @@
 import chalk from 'chalk';
-import Repo from './types/repo';
-import CommitData from './types/commits';
-import { filter } from 'underscore';
+import { Repo, CommitData } from '@nav-frontend/shared-types';
 const config = require('./config.js');
 const cliProgress = require('cli-progress');
 const glob = require('fast-glob');

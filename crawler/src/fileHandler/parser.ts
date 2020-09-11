@@ -1,8 +1,7 @@
-import Repo from '../types/repo';
+import { Repo, CommitData } from '@nav-frontend/shared-types';
 import * as util from '../util';
 import { checkOut } from '../github/commands';
-import CommitData from '../types/commits';
-import Load from './loader';
+import { fetchPackage } from './file';
 const { gitToJs } = require('git-parse');
 
 /**
@@ -23,7 +22,7 @@ const fetchCommitPackages = async (repo: Repo, dir: string) => {
                 if (path.indexOf('node_modules') !== -1) {
                     if (repo.name !== 'navikt/nav-frontend-moduler') continue;
                 }
-                const pa = Load.fetchPackage(path);
+                const pa = fetchPackage(path);
                 pack.push(pa);
             }
             commit.packages = pack;
@@ -78,7 +77,7 @@ const parse = (repo: Repo) => {
                     const files = await util.getPackagePaths(dir);
                     let pack = [];
                     for (const path of files) {
-                        const pa = Load.fetchPackage(path);
+                        const pa = fetchPackage(path);
                         pack.push(pa);
                     }
                     repo.packages = pack;

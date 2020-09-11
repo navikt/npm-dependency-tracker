@@ -1,6 +1,6 @@
 import CommitData from './commits';
 import GithubApi from './githubApi';
-type Repo = {
+declare type Repo = {
     name: string;
     lastCommit: string;
     cloneUrl: string;
@@ -9,5 +9,4 @@ type Repo = {
     commits: CommitData.Root[];
     rawFetch: GithubApi.Root | undefined;
 };
-
 export default Repo;

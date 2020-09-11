@@ -1,26 +1,27 @@
 require('dotenv').config();
 const log = require('why-is-node-running'); // should be your first require
+import { Repo } from '@nav-frontend/shared-types';
 import * as util from './util';
 
-import Repo from './types/repo';
-
+import { loadRepos, clone, parse, cleanCommits, save, saveCurrent } from './repoHandler';
+//import { Repo } from '@nav-frontend/shared-types';
 const run = async () => {
-    let repos: Repo[] | undefined = await Repo.loadRepos();
+    let repos: Repo[] | undefined = await loadRepos();
 
     if (repos === undefined) return -1;
 
     repos = util.filterBlacklisted(repos);
 
-    const update = await Repo.clone(repos);
-    const parsing = await Repo.parse(repos);
+    const update = await clone(repos);
+    const parsing = await parse(repos);
     let errors = update.concat(parsing);
 
     errors.length > 0 ? console.log('Errors: ' + errors) : null;
 
-    Repo.cleanCommits(repos);
-    Repo.save(repos);
+    cleanCommits(repos);
+    save(repos);
 
-    Repo.saveCurrent(repos);
+    saveCurrent(repos);
 
     return 1;
 };
