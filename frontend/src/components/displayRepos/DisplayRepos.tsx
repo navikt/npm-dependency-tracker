@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import classnames from 'classnames';
 import './DisplayRepos.less';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Ingress, Undertittel } from 'nav-frontend-typografi';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 // import { Søkeknapp } from 'nav-frontend-ikonknapper';
 import EtikettBase from 'nav-frontend-etiketter';
@@ -12,7 +12,8 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { RootState } from '../../redux/create';
 
 import { Data, Star, FileContent } from '@nav-frontend/icons';
-import { Input, Select } from 'nav-frontend-skjema';
+import { Input, Select, Checkbox } from 'nav-frontend-skjema';
+import Lenke from 'nav-frontend-lenker';
 import { NameFilter, RepoResult } from '@nav-frontend/shared-types';
 import { filterNames } from '../../redux/modules/currentData';
 // import Panel from 'nav-frontend-paneler';
@@ -22,8 +23,13 @@ const clsGrid = (n: number) => {
 export const DisplayRepos = () => {
     const dispatch = useDispatch();
 
-    const [nameFilter, setNameFilter] = useState<NameFilter>({ name: '', sortby: '' });
-    const [loadCount, setLoadCount] = useState<number>(2);
+    const [nameFilter, setNameFilter] = useState<NameFilter>({
+        name: '',
+        sortby: '',
+        withWebsite: false,
+        isPrivate: false
+    });
+    const [loadCount, setLoadCount] = useState<number>(1);
     const [displayData, setdisplayData] = useState<RepoResult[]>([]);
 
     const data = useSelector((state: RootState) => state.dataReducer.data as RepoResult[]);
@@ -34,7 +40,7 @@ export const DisplayRepos = () => {
 
     useEffect(() => {
         const newData = data.filter((x, y) => {
-            if (y <= loadCount * 20) return true;
+            if (y <= loadCount * 30) return true;
             return false;
         });
         setdisplayData(newData);
@@ -61,15 +67,6 @@ export const DisplayRepos = () => {
                         {repo.language}
                     </EtikettBase>
                 ) : null}
-                {repo.private ? (
-                    <EtikettBase
-                        type="info"
-                        mini
-                        className={classnames('repos__tags', 'repos__tags--private')}
-                    >
-                        Private
-                    </EtikettBase>
-                ) : null}
                 {repo.subscribers ? (
                     <EtikettBase
                         type="info"
@@ -90,6 +87,15 @@ export const DisplayRepos = () => {
                         <FileContent className="repos__tags--icon" />
                     </EtikettBase>
                 ) : null}
+                {repo.private ? (
+                    <EtikettBase
+                        type="info"
+                        mini
+                        className={classnames('repos__tags', 'repos__tags--private')}
+                    >
+                        Private
+                    </EtikettBase>
+                ) : null}
             </span>
         );
     };
@@ -99,51 +105,84 @@ export const DisplayRepos = () => {
                 <Data className="repos__logo" alt-text="Repolist-logo" />
                 <Undertittel>Repos</Undertittel>
             </span>
-            <span className={classnames('repos__input', clsGrid(7))}>
-                <Input
-                    onChange={(e) => setNameFilter({ ...nameFilter, name: e.target.value })}
-                    placeholder="Søk på filtrerte repo-navn"
-                    className="repos__sokInput"
-                />
-                <Select
-                    bredde="s"
-                    className=""
-                    onChange={(e) => setNameFilter({ ...nameFilter, sortby: e.target.value })}
-                    defaultValue={''}
-                >
-                    <option value="" disabled>
-                        Sorter etter..
-                    </option>
-                    <option value="alfabet">A-Å</option>
-                    <option value="nPackages">antall packages</option>
-                    <option value="nWatchers">watchers</option>
-                </Select>
-                {/* <Søkeknapp
+            <div className={classnames('repos__filters', clsGrid(7))}>
+                <span className={'repos__input'}>
+                    <Input
+                        onChange={(e) => setNameFilter({ ...nameFilter, name: e.target.value })}
+                        placeholder="Søk på filtrerte repo-navn"
+                        className="repos__sokInput"
+                    />
+                    <Select
+                        bredde="s"
+                        className=""
+                        onChange={(e) => setNameFilter({ ...nameFilter, sortby: e.target.value })}
+                        defaultValue={''}
+                    >
+                        <option value="" disabled>
+                            Sorter etter..
+                        </option>
+                        <option value="alfabet">A-Å</option>
+                        <option value="opprettet">Dato opprettet</option>
+                        <option value="nPackages">Package.json</option>
+                        <option value="nWatchers">Watchers</option>
+                    </Select>
+                    {/* <Søkeknapp
                     className="repos__sokButton"
                     onClick={() => dispatch(filterNames('nav-frontend'))}
                 /> */}
-            </span>
+                </span>
+                <span className="repos__checkboxes">
+                    <Checkbox
+                        className="repos--rightMargin"
+                        onClick={(e) =>
+                            setNameFilter({ ...nameFilter, withWebsite: !nameFilter.withWebsite })
+                        }
+                        label="Nettside"
+                    />
+                    <Checkbox
+                        className="repos--rightMargin"
+                        onClick={(e) =>
+                            setNameFilter({ ...nameFilter, isPrivate: !nameFilter.isPrivate })
+                        }
+                        label="Privat"
+                    />
+                </span>
+            </div>
             <InfiniteScroll
-                pageStart={2}
+                pageStart={1}
                 initialLoad={false}
                 loadMore={setLoadCount}
                 hasMore={data.length !== 0 && displayData.length !== data.length}
-                loader={<NavFrontendSpinner className="repos__spinner" />}
+                loader={<NavFrontendSpinner key="-1" className="repos__spinner" />}
                 className="repos__scroller"
             >
                 {displayData.map((repo) => {
                     return (
-                        <Ekspanderbartpanel
-                            tittel={
-                                <div>
-                                    <Undertittel>{repo.name}</Undertittel>
-                                    {generateTags(repo)}
-                                </div>
-                            }
-                            className={classnames(clsGrid(7), 'repos__panel')}
-                        >
-                            {repo.created}
-                        </Ekspanderbartpanel>
+                        <div key={repo.name}>
+                            <Ekspanderbartpanel
+                                tittel={
+                                    <div>
+                                        <Undertittel>{repo.name}</Undertittel>
+                                        {generateTags(repo)}
+                                    </div>
+                                }
+                                className={classnames(clsGrid(7), 'repos__panel')}
+                            >
+                                {repo.homepage ? (
+                                    <Ingress>
+                                        Nettside:{' '}
+                                        <Lenke href={repo.homepage}>{repo.homepage}</Lenke>
+                                    </Ingress>
+                                ) : null}
+                                {repo.url ? (
+                                    <Ingress>
+                                        Github: <Lenke href={repo.url}>{repo.url}</Lenke>
+                                    </Ingress>
+                                ) : null}
+                                <Ingress>Opprettet: {new Date(repo.created).toUTCString()}</Ingress>
+                                <Ingress>Siste push: {new Date(repo.pushed).toUTCString()}</Ingress>
+                            </Ekspanderbartpanel>
+                        </div>
                     );
                 })}
             </InfiniteScroll>

@@ -12,12 +12,20 @@
         height: 24px;
         padding-right: 16px;
     }
-
-    &__input {
+    &__filters {
         margin-bottom: 2rem;
+    }
+    &__input {
+        margin-bottom: 0.5rem;
         display: flex;
         position: relative;
         align-items: flex-end;
+    }
+    &__checkboxes {
+        display: flex;
+    }
+    &--rightMargin {
+        margin-right: 0.5rem;
     }
 
     &__sokButton {
@@ -45,6 +53,7 @@
     &__tags {
         font-size: 0.875rem;
         margin-right: 6px;
+        padding: 0px 4px !important;
         &--private {
             background-color: @navOransjeLighten20 !important;
             border: 1px solid @navOransjeDarken40 !important;
