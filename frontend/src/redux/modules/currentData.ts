@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
-import { RepoResult } from '@nav-frontend/shared-types';
+import { NameFilter, RepoResult } from '@nav-frontend/shared-types';
 
 const url = process.env.REACT_APP_URL ? process.env.REACT_APP_URL : 'http://localhost:3001';
 
@@ -21,19 +21,15 @@ type DataAction =
     | { type: Actions.SUCCESS_LOAD; data: RepoResult[] }
     | { type: Actions.SUCCESS_GET_NAMES; names: string[] }
     | { type: Actions.ERROR_LOAD; error: Error }
-    | { type: Actions.FILTER_NAMES; filter: string }
-    | { type: Actions.SORT_BY; sort: string }
+    | { type: Actions.FILTER_NAMES; filter: NameFilter }
     | { type: Actions.FILTER }
     | { type: Actions.SUCCESS_FILTER };
 
 export function initialLoad(): DataAction {
     return { type: Actions.INITIAL_LOAD };
 }
-export function filterNames(s: string): DataAction {
-    return { type: Actions.FILTER_NAMES, filter: s };
-}
-export function sortBy(s: string): DataAction {
-    return { type: Actions.SORT_BY, sort: s };
+export function filterNames(filter: NameFilter): DataAction {
+    return { type: Actions.FILTER_NAMES, filter: filter };
 }
 
 const postJson = (url: string, data: string) =>
@@ -62,20 +58,10 @@ function* filterName(action: DataAction) {
         yield put({ type: Actions.ERROR_LOAD, error: e });
     }
 }
-function* sortNamesBy(action: DataAction) {
-    const { type, ...rest } = action;
-    try {
-        const res = yield call(() => postJson(url + '/sort-by', JSON.stringify(rest)));
-        yield put({ type: Actions.SUCCESS_LOAD, data: res });
-    } catch (e) {
-        yield put({ type: Actions.ERROR_LOAD, error: e });
-    }
-}
 
 export const dataSaga = [
     takeLatest(Actions.INITIAL_LOAD, fetchJson),
-    takeLatest(Actions.FILTER_NAMES, filterName),
-    takeLatest(Actions.SORT_BY, sortNamesBy)
+    takeLatest(Actions.FILTER_NAMES, filterName)
 ];
 
 const data = createReducer([], {

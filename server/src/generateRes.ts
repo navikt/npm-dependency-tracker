@@ -1,5 +1,4 @@
-import { Repo, RepoResult } from '@nav-frontend/shared-types';
-import { push } from 'isomorphic-git';
+import { NameFilter, Repo, RepoResult } from '@nav-frontend/shared-types';
 
 export const getRes = (data: Repo[]): RepoResult[] => {
     let res: RepoResult[] = [];
@@ -10,13 +9,39 @@ export const getRes = (data: Repo[]): RepoResult[] => {
     return res;
 };
 
-export const getFilteredNameRes = (data: Repo[], str: string) => {
+const sortBy = (data: RepoResult[], sort: string) => {
+    switch (sort) {
+        case 'alfabet':
+            data.sort((a, b) => a.name.localeCompare(b.name));
+            break;
+        case 'nPackages':
+            data.sort((a, b) => {
+                if (a.packageN > b.packageN) return -1;
+                if (a.packageN < b.packageN) return 1;
+                else return 0;
+            });
+            return;
+        case 'nWatchers':
+            data.sort((a, b) => {
+                if (a.watchers > b.watchers) return -1;
+                if (a.watchers < b.watchers) return 1;
+                else return 0;
+            });
+            break;
+
+        default:
+            return;
+    }
+};
+
+export const filterByNames = (data: Repo[], filter: NameFilter) => {
     let d = getRes(data);
     d = d.filter((repo) => {
-        if (repo.name.indexOf(str) !== -1) {
+        if (repo.name.indexOf(filter.name) !== -1 || filter.name === '') {
             return true;
         }
         return false;
     });
+    sortBy(d, filter.sortby);
     return d;
 };

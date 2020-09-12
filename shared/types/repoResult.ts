@@ -14,6 +14,7 @@ type RepoResult = {
     watchers: number;
     forks: number;
     subscribers: number;
+    issues: number;
 };
 
 const RepoResult = (repo: Repo) => {
@@ -30,7 +31,8 @@ const RepoResult = (repo: Repo) => {
         stars: repo.rawFetch.stargazers_count,
         watchers: repo.rawFetch.watchers_count,
         forks: repo.rawFetch.forks_count,
-        subscribers: repo.rawFetch.subscribers_count
+        subscribers: repo.rawFetch.stargazers_count,
+        issues: repo.rawFetch.open_issues_count
     };
 };
 export default RepoResult;

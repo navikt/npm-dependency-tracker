@@ -1,3 +1,5 @@
+@import (reference) '~nav-frontend-core/less/_variabler';
+
 .repos {
     &__headline {
         margin-top: 5rem;
@@ -31,5 +33,37 @@
     }
     &__panel {
         margin-bottom: 1rem;
+    }
+    &__scroller {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    &__spinner {
+        align-self: center;
+    }
+    &__tags {
+        font-size: 0.875rem;
+        margin-right: 6px;
+        &--private {
+            background-color: @navOransjeLighten20 !important;
+            border: 1px solid @navOransjeDarken40 !important;
+        }
+        &--size {
+            background-color: @navBlaLighten80!important;
+            border: 1px solid @navBlaLighten20!important;
+        }
+        &--subs {
+            background-color: @navLillaLighten60!important;
+            border: 1px solid @navLilla!important;
+        }
+        &--lang {
+            background-color: @navLimeGronnLighten60!important;
+            border: 1px solid @navLimeGronnDarken20!important;
+        }
+        &--icon {
+            margin-bottom: -0.125rem;
+            margin-left: 0.25rem;
+        }
     }
 }
