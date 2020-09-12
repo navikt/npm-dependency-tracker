@@ -8,7 +8,9 @@ import { Knapp } from 'nav-frontend-knapper';
 import filterlogo from '../../assets/filter.svg';
 import './Filter.less';
 import { addPackFilter } from '../../redux/modules/currentData';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/create';
+import FilterPanel from '../filterPanel/FilterPanel';
 
 const clsGrid = (n: number) => {
     return classnames(`mdc-layout-grid__cell`, `mdc-layout-grid__cell--span-${n}`);
@@ -18,7 +20,7 @@ const validSemver = (v: string) => {
     return true;
 };
 
-export const Filter = <FilterProps, FilterState>(props: FilterProps, state: FilterState) => {
+export const Filter = () => {
     const dispatch = useDispatch();
     const [name, setname] = useState<{ str: string; error: string }>({ str: '', error: '' });
     const [version, setversion] = useState<{ str: string; error: string }>({ str: '', error: '' });
@@ -42,6 +44,8 @@ export const Filter = <FilterProps, FilterState>(props: FilterProps, state: Filt
         );
     };
 
+    const filters = useSelector((state: RootState) => state.dataReducer.packFilter);
+    // console.log(JSON.stringify(filters, null, 4));
     return (
         <div className={classnames('mdc-layout-grid__inner', 'filter')}>
             <div className={classnames('filter__headline', clsGrid(12))}>
@@ -92,6 +96,11 @@ export const Filter = <FilterProps, FilterState>(props: FilterProps, state: Filt
                         Legg til
                     </Knapp>
                 </form>
+            </div>
+            <div className={classnames(clsGrid(12), 'filter__container')}>
+                {filters.map((filter) => {
+                    return <FilterPanel filter={filter} />;
+                })}
             </div>
         </div>
     );

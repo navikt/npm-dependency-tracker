@@ -71,14 +71,14 @@ function* filterName(action: DataAction) {
 }
 function* filterPackages(action: DataAction) {
     const { type, ...rest } = action;
+    const { packfilter } = rest as { packfilter: PackFilter };
 
     const getPackfilters = (state: RootState) => state.dataReducer.packFilter;
     const filters = yield select(getPackfilters);
-    console.log(filters);
     try {
         //const res = yield call(() => postJson(url + '/filter-name', JSON.stringify(rest)));
         //yield put({ type: Actions.SUCCESS_LOAD, data: res });
-        yield put({ type: Actions.SET_PACKFILTER, packfilter: [...filters, rest] });
+        yield put({ type: Actions.SET_PACKFILTER, packfilter: [...filters, packfilter] });
     } catch (e) {
         // yield put({ type: Actions.ERROR_LOAD, error: e });
     }

@@ -2,24 +2,22 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import classnames from 'classnames';
 import './DisplayRepos.less';
-import { Ingress, Undertittel } from 'nav-frontend-typografi';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-// import { Søkeknapp } from 'nav-frontend-ikonknapper';
-import EtikettBase from 'nav-frontend-etiketter';
+import { Undertittel } from 'nav-frontend-typografi';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import { RootState } from '../../redux/create';
 
-import { Data, Star, FileContent } from '@nav-frontend/icons';
+import { Data } from '@nav-frontend/icons';
 import { Input, Select, Checkbox } from 'nav-frontend-skjema';
-import Lenke from 'nav-frontend-lenker';
 import { NameFilter, RepoResult } from '@nav-frontend/shared-types';
 import { filterNames } from '../../redux/modules/currentData';
-// import Panel from 'nav-frontend-paneler';
+import RepoPanel from '../repoPanel/RepoPanel';
+
 const clsGrid = (n: number) => {
     return classnames(`mdc-layout-grid__cell`, `mdc-layout-grid__cell--span-${n}`);
 };
+
 export const DisplayRepos = () => {
     const dispatch = useDispatch();
 
@@ -46,59 +44,6 @@ export const DisplayRepos = () => {
         setdisplayData(newData);
     }, [data, loadCount]);
 
-    const generateTags = (repo: RepoResult) => {
-        return (
-            <span>
-                {repo.size ? (
-                    <EtikettBase
-                        type="info"
-                        mini
-                        className={classnames('repos__tags', 'repos__tags--size')}
-                    >
-                        {repo.size + 'kB'}
-                    </EtikettBase>
-                ) : null}
-                {repo.language ? (
-                    <EtikettBase
-                        type="info"
-                        mini
-                        className={classnames('repos__tags', 'repos__tags--lang')}
-                    >
-                        {repo.language}
-                    </EtikettBase>
-                ) : null}
-                {repo.subscribers ? (
-                    <EtikettBase
-                        type="info"
-                        mini
-                        className={classnames('repos__tags', 'repos__tags--subs')}
-                    >
-                        {repo.subscribers}
-                        <Star className="repos__tags--icon" />
-                    </EtikettBase>
-                ) : null}
-                {repo.packageN ? (
-                    <EtikettBase
-                        type="info"
-                        mini
-                        className={classnames('repos__tags', 'repos__tags--pack')}
-                    >
-                        {repo.packageN}
-                        <FileContent className="repos__tags--icon" />
-                    </EtikettBase>
-                ) : null}
-                {repo.private ? (
-                    <EtikettBase
-                        type="info"
-                        mini
-                        className={classnames('repos__tags', 'repos__tags--private')}
-                    >
-                        Private
-                    </EtikettBase>
-                ) : null}
-            </span>
-        );
-    };
     return (
         <Fragment>
             <span className={classnames('repos__headline', clsGrid(12))}>
@@ -126,10 +71,6 @@ export const DisplayRepos = () => {
                         <option value="nPackages">Package.json</option>
                         <option value="nWatchers">Watchers</option>
                     </Select>
-                    {/* <Søkeknapp
-                    className="repos__sokButton"
-                    onClick={() => dispatch(filterNames('nav-frontend'))}
-                /> */}
                 </span>
                 <span className="repos__checkboxes">
                     <Checkbox
@@ -157,33 +98,7 @@ export const DisplayRepos = () => {
                 className="repos__scroller"
             >
                 {displayData.map((repo) => {
-                    return (
-                        <div key={repo.name}>
-                            <Ekspanderbartpanel
-                                tittel={
-                                    <div>
-                                        <Undertittel>{repo.name}</Undertittel>
-                                        {generateTags(repo)}
-                                    </div>
-                                }
-                                className={classnames(clsGrid(7), 'repos__panel')}
-                            >
-                                {repo.homepage ? (
-                                    <Ingress>
-                                        Nettside:{' '}
-                                        <Lenke href={repo.homepage}>{repo.homepage}</Lenke>
-                                    </Ingress>
-                                ) : null}
-                                {repo.url ? (
-                                    <Ingress>
-                                        Github: <Lenke href={repo.url}>{repo.url}</Lenke>
-                                    </Ingress>
-                                ) : null}
-                                <Ingress>Opprettet: {new Date(repo.created).toUTCString()}</Ingress>
-                                <Ingress>Siste push: {new Date(repo.pushed).toUTCString()}</Ingress>
-                            </Ekspanderbartpanel>
-                        </div>
-                    );
+                    return <RepoPanel key={repo.name} className={clsGrid(7)} repo={repo} />;
                 })}
             </InfiniteScroll>
         </Fragment>
