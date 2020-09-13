@@ -99,7 +99,7 @@ export const Filter = () => {
             </div>
             <div className={classnames(clsGrid(12), 'filter__container')}>
                 {filters.map((filter) => {
-                    return <FilterPanel filter={filter} />;
+                    return <FilterPanel className={'filter__filterPanel'} filter={filter} />;
                 })}
             </div>
         </div>
