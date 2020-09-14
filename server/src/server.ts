@@ -1,9 +1,9 @@
-import { NameFilter } from '@nav-frontend/shared-types';
+import { NameFilter, RepoResult } from '@nav-frontend/shared-types';
 import express = require('express');
 const app: express.Application = express();
 const packages = require('../crawler/output/outputPackages.json');
 const raw = require('../crawler/output/outputRepos.json');
-import { filterByNames, getRes } from './generateRes';
+import { filterByNames, filterByOptions, filterByPack, getRes, sortBy } from './generateRes';
 const PORT = 3001;
 
 app.use(function (req, res, next) {
@@ -41,4 +41,18 @@ app.post('/filter-name', function (req, res) {
     } catch {
         res.json([]);
     }
+});
+app.post('/filter', function (req, res) {
+    let result;
+    try {
+        result = filterByNames(raw, req.body.nameFilter);
+        result = filterByOptions(result, req.body.nameFilter);
+        result = filterByPack(result, req.body.packFilter);
+
+        result = result.map((repo) => RepoResult(repo));
+        sortBy(result, req.body.nameFilter.sortby);
+    } catch (e) {
+        res.json([]);
+    }
+    res.json(result);
 });

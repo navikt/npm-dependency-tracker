@@ -1,15 +1,16 @@
-import { NameFilter, Repo, RepoResult } from '@nav-frontend/shared-types';
+import { NameFilter, PackFilter, Repo, RepoResult } from '@nav-frontend/shared-types';
+const semver = require('semver');
 
 export const getRes = (data: Repo[]): RepoResult[] => {
     let res: RepoResult[] = [];
     data.forEach((repo) => {
         res.push(RepoResult(repo));
     });
-    res.sort((a, b) => a.name.localeCompare(b.name));
+    data.sort((a, b) => a.name.localeCompare(b.name));
     return res;
 };
 
-const sortBy = (data: RepoResult[], sort: string) => {
+export const sortBy = (data: RepoResult[], sort: string) => {
     switch (sort) {
         case 'alfabet':
             data.sort((a, b) => a.name.localeCompare(b.name));
@@ -44,26 +45,97 @@ const sortBy = (data: RepoResult[], sort: string) => {
 };
 
 export const filterByNames = (data: Repo[], filter: NameFilter) => {
-    let d = getRes(data);
-    d = d.filter((repo) => {
+    let newData = data.filter((repo) => {
         if (repo.name.indexOf(filter.name) !== -1 || filter.name === '') return true;
         return false;
     });
 
-    d = d.filter((repo) => {
+    return newData;
+};
+export const filterByOptions = (data: Repo[], filter: NameFilter) => {
+    let newData = data.filter((repo) => {
         if (filter.withWebsite) {
-            if (repo.homepage) return true;
+            if (repo.rawFetch.homepage) return true;
             return false;
         }
         return true;
     });
-    d = d.filter((repo) => {
+    newData = newData.filter((repo) => {
         if (filter.isPrivate) {
-            if (repo.private) return true;
+            if (repo.rawFetch.private) return true;
             return false;
         }
         return true;
     });
-    sortBy(d, filter.sortby);
-    return d;
+    return newData;
+};
+
+/** <option value="eksakt">Eksakt</option>
+<option value="nyere">Nyere</option>
+<option value="eldre">Eldre</option>
+ */
+const checkVersion = (packV: string, depV: string, scope: string) => {
+    if (packV === 'latest' && scope === 'nyere') return true;
+    else if (packV === 'latest' && scope !== 'nyere') return false;
+
+    packV = semver.minVersion(packV).raw;
+    depV = semver.minVersion(depV).raw;
+
+    switch (scope) {
+        case 'eldre':
+            if (semver.lt(packV, depV)) return true;
+            else return false;
+        case 'nyere':
+            if (semver.gt(packV, depV)) return true;
+            else return false;
+        case 'eksakt':
+            if (semver.eq(packV, depV)) return true;
+            else return false;
+        default:
+            return false;
+    }
+};
+
+const inDep = (pack: { [key: string]: string }, filter: PackFilter) => {
+    if (pack.hasOwnProperty(filter.name)) {
+        if (filter.version !== '') {
+            if (checkVersion(pack[filter.name], filter.version, filter.timeline)) return true;
+        } else return true;
+    }
+    return false;
+};
+
+const validPackage = (pack: any, filter: PackFilter[]) => {
+    let peerDep = pack.peerDependencies;
+    let devDep = pack.devDependencies;
+    let dep = pack.dependencies;
+
+    for (const query of filter) {
+        let valid = false;
+        if (peerDep) {
+            valid = inDep(peerDep, query) ? true : valid;
+        }
+        if (devDep) {
+            valid = inDep(devDep, query) ? true : valid;
+        }
+        if (dep) {
+            valid = inDep(dep, query) ? true : valid;
+        }
+        if (!valid) return false;
+    }
+    return true;
+};
+export const filterByPack = (data: Repo[], filter: PackFilter[]) => {
+    if (filter.length === 0) return data;
+    console.log('//////////////////////////////////');
+    const newData = data.filter((repo) => {
+        for (const pack of repo.packages) {
+            if (validPackage(pack, filter)) {
+                return true;
+            }
+        }
+        return false;
+    });
+    console.log(newData.length);
+    return newData;
 };

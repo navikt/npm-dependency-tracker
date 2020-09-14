@@ -16,7 +16,7 @@ const newRepo = (
     packages: any[] = [],
     commits: CommitData.Root[] = [],
     branch: string = '',
-    rawFetch: GithubApi.Root | undefined = undefined
+    rawFetch: GithubApi.Root
 ): Repo => {
     return {
         name: name,

@@ -2,7 +2,7 @@ type PackFilter = {
     name: string;
     version: string;
     timeline: string;
-    bool: string;
+    key: string;
 };
 
 export default PackFilter;

@@ -12,20 +12,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/create';
 import FilterPanel from '../filterPanel/FilterPanel';
 
+import { guid } from 'nav-frontend-js-utils';
+import { PackFilter } from '@nav-frontend/shared-types';
+import semverRegex from 'semver-regex';
+
 const clsGrid = (n: number) => {
     return classnames(`mdc-layout-grid__cell`, `mdc-layout-grid__cell--span-${n}`);
-};
-
-const validSemver = (v: string) => {
-    return true;
 };
 
 export const Filter = () => {
     const dispatch = useDispatch();
     const [name, setname] = useState<{ str: string; error: string }>({ str: '', error: '' });
     const [version, setversion] = useState<{ str: string; error: string }>({ str: '', error: '' });
-    const [timeline, settimeline] = useState<string>('');
-    const [bool, setbool] = useState<string>('');
+    const [timeline, settimeline] = useState<string>('eksakt');
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -34,18 +33,22 @@ export const Filter = () => {
             setname({ ...name, error: 'Navn må være satt' });
             err = true;
         } else setname({ ...name, error: '' });
-        if (!validSemver(version.str)) {
+        if (!!version.str.length && !semverRegex().test(version.str)) {
             setversion({ ...version, error: 'Ikke gyldig semver' });
             err = true;
         } else setversion({ ...version, error: '' });
         if (err) return;
         dispatch(
-            addPackFilter({ name: name.str, version: version.str, timeline: timeline, bool: bool })
+            addPackFilter({
+                name: name.str,
+                version: version.str,
+                timeline: timeline,
+                key: guid()
+            })
         );
     };
 
     const filters = useSelector((state: RootState) => state.dataReducer.packFilter);
-    // console.log(JSON.stringify(filters, null, 4));
     return (
         <div className={classnames('mdc-layout-grid__inner', 'filter')}>
             <div className={classnames('filter__headline', clsGrid(12))}>
@@ -64,17 +67,20 @@ export const Filter = () => {
                 <form onSubmit={handleSubmit} className={'mdc-layout-grid__inner'}>
                     <Input
                         feil={name.error}
+                        value={name.str}
                         onChange={(e) => setname({ ...name, str: e.target.value })}
                         label="Pakkenavn"
                         className={classnames(clsGrid(4), 'filter--width')}
                     />
                     <Input
+                        value={version.str}
                         feil={version.error}
                         onChange={(e) => setversion({ ...version, str: e.target.value })}
                         label="Versjon"
                         className={classnames(clsGrid(2))}
                     />
                     <Select
+                        value={timeline}
                         label="Tid"
                         onChange={(e) => settimeline(e.target.value)}
                         className={classnames(clsGrid(2))}
@@ -83,23 +89,21 @@ export const Filter = () => {
                         <option value="nyere">Nyere</option>
                         <option value="eldre">Eldre</option>
                     </Select>
-                    <Select
-                        label="Bool"
-                        onChange={(e) => setbool(e.target.value)}
-                        className={classnames(clsGrid(2))}
-                    >
-                        <option value="AND">AND &&</option>
-                        <option value="OR">OR ||</option>
-                        <option value="NOT">NOT X</option>
-                    </Select>
+
                     <Knapp type="hoved" className={classnames(clsGrid(2), 'filter__knapp')}>
                         Legg til
                     </Knapp>
                 </form>
             </div>
             <div className={classnames(clsGrid(12), 'filter__container')}>
-                {filters.map((filter) => {
-                    return <FilterPanel className={'filter__filterPanel'} filter={filter} />;
+                {filters.map((filter: PackFilter) => {
+                    return (
+                        <FilterPanel
+                            key={filter.key}
+                            className={'filter__filterPanel'}
+                            filter={filter}
+                        />
+                    );
                 })}
             </div>
         </div>

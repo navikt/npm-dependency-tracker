@@ -70,6 +70,7 @@ interface RepoPanelProps {
 
 const RepoPanel = (props: RepoPanelProps) => {
     const { repo, className } = props;
+
     return (
         <Ekspanderbartpanel
             tittel={
@@ -82,7 +83,10 @@ const RepoPanel = (props: RepoPanelProps) => {
         >
             {repo.homepage ? (
                 <Ingress>
-                    Nettside: <Lenke href={repo.homepage}>{repo.homepage}</Lenke>
+                    Nettside:{' '}
+                    <Lenke href={repo.homepage} target="_blank">
+                        {repo.homepage}
+                    </Lenke>
                 </Ingress>
             ) : null}
             {repo.url ? (

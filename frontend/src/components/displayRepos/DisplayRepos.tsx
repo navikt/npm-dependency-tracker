@@ -43,7 +43,6 @@ export const DisplayRepos = () => {
         });
         setdisplayData(newData);
     }, [data, loadCount]);
-
     return (
         <Fragment>
             <span className={classnames('repos__headline', clsGrid(12))}>

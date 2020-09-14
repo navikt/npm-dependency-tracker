@@ -1,13 +1,14 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import classnames from 'classnames';
-import { useDispatch } from 'react-redux';
-import { initialLoad } from '../../redux/modules/currentData';
+import { useDispatch, useSelector } from 'react-redux';
+import { initialLoad, update } from '../../redux/modules/currentData';
 
 import Header from '../../components/header/Header';
 import Filter from '../../components/filter/Filter';
 import Stats from '../../components/stats/Stats';
 import Repos from '../../components/displayRepos/DisplayRepos';
 import './Home.less';
+import { RootState } from '../../redux/create';
 
 const clsGrid = (n: number) => {
     return classnames(`mdc-layout-grid__cell`, `mdc-layout-grid__cell--span-${n}`);
@@ -16,10 +17,31 @@ const clsGrid = (n: number) => {
 const Home = () => {
     const dispatch = useDispatch();
 
+    const firstPack = useRef(true);
+    const firstName = useRef(true);
+    const packFilter = useSelector((state: RootState) => state.dataReducer.packFilter);
+    const nameFilter = useSelector((state: RootState) => state.dataReducer.namesFilter);
     useEffect(() => {
         dispatch(initialLoad());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch]);
+
+    useEffect(() => {
+        if (firstName.current) {
+            firstName.current = false;
+            return;
+        }
+        dispatch(update());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [nameFilter]);
+    useEffect(() => {
+        if (firstPack.current) {
+            firstPack.current = false;
+            return;
+        }
+        dispatch(update());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [packFilter]);
 
     return (
         <Fragment>
