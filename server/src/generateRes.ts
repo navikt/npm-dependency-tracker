@@ -1,5 +1,6 @@
 import { NameFilter, PackFilter, Repo, RepoResult } from '@nav-frontend/shared-types';
 const semver = require('semver');
+import semverRegex from 'semver-regex';
 
 export const getRes = (data: Repo[]): RepoResult[] => {
     let res: RepoResult[] = [];
@@ -70,11 +71,9 @@ export const filterByOptions = (data: Repo[], filter: NameFilter) => {
     return newData;
 };
 
-/** <option value="eksakt">Eksakt</option>
-<option value="nyere">Nyere</option>
-<option value="eldre">Eldre</option>
- */
 const checkVersion = (packV: string, depV: string, scope: string) => {
+    if (!semverRegex().test(packV)) return false;
+
     if (packV === 'latest' && scope === 'nyere') return true;
     else if (packV === 'latest' && scope !== 'nyere') return false;
 
@@ -127,7 +126,6 @@ const validPackage = (pack: any, filter: PackFilter[]) => {
 };
 export const filterByPack = (data: Repo[], filter: PackFilter[]) => {
     if (filter.length === 0) return data;
-    console.log('//////////////////////////////////');
     const newData = data.filter((repo) => {
         for (const pack of repo.packages) {
             if (validPackage(pack, filter)) {
@@ -136,6 +134,5 @@ export const filterByPack = (data: Repo[], filter: PackFilter[]) => {
         }
         return false;
     });
-    console.log(newData.length);
     return newData;
 };
