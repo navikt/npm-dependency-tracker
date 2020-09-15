@@ -7,14 +7,14 @@ import { Knapp } from 'nav-frontend-knapper';
 
 import filterlogo from '../../assets/filter.svg';
 import './Filter.less';
-import { addPackFilter } from '../../redux/modules/currentData';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/create';
 import FilterPanel from '../filterPanel/FilterPanel';
 
 import { guid } from 'nav-frontend-js-utils';
-import { PackFilter } from '@nav-frontend/shared-types';
+import { PackFilter, VersionLimit } from '@nav-frontend/shared-types';
 import semverRegex from 'semver-regex';
+import { packFilterSlice } from '../../redux/appState';
+import { RootState } from '../../redux/creator';
 
 const clsGrid = (n: number) => {
     return classnames(`mdc-layout-grid__cell`, `mdc-layout-grid__cell--span-${n}`);
@@ -24,7 +24,7 @@ export const Filter = () => {
     const dispatch = useDispatch();
     const [name, setname] = useState<{ str: string; error: string }>({ str: '', error: '' });
     const [version, setversion] = useState<{ str: string; error: string }>({ str: '', error: '' });
-    const [timeline, settimeline] = useState<string>('eksakt');
+    const [timeline, settimeline] = useState<string>(VersionLimit.EXACT);
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -39,7 +39,7 @@ export const Filter = () => {
         } else setversion({ ...version, error: '' });
         if (err) return;
         dispatch(
-            addPackFilter({
+            packFilterSlice.actions.ADD_PACKAGEFILTER({
                 name: name.str,
                 version: version.str,
                 timeline: timeline,
@@ -48,7 +48,7 @@ export const Filter = () => {
         );
     };
 
-    const filters = useSelector((state: RootState) => state.dataReducer.packFilter);
+    const filters = useSelector((state: RootState) => state.AppReducer.packfilter.packageFilter);
     return (
         <div className={classnames('mdc-layout-grid__inner', 'filter')}>
             <div className={classnames('filter__headline', clsGrid(12))}>
@@ -85,9 +85,9 @@ export const Filter = () => {
                         onChange={(e) => settimeline(e.target.value)}
                         className={classnames(clsGrid(2))}
                     >
-                        <option value="eksakt">Eksakt</option>
-                        <option value="nyere">Nyere</option>
-                        <option value="eldre">Eldre</option>
+                        <option value={VersionLimit.EXACT}>EXACT</option>
+                        <option value={VersionLimit.UP}>UP</option>
+                        <option value={VersionLimit.DOWN}>DOWN</option>
                     </Select>
 
                     <Knapp type="hoved" className={classnames(clsGrid(2), 'filter__knapp')}>

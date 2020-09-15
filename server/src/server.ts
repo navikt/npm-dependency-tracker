@@ -1,4 +1,4 @@
-import { NameFilter, RepoResult } from '@nav-frontend/shared-types';
+import { NameFilter, RepoResult, ServerResults } from '@nav-frontend/shared-types';
 import express = require('express');
 const app: express.Application = express();
 const packages = require('../crawler/output/outputPackages.json');
@@ -18,30 +18,11 @@ app.listen(PORT, function () {
     console.log('Server is listening on port ' + PORT);
 });
 
-app.get('/', function (req, res) {
-    res.send('Hello World!');
-});
-app.get('/get-result', function (req, res) {
-    res.json(getRes(raw));
-});
-app.get('/get-repo-names', function (req, res) {
-    let names: string[] = [];
-    packages.forEach((repo: any) => {
-        try {
-            names.push(repo.name);
-        } catch (e) {}
-    });
-    res.json(names);
+app.get('/initial-load', function (req, res) {
+    const result: ServerResults = { repos: getRes(raw), statistics: [], history: [] };
+    res.json(result);
 });
 
-app.post('/filter-name', function (req, res) {
-    try {
-        let filter: NameFilter = req.body.filter;
-        res.json(filterByNames(raw, filter));
-    } catch {
-        res.json([]);
-    }
-});
 app.post('/filter', function (req, res) {
     let result;
     try {
@@ -51,8 +32,8 @@ app.post('/filter', function (req, res) {
 
         result = result.map((repo) => RepoResult(repo));
         sortBy(result, req.body.nameFilter.sortby);
+        res.json({ repos: result, statistics: [], history: [] });
     } catch (e) {
-        res.json([]);
+        res.json({ repos: [], statistics: [], history: [] });
     }
-    res.json(result);
 });

@@ -1,18 +1,18 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import classnames from 'classnames';
-import './DisplayRepos.less';
 import { Undertittel } from 'nav-frontend-typografi';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import InfiniteScroll from 'react-infinite-scroller';
 
-import { RootState } from '../../redux/create';
-
 import { Data } from '@nav-frontend/icons';
 import { Input, Select, Checkbox } from 'nav-frontend-skjema';
 import { NameFilter, RepoResult } from '@nav-frontend/shared-types';
-import { filterNames } from '../../redux/modules/currentData';
 import RepoPanel from '../repoPanel/RepoPanel';
+import { RootState } from '../../redux/creator';
+import { nameFilterSlice } from '../../redux/appState';
+
+import './DisplayRepos.less';
 
 const clsGrid = (n: number) => {
     return classnames(`mdc-layout-grid__cell`, `mdc-layout-grid__cell--span-${n}`);
@@ -30,10 +30,10 @@ export const DisplayRepos = () => {
     const [loadCount, setLoadCount] = useState<number>(1);
     const [displayData, setdisplayData] = useState<RepoResult[]>([]);
 
-    const data = useSelector((state: RootState) => state.dataReducer.data as RepoResult[]);
+    let data = useSelector((state: RootState) => state.AppReducer.server.serverData.repos);
 
     useEffect(() => {
-        dispatch(filterNames(nameFilter));
+        dispatch(nameFilterSlice.actions.CHANGE_NAMEFILTER(nameFilter));
     }, [dispatch, nameFilter]);
 
     useEffect(() => {

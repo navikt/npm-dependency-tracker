@@ -1,4 +1,4 @@
-import { NameFilter, PackFilter, Repo, RepoResult } from '@nav-frontend/shared-types';
+import { NameFilter, PackFilter, Repo, RepoResult, VersionLimit } from '@nav-frontend/shared-types';
 const semver = require('semver');
 import semverRegex from 'semver-regex';
 
@@ -74,20 +74,20 @@ export const filterByOptions = (data: Repo[], filter: NameFilter) => {
 const checkVersion = (packV: string, depV: string, scope: string) => {
     if (!semverRegex().test(packV)) return false;
 
-    if (packV === 'latest' && scope === 'nyere') return true;
-    else if (packV === 'latest' && scope !== 'nyere') return false;
+    if (packV === 'latest' && scope === VersionLimit.UP) return true;
+    else if (packV === 'latest' && scope !== VersionLimit.UP) return false;
 
     packV = semver.minVersion(packV).raw;
     depV = semver.minVersion(depV).raw;
 
     switch (scope) {
-        case 'eldre':
+        case VersionLimit.DOWN:
             if (semver.lt(packV, depV)) return true;
             else return false;
-        case 'nyere':
+        case VersionLimit.EXACT:
             if (semver.gt(packV, depV)) return true;
             else return false;
-        case 'eksakt':
+        case VersionLimit.EXACT:
             if (semver.eq(packV, depV)) return true;
             else return false;
         default:

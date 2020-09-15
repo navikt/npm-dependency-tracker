@@ -6,7 +6,6 @@ import './Stats.less';
 import { Undertittel, Systemtittel } from 'nav-frontend-typografi';
 
 import { Data } from '@nav-frontend/icons';
-import { RootState } from '../../redux/create';
 const clsGrid = (n: number) => {
     return classnames(`mdc-layout-grid__cell`, `mdc-layout-grid__cell--span-${n}`);
 };
@@ -15,8 +14,6 @@ const clsCell = () => {
 };
 
 export const Stats = () => {
-    const names = useSelector((state: RootState) => state.dataReducer.names);
-
     return (
         <Fragment>
             <span className={classnames('stats__headline', clsGrid(12))}>
@@ -25,7 +22,6 @@ export const Stats = () => {
             </span>
             <Panel border className={classnames(clsCell(), 'stats__panel')}>
                 <Systemtittel>Repos</Systemtittel>
-                <Undertittel>{names.length}</Undertittel>
             </Panel>
             <Panel border className={classnames(clsCell(), 'stats__panel')}>
                 <h1>Stats</h1>

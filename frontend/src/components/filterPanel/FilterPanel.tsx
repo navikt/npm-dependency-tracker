@@ -1,4 +1,4 @@
-import { PackFilter } from '@nav-frontend/shared-types';
+import { PackFilter, VersionLimit } from '@nav-frontend/shared-types';
 import React, { useEffect, useState } from 'react';
 import semverRegex from 'semver-regex';
 import { HoyreChevron } from 'nav-frontend-chevron';
@@ -8,7 +8,7 @@ import { Xknapp } from 'nav-frontend-ikonknapper';
 
 import './FilterPanel.less';
 import { useDispatch } from 'react-redux';
-import { changePackFilter, removePackFilter } from '../../redux/modules/currentData';
+import { packFilterSlice } from '../../redux/appState';
 
 interface FilterPanelProps {
     filter: PackFilter;
@@ -28,6 +28,7 @@ const FilterPanel = (props: FilterPanelProps) => {
         error: ''
     });
     const [timeline, setTimeline] = useState(filter.timeline);
+
     useEffect(() => {
         let err = false;
         if (name.str === '') {
@@ -40,7 +41,7 @@ const FilterPanel = (props: FilterPanelProps) => {
         } else setVersion({ ...version, error: '' });
         if (err) return;
         dispatch(
-            changePackFilter({
+            packFilterSlice.actions.CHANGE_PACKAGEFILTER({
                 name: name.str,
                 version: version.str,
                 timeline: timeline,
@@ -69,12 +70,12 @@ const FilterPanel = (props: FilterPanelProps) => {
                 feil={version.error}
             />
             <Select onChange={(e) => setTimeline(e.target.value)} bredde="s" value={timeline}>
-                <option value="eksakt">Eksakt</option>
-                <option value="nyere">Nyere</option>
-                <option value="eldre">Eldre</option>
+                <option value={VersionLimit.EXACT}>Eksakt</option>
+                <option value={VersionLimit.UP}>Nyere</option>
+                <option value={VersionLimit.DOWN}>Eldre</option>
             </Select>
             <Xknapp
-                onClick={() => dispatch(removePackFilter(filter.key))}
+                onClick={() => dispatch(packFilterSlice.actions.REMOVE_PACKAGEFILTER(filter.key))}
                 className="filterPanel__xknapp"
             />
         </div>

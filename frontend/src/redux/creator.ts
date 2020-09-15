@@ -1,9 +1,9 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { all } from 'redux-saga/effects';
-import dataReducer, { dataSaga } from './modules/currentData';
+import AppReducer, { dataSaga } from './appState';
 
-const rootReducer = combineReducers({ dataReducer });
+const rootReducer = combineReducers({ AppReducer });
 
 export type RootState = ReturnType<typeof rootReducer>;
 
