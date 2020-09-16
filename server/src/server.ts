@@ -4,7 +4,15 @@ const app: express.Application = express();
 const packages = require('../crawler/output/outputPackages.json');
 const raw = require('../crawler/output/outputRepos.json');
 import { filterByNames, filterByOptions, filterByPack, getRes, sortBy } from './generateRes';
-import { reposDeps, reposDevDeps, reposLang, reposN, reposNpackages, reposPeerDeps } from './stats';
+import {
+    repoHistory,
+    reposDeps,
+    reposDevDeps,
+    reposLang,
+    reposN,
+    reposNpackages,
+    reposPeerDeps
+} from './stats';
 const PORT = 3001;
 
 app.use(function (req, res, next) {
@@ -43,7 +51,8 @@ app.post('/filter', function (req, res) {
         result = result.map((repo) => RepoResult(repo));
         sortBy(result, req.body.nameFilter.sortby);
 
-        res.json({ repos: result, statistics: stats, history: [] });
+        let history = [repoHistory(result)];
+        res.json({ repos: result, statistics: stats, history: history });
     } catch (e) {
         res.json({ repos: [], statistics: [], history: [] });
     }

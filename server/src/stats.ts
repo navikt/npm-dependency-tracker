@@ -1,4 +1,6 @@
-import { Repo, Stat } from '@nav-frontend/shared-types';
+import { History, Repo, RepoResult, Stat } from '@nav-frontend/shared-types';
+import moment from 'moment';
+import { sortBy } from './generateRes';
 
 export const reposN = (repos: Repo[]) => {
     return { name: 'Repos N', 0: ['Antall', repos.length.toString()] };
@@ -87,4 +89,36 @@ export const reposNpackages = (repos: Repo[], rawLength: number) => {
         .reverse();
 
     return { name: 'Package.json N', ...sortedPack };
+};
+
+export const repoHistory = (repos: RepoResult[]) => {
+    if (repos.length === 0) return null;
+    const newRepos = [...repos];
+    sortBy(newRepos, 'opprettet');
+    newRepos.reverse();
+
+    let count = 0,
+        prev = 0,
+        i = 0;
+    let day = moment(newRepos[0].created);
+    let events: any[] = [];
+
+    const tomorrow = moment().add(1, 'day');
+    while (day.isBefore(tomorrow)) {
+        for (i; i < newRepos.length; ) {
+            if (moment(newRepos[i].created).isSame(day, 'month')) {
+                count++;
+                i++;
+                continue;
+            } else {
+                break;
+            }
+        }
+        if (count > prev) {
+            prev = count;
+            events.push({ månede: day.format('MM/YY'), antall: count });
+        }
+        day.add(1, 'day');
+    }
+    return { name: 'Repo-vekst', events: events } as History;
 };

@@ -22,7 +22,6 @@ export const Stats = () => {
     const stats = useSelector((state: RootState) => state.AppReducer.server.statistics);
 
     const genPanel = (stat: Stat) => {
-        console.log(stat);
         if (Object.keys(stat).length < 6) {
             return (
                 <Panel key={guid()} border className={classnames(clsCell(), 'stats__panel')}>

@@ -113,7 +113,7 @@ export const filterBlacklisted = (repos: Repo[]) => {
 };
 
 export const getPackagePaths = async (dir: string) => {
-    let files = await glob(`${dir}/**/package.json`);
+    let files: string[] = await glob(`${dir}/**/package.json`);
     return files;
 };
 

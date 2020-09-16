@@ -22,10 +22,7 @@ const run = async () => {
 
     errors.length > 0 ? console.log('Errors: ' + errors) : null;
 
-    cleanCommits(repos);
     save(repos);
-
-    saveCurrent(repos);
 
     return 1;
 };
