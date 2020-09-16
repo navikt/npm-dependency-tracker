@@ -30,7 +30,7 @@ export const DisplayRepos = () => {
     const [loadCount, setLoadCount] = useState<number>(1);
     const [displayData, setdisplayData] = useState<RepoResult[]>([]);
 
-    let data = useSelector((state: RootState) => state.AppReducer.server.serverData.repos);
+    let data = useSelector((state: RootState) => state.AppReducer.server.repos);
 
     useEffect(() => {
         dispatch(nameFilterSlice.actions.CHANGE_NAMEFILTER(nameFilter));

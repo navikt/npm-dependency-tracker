@@ -1,12 +1,5 @@
 import { NameFilter, PackFilter, RootFilter, ServerResults } from '@nav-frontend/shared-types';
-import {
-    CaseReducer,
-    combineReducers,
-    createReducer,
-    createSlice,
-    PayloadAction
-} from '@reduxjs/toolkit';
-import { act } from 'react-dom/test-utils';
+import { combineReducers, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { RootState } from './creator';
 
@@ -73,8 +66,8 @@ function* callServer() {
         const filterStates = (state: RootState) => state.AppReducer;
         const filters = yield select(filterStates);
         const filter: RootFilter = {
-            nameFilter: filters.namefilter.nameFilter,
-            packFilter: filters.packfilter.packageFilter,
+            nameFilter: filters.namefilter,
+            packFilter: filters.packfilter,
             preset: ''
         };
         const res = yield call(() => postJson(url + '/filter', JSON.stringify(filter)));
@@ -88,49 +81,44 @@ function* callServer() {
 
 const serverLoad = createSlice({
     name: 'serverData',
-    initialState: initialState,
+    initialState: initialState.serverData,
     reducers: {
-        SUCCESS_LOAD: (state, action: PayloadAction<ServerResults>) => {
-            return { ...state, serverData: action.payload };
-        },
-        ERROR_LOAD: (state) => {
-            return { ...state };
-        }
+        SUCCESS_LOAD: (state, action: PayloadAction<ServerResults>) => action.payload,
+        ERROR_LOAD: (state) => state
     }
 });
+
 export const nameFilterSlice = createSlice({
     name: 'nameFilterSlice',
-    initialState: initialState,
+    initialState: initialState.nameFilter,
     reducers: {
-        CHANGE_NAMEFILTER: (state, action: PayloadAction<NameFilter>) => {
-            return { ...state, nameFilter: action.payload };
-        }
+        CHANGE_NAMEFILTER: (state, action: PayloadAction<NameFilter>) => action.payload
     }
 });
 export const packFilterSlice = createSlice({
     name: 'packFilterSlice',
-    initialState: initialState,
+    initialState: initialState.packageFilter,
     reducers: {
         ADD_PACKAGEFILTER: (state, action: PayloadAction<PackFilter>) => {
-            for (const filter of state.packageFilter) {
+            for (const filter of state) {
                 if (filter.key === action.payload.key) return { ...state };
             }
-            return { ...state, packageFilter: [...state.packageFilter, action.payload] };
+            return [...state, action.payload];
         },
         CHANGE_PACKAGEFILTER: (state, action: PayloadAction<PackFilter>) => {
-            const updated = state.packageFilter.map((filter) => {
+            const updated = state.map((filter) => {
                 if (filter.key === action.payload.key) {
                     return action.payload;
                 } else return filter;
             });
-            return { ...state, packageFilter: updated };
+            return updated;
         },
         REMOVE_PACKAGEFILTER: (state, action: PayloadAction<string>) => {
-            const updated = state.packageFilter.filter((filter) => {
+            const updated = state.filter((filter) => {
                 if (filter.key === action.payload) return false;
                 else return true;
             });
-            return { ...state, packageFilter: updated };
+            return updated;
         }
     }
 });

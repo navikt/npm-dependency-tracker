@@ -48,7 +48,7 @@ export const Filter = () => {
         );
     };
 
-    const filters = useSelector((state: RootState) => state.AppReducer.packfilter.packageFilter);
+    const filters = useSelector((state: RootState) => state.AppReducer.packfilter);
     return (
         <div className={classnames('mdc-layout-grid__inner', 'filter')}>
             <div className={classnames('filter__headline', clsGrid(12))}>

@@ -5,5 +5,5 @@ export { default as NameFilter } from './types/nameFilter';
 export { default as PackFilter } from './types/packFilter';
 export { default as RootFilter } from './types/rootFilter';
 export { default as VersionLimit } from './types/versionLimit';
-export { ServerResults, History } from './types/data';
+export { ServerResults, History, Stat } from './types/data';
 export { default as Repo } from './types/repo';
