@@ -83,7 +83,9 @@ const serverLoad = createSlice({
     name: 'serverData',
     initialState: initialState.serverData,
     reducers: {
-        SUCCESS_LOAD: (state, action: PayloadAction<ServerResults>) => action.payload,
+        SUCCESS_LOAD: (state, action: PayloadAction<ServerResults>) => {
+            return action.payload;
+        },
         ERROR_LOAD: (state) => state
     }
 });

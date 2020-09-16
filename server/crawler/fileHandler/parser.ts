@@ -77,8 +77,13 @@ const parse = (repo: Repo) => {
                     const files = await util.getPackagePaths(dir);
                     let pack = [];
                     for (const path of files) {
-                        const pa = fetchPackage(path);
-                        pack.push(pa);
+                        if (
+                            path.indexof('node_modules') === -1 ||
+                            repo.name.indexOf('nav-frontend-moduler') !== -1
+                        ) {
+                            const pa = fetchPackage(path);
+                            pack.push(pa);
+                        }
                     }
                     repo.packages = pack;
                     resolve();

@@ -53,6 +53,7 @@
         "react-infinite-scroller": "^1.2.4",
         "react-redux": "^7.2.1",
         "react-scripts": "3.4.1",
+        "recharts": "^1.8.5",
         "redux": "^4.0.5",
         "semver": "^7.3.2",
         "semver-diff": "^3.1.1",

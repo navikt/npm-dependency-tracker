@@ -26,7 +26,6 @@ const clone = (url: string, dir: string) => {
     return new Promise((resolve, reject) => {
         fs.access(dir, (err: Error) => {
             if (err) {
-                console.count('reclone');
                 exec(`git clone ${url} ${dir}`, (e: Error) => {
                     if (e) reject(url);
                     resolve();
