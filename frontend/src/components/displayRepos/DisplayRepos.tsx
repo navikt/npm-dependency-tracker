@@ -5,7 +5,6 @@ import { Undertittel } from 'nav-frontend-typografi';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import InfiniteScroll from 'react-infinite-scroller';
 
-import { Data } from '@nav-frontend/icons';
 import { Input, Select, Checkbox } from 'nav-frontend-skjema';
 import { NameFilter, RepoResult } from '@nav-frontend/shared-types';
 import RepoPanel from '../repoPanel/RepoPanel';
@@ -31,6 +30,14 @@ export const DisplayRepos = () => {
     const [displayData, setdisplayData] = useState<RepoResult[]>([]);
 
     let data = useSelector((state: RootState) => state.AppReducer.server.repos);
+    let filter = useSelector((state: RootState) => state.AppReducer.namefilter);
+
+    useEffect(() => {
+        if (JSON.stringify(filter) !== JSON.stringify(nameFilter)) {
+            setNameFilter(filter);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         dispatch(nameFilterSlice.actions.CHANGE_NAMEFILTER(nameFilter));
@@ -45,22 +52,19 @@ export const DisplayRepos = () => {
     }, [data, loadCount]);
     return (
         <Fragment>
-            <span className={classnames('repos__headline', clsGrid(12))}>
-                <Data className="repos__logo" alt-text="Repolist-logo" />
-                <Undertittel>Repos</Undertittel>
-            </span>
             <div className={classnames('repos__filters', clsGrid(7))}>
                 <span className={'repos__input'}>
                     <Input
                         onChange={(e) => setNameFilter({ ...nameFilter, name: e.target.value })}
                         placeholder="Søk på filtrerte repo-navn"
                         className="repos__sokInput"
+                        value={nameFilter.name}
                     />
                     <Select
                         bredde="s"
                         className=""
                         onChange={(e) => setNameFilter({ ...nameFilter, sortby: e.target.value })}
-                        defaultValue={''}
+                        value={nameFilter.sortby}
                     >
                         <option value="" disabled>
                             Sorter etter..
@@ -73,15 +77,17 @@ export const DisplayRepos = () => {
                 </span>
                 <span className="repos__checkboxes">
                     <Checkbox
+                        checked={nameFilter.withWebsite}
                         className="repos--rightMargin"
-                        onClick={(e) =>
+                        onChange={(e) =>
                             setNameFilter({ ...nameFilter, withWebsite: !nameFilter.withWebsite })
                         }
                         label="Nettside"
                     />
                     <Checkbox
+                        checked={nameFilter.isPrivate}
                         className="repos--rightMargin"
-                        onClick={(e) =>
+                        onChange={(e) =>
                             setNameFilter({ ...nameFilter, isPrivate: !nameFilter.isPrivate })
                         }
                         label="Privat"

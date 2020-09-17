@@ -1,15 +1,20 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import classnames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { initialLoad, update } from '../../redux/appState';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 
+import Tabs from 'nav-frontend-tabs';
 import Header from '../../components/header/Header';
 import Filter from '../../components/filter/Filter';
 import Stats from '../../components/stats/Stats';
 import Repos from '../../components/displayRepos/DisplayRepos';
+
+import { Data, Sandglass } from '@nav-frontend/icons';
+
 import './Home.less';
 import { RootState } from '../../redux/creator';
+import { Undertittel } from 'nav-frontend-typografi';
+import Chart from '../../components/chart/Charts';
 
 const clsGrid = (n: number) => {
     return classnames(`mdc-layout-grid__cell`, `mdc-layout-grid__cell--span-${n}`);
@@ -22,7 +27,8 @@ const Home = () => {
     const firstName = useRef(true);
     const packFilter = useSelector((state: RootState) => state.AppReducer.packfilter);
     const nameFilter = useSelector((state: RootState) => state.AppReducer.namefilter);
-    const history = useSelector((state: RootState) => state.AppReducer.server.history);
+
+    const [tabs, setTabs] = useState(1);
 
     useEffect(() => {
         dispatch(initialLoad());
@@ -46,31 +52,37 @@ const Home = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [packFilter]);
 
-    const renderLineChart = () => (
-        <LineChart
-            width={1200}
-            height={500}
-            data={history[0].events}
-            margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
-        >
-            <Line type="monotone" dataKey="antall" stroke="#8884d8" />
-            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-            <XAxis dataKey="månede" />
-            <YAxis />
-            <Tooltip />
-        </LineChart>
-    );
-
-    console.log(history[0]);
     return (
         <Fragment>
             <Header />
-            <div>{history[0] ? renderLineChart() : null}</div>
             <main className={classnames('main', 'mdc-layout-grid')}>
                 <Filter />
-                <div className={'mdc-layout-grid__inner'}>
+                <div className={classnames('mdc-layout-grid__inner', 'main__content')}>
                     <div className={clsGrid(8)}>
-                        <Repos />
+                        <div className="main__tabs">
+                            <Tabs
+                                onChange={(e, i) => {
+                                    setTabs(i);
+                                }}
+                            >
+                                <Tabs.Tab>
+                                    <span className="main__tab">
+                                        <Data className="main__logo" alt-text="Repo-ikon" />
+                                        <Undertittel>Repos</Undertittel>
+                                    </span>
+                                </Tabs.Tab>
+                                <Tabs.Tab aktiv>
+                                    <span className="main__tab">
+                                        <Sandglass
+                                            className="main__logo"
+                                            alt-text="Historie-ikon"
+                                        />
+                                        <Undertittel>Historie</Undertittel>
+                                    </span>
+                                </Tabs.Tab>
+                            </Tabs>
+                        </div>
+                        {tabs === 0 ? <Repos /> : <Chart />}
                     </div>
                     <aside className={clsGrid(4)}>
                         <Stats />

@@ -57,9 +57,6 @@ export const Filter = () => {
                 <span className="filter__preset">
                     <Select label="Presets:" bredde="s">
                         <option value="ingen">Ingen</option>
-                        <option value="abc">abc</option>
-                        <option value="bcd">bcd</option>
-                        <option value="cdf">cdf</option>
                     </Select>
                 </span>
             </div>
@@ -85,9 +82,9 @@ export const Filter = () => {
                         onChange={(e) => settimeline(e.target.value)}
                         className={classnames(clsGrid(2))}
                     >
-                        <option value={VersionLimit.EXACT}>EXACT</option>
-                        <option value={VersionLimit.UP}>UP</option>
-                        <option value={VersionLimit.DOWN}>DOWN</option>
+                        <option value={VersionLimit.EXACT}>Eksakt</option>
+                        <option value={VersionLimit.UP}>Nyere</option>
+                        <option value={VersionLimit.DOWN}>Eldre</option>
                     </Select>
 
                     <Knapp type="hoved" className={classnames(clsGrid(2), 'filter__knapp')}>
