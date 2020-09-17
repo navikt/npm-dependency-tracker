@@ -68,6 +68,13 @@ export const filterByOptions = (data: Repo[], filter: NameFilter) => {
         }
         return true;
     });
+    newData = newData.filter((repo) => {
+        if (filter.isArchived) {
+            if (repo.rawFetch.archived) return false;
+            return true;
+        }
+        return true;
+    });
     return newData;
 };
 
@@ -95,7 +102,7 @@ const checkVersion = (packV: string, depV: string, scope: string) => {
     }
 };
 
-const inDep = (pack: { [key: string]: string }, filter: PackFilter) => {
+export const inDep = (pack: { [key: string]: string }, filter: PackFilter) => {
     if (pack.hasOwnProperty(filter.name)) {
         if (filter.version !== '') {
             if (checkVersion(pack[filter.name], filter.version, filter.timeline)) return true;

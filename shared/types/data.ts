@@ -8,6 +8,8 @@ export type Stat = {
 export type History = {
     // TODO Change from any to Event type
     name: string;
+    xAxis: string;
+    lines: string[];
     events: any[];
 };
 

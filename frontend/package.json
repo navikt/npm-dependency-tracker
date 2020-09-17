@@ -48,6 +48,8 @@
         "nav-frontend-spinner-style": "^0.2.5",
         "nav-frontend-tabs": "^0.0.44",
         "nav-frontend-tabs-style": "^0.0.27",
+        "nav-frontend-toggle": "^0.0.40",
+        "nav-frontend-toggle-style": "^0.0.35",
         "nav-frontend-typografi": "^2.0.26",
         "nav-frontend-typografi-style": "^1.0.22",
         "prop-types": "^15.7.2",

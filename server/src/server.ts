@@ -5,13 +5,15 @@ const packages = require('../crawler/output/outputPackages.json');
 const raw = require('../crawler/output/outputRepos.json');
 import { filterByNames, filterByOptions, filterByPack, getRes, sortBy } from './generateRes';
 import {
+    depVekst,
     repoHistory,
     reposDeps,
     reposDevDeps,
     reposLang,
     reposN,
     reposNpackages,
-    reposPeerDeps
+    reposPeerDeps,
+    repoVekstPerM
 } from './stats';
 const PORT = 3001;
 
@@ -48,10 +50,14 @@ app.post('/filter', function (req, res) {
             reposNpackages(result, raw.length)
         ];
 
+        let history = [depVekst(result, req.body.packFilter)];
+
         result = result.map((repo) => RepoResult(repo));
         sortBy(result, req.body.nameFilter.sortby);
 
-        let history = [repoHistory(result)];
+        history.push(repoHistory(result));
+        history.push(repoVekstPerM(result));
+
         res.json({ repos: result, statistics: stats, history: history });
     } catch (e) {
         res.json({ repos: [], statistics: [], history: [] });

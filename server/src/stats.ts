@@ -1,6 +1,6 @@
-import { History, Repo, RepoResult, Stat } from '@nav-frontend/shared-types';
+import { History, PackFilter, Repo, RepoResult, Stat } from '@nav-frontend/shared-types';
 import moment from 'moment';
-import { sortBy } from './generateRes';
+import { inDep, sortBy } from './generateRes';
 
 export const reposN = (repos: Repo[]) => {
     return { name: 'Repos N', 0: ['Antall', repos.length.toString()] };
@@ -83,6 +83,7 @@ export const reposNpackages = (repos: Repo[], rawLength: number) => {
             count[`Andre`] = 1 + (count[`Andre`] || 0);
         }
     }
+    count['Totalt'] = count['En'] + count['To'] + count['Tre'] + count['Andre'];
     count['Ingen'] = rawLength - repos.length + (count['Ingen'] || 0);
     const sortedPack: [string, number][] = Object.entries(count)
         .sort((a, b) => a[1] - b[1])
@@ -92,7 +93,8 @@ export const reposNpackages = (repos: Repo[], rawLength: number) => {
 };
 
 export const repoHistory = (repos: RepoResult[]) => {
-    if (repos.length === 0) return null;
+    if (repos.length === 0)
+        return { name: 'Repo-vekst', xAxis: '', lines: [], events: [] } as History;
     const newRepos = [...repos];
     sortBy(newRepos, 'opprettet');
     newRepos.reverse();
@@ -120,5 +122,174 @@ export const repoHistory = (repos: RepoResult[]) => {
         }
         day.add(1, 'day');
     }
-    return { name: 'Repo-vekst', events: events } as History;
+    return { name: 'Repo vekst', xAxis: 'månede', lines: ['antall'], events: events } as History;
+};
+
+export const repoVekstPerM = (repos: RepoResult[]) => {
+    if (repos.length === 0)
+        return { name: 'Repo-per-m', xAxis: '', lines: [], events: [] } as History;
+    const newRepos = [...repos];
+    sortBy(newRepos, 'opprettet');
+    newRepos.reverse();
+
+    let count = 0,
+        i = 0;
+    let day = moment(newRepos[0].created);
+    let events: any[] = [];
+
+    const tomorrow = moment().add(1, 'day');
+    while (day.isBefore(tomorrow)) {
+        for (i; i < newRepos.length; ) {
+            if (moment(newRepos[i].created).isSame(day, 'month')) {
+                count++;
+                i++;
+                continue;
+            } else {
+                break;
+            }
+        }
+        if (count > 0) {
+            events.push({ månede: day.format('MM/YY'), antall: count });
+            count = 0;
+        }
+        day.add(1, 'day');
+    }
+    return {
+        name: 'Repo per månede',
+        xAxis: 'månede',
+        lines: ['antall'],
+        events: events
+    } as History;
+};
+
+const inPackage = (pack: any, filter: PackFilter) => {
+    let peerDep = pack.peerDependencies;
+    let devDep = pack.devDependencies;
+    let dep = pack.dependencies;
+
+    let valid = false;
+    if (peerDep) {
+        valid = inDep(peerDep, filter) ? true : valid;
+    }
+    if (devDep) {
+        valid = inDep(devDep, filter) ? true : valid;
+    }
+    if (dep) {
+        valid = inDep(dep, filter) ? true : valid;
+    }
+    return valid;
+};
+
+const depsPerRepo = (repo: Repo, filter: PackFilter[]) => {
+    if (repo.commits.length === 0)
+        return { name: repo.name, xAxis: '', lines: [], events: [] } as History;
+
+    let events: any[] = [];
+    let i = 0;
+
+    let counter = new Array(filter.length).fill(0);
+    let res = counter.slice();
+
+    const tomorrow = moment().add(1, 'day');
+    let day = moment(repo.commits[0].date);
+    while (day.isBefore(tomorrow)) {
+        for (i; i < repo.commits.length; ) {
+            if (moment(repo.commits[i].date).isSame(day, 'month')) {
+                for (const pack of repo.commits[i].packages) {
+                    filter.forEach((fil, i) => {
+                        if (inPackage(pack, fil)) {
+                            counter[i] += 1;
+                        }
+                    });
+                }
+                res = counter.slice();
+                counter = new Array(filter.length).fill(0);
+                i++;
+                continue;
+            } else {
+                break;
+            }
+        }
+        // dynamically add elements to obj
+        let obj: { [key: string]: string } = { månede: day.format('MM/YY') };
+        filter.forEach((fil, i) => {
+            obj[fil.name] = res[i];
+        });
+        events.push(obj);
+
+        day.add(1, 'month');
+    }
+
+    return {
+        name: repo.name,
+        xAxis: 'månede',
+        lines: filter.map((fil) => {
+            return fil.name;
+        }),
+        events: events
+    } as History;
+};
+
+const addObj = (events: any[], obj: { [key: string]: string }) => {
+    let found = false;
+    let newEvents = events.slice();
+    for (const ev of events) {
+        if (Object.keys(obj)[0] in ev && ev[Object.keys(obj)[0]] === obj[Object.keys(obj)[0]]) {
+            let first = true;
+            for (const key in obj) {
+                if (first) {
+                    first = false;
+                    continue;
+                }
+                ev[key] += obj[key];
+            }
+            found = true;
+            break;
+        }
+    }
+    if (!found) {
+        let newObj: { [key: string]: string } = {};
+        if (moment(`01/${obj['månede']}`, 'DD-MM-YY').isSame(moment(), 'month')) return newEvents;
+        for (const key in obj) {
+            newObj[key] = obj[key];
+        }
+        newEvents.push(newObj);
+    }
+
+    return newEvents;
+};
+
+export const depVekst = (repos: Repo[], filter: PackFilter[]) => {
+    if (repos.length === 0 || filter.length === 0)
+        return { name: 'Pakker', xAxis: '', lines: [], events: [] } as History;
+
+    // semver.gt(packV, depV)
+
+    let history: History[] = [];
+    repos.forEach((repo) => {
+        history.push(depsPerRepo(repo, filter));
+    });
+
+    let sumEvents: any[] = [];
+
+    for (const e of history) {
+        for (const event of e.events) {
+            sumEvents = addObj(sumEvents, event);
+        }
+    }
+    sumEvents.sort((a, b) => {
+        const mA = moment(`01/${a['månede']}`, 'DD-MM-YY');
+        const mB = moment(`01/${b['månede']}`, 'DD-MM-YY');
+        if (mA < mB) return -1;
+        if (mA > mB) return 1;
+        else return 0;
+    });
+    return {
+        name: 'Pakker',
+        xAxis: 'månede',
+        lines: filter.map((fil) => {
+            return fil.name;
+        }),
+        events: sumEvents
+    } as History;
 };

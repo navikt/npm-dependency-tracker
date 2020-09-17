@@ -34,7 +34,7 @@ type AppState = {
 
 const initialState: AppState = {
     serverData: { repos: [], statistics: [], history: [] },
-    nameFilter: { name: '', sortby: '', withWebsite: false, isPrivate: false },
+    nameFilter: { name: '', sortby: '', withWebsite: false, isPrivate: false, isArchived: false },
     packageFilter: []
 };
 export const initialLoad = (): AppActions => {

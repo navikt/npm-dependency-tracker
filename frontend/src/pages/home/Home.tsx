@@ -28,7 +28,7 @@ const Home = () => {
     const packFilter = useSelector((state: RootState) => state.AppReducer.packfilter);
     const nameFilter = useSelector((state: RootState) => state.AppReducer.namefilter);
 
-    const [tabs, setTabs] = useState(1);
+    const [tabs, setTabs] = useState(0);
 
     useEffect(() => {
         dispatch(initialLoad());

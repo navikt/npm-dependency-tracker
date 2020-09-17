@@ -3,6 +3,7 @@ type NameFilter = {
     sortby: string;
     withWebsite: boolean;
     isPrivate: boolean;
+    isArchived: boolean;
 };
 
 export default NameFilter;

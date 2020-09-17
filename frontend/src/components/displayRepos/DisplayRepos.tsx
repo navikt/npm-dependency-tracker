@@ -24,7 +24,8 @@ export const DisplayRepos = () => {
         name: '',
         sortby: '',
         withWebsite: false,
-        isPrivate: false
+        isPrivate: false,
+        isArchived: false
     });
     const [loadCount, setLoadCount] = useState<number>(1);
     const [displayData, setdisplayData] = useState<RepoResult[]>([]);
@@ -91,6 +92,14 @@ export const DisplayRepos = () => {
                             setNameFilter({ ...nameFilter, isPrivate: !nameFilter.isPrivate })
                         }
                         label="Privat"
+                    />
+                    <Checkbox
+                        checked={nameFilter.isArchived}
+                        className="repos--rightMargin"
+                        onChange={(e) =>
+                            setNameFilter({ ...nameFilter, isArchived: !nameFilter.isArchived })
+                        }
+                        label="Arkivert"
                     />
                 </span>
             </div>
