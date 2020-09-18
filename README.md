@@ -1,6 +1,6 @@
 <h1 align="center">
     <img src="https://www.nav.no/_/asset/no.nav.navno:1575554845/img/navno/logo.svg" />
-    <br/>Pakkebruk i Nav
+    <br/>npm-dependency-tracker
 </h1>
 
 <div align="center">
