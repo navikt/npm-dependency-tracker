@@ -24,7 +24,7 @@ Går gjennom alle repos i en github org og henter ut alle dependencies og commit
 
 ### App
 
-Genererer lesbar data og statistikk som blir servert på en fronten-løsning
+Genererer lesbar data og statistikk som blir servert på en frontend-løsning
 
 `./server/src`
 `./frontend`
