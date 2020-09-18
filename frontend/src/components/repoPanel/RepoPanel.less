@@ -1,0 +1,33 @@
+@import (reference) '~nav-frontend-core/less/_variabler';
+
+.repoPanel {
+    &__panel {
+        margin-bottom: 1rem;
+    }
+
+    &__tags {
+        font-size: 0.875rem;
+        margin-right: 6px;
+        padding: 0px 4px !important;
+        &--private {
+            background-color: @navOransjeLighten20 !important;
+            border: 1px solid @navOransjeDarken40 !important;
+        }
+        &--size {
+            background-color: @navBlaLighten80!important;
+            border: 1px solid @navBlaLighten20!important;
+        }
+        &--subs {
+            background-color: @navLillaLighten60!important;
+            border: 1px solid @navLilla!important;
+        }
+        &--lang {
+            background-color: @navLimeGronnLighten60!important;
+            border: 1px solid @navLimeGronnDarken20!important;
+        }
+        &--icon {
+            margin-bottom: -0.125rem;
+            margin-left: 0.25rem;
+        }
+    }
+}

@@ -1,0 +1,42 @@
+.filter {
+    &__headline {
+        width: 1200px;
+        display: flex;
+    }
+    &__preset {
+        margin-left: auto;
+        .skjemaelement__label {
+            display: inline;
+            margin-right: 16px;
+        }
+    }
+    &__logo {
+        height: 24px;
+        padding-right: 16px;
+    }
+    &__version {
+        width: 100%;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+    }
+    &__options {
+        display: flex;
+    }
+    &__knapp {
+        height: max-content;
+        margin-top: 30px !important;
+    }
+    &__container {
+        min-height: 50px;
+        max-height: 200px;
+        overflow: auto;
+        list-style-type: none;
+    }
+
+    &__filterPanel {
+        display: flex;
+        justify-content: space-evenly;
+        width: 65%;
+    }
+}

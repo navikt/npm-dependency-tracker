@@ -5,4 +5,11 @@ build
 .env
 tmp_repos
 output.json
+backend/output/**
 .vscode
+frontend/src/output
+output
+navikt-repos
+lib
+shared/lib/**
+shared/lib

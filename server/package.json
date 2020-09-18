@@ -1,0 +1,52 @@
+{
+    "name": "crawler-server",
+    "version": "0.1.0",
+    "description": "Server for Package-crawler",
+    "main": "server.ts",
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "ts": "tsc",
+        "start-server": "ts-node-dev src/server.ts",
+        "start-crawler": "tsc && node --max-old-space-size=4092 ./build/crawler/index.js"
+    },
+    "dependencies": {
+        "@nav-frontend/shared-types": "0.0.1",
+        "@types/express": "^4.17.8",
+        "current-git-branch": "^1.1.0",
+        "express": "^4.17.1",
+        "git-blame": "^1.4.0",
+        "git-clone": "^0.1.0",
+        "git-parse": "^1.0.4",
+        "gitdiff-parser": "^0.2.2",
+        "gitlog": "^4.0.0",
+        "isomorphic-git": "^1.7.4",
+        "mkdirp": "^1.0.4",
+        "moment": "^2.28.0",
+        "node-cmd": "^3.0.0",
+        "parse-diff": "^0.7.0",
+        "tiny-glob": "^0.2.6",
+        "ts-node-dev": "1.0.0-pre.62",
+        "what-the-diff": "^0.6.0",
+        "why-is-node-running": "^2.2.0"
+    },
+    "devDependencies": {
+        "@types/node": "^14.0.25",
+        "@types/request": "^2.48.5",
+        "@types/rimraf": "^3.0.0",
+        "@types/underscore": "^1.10.14",
+        "chalk": "4.1.0",
+        "cli-progress": "^3.8.2",
+        "dotenv": "^8.2.0",
+        "download-git-repo": "^3.0.2",
+        "fast-glob": "^3.2.4",
+        "git-clone": "^0.1.0",
+        "glob": "^7.1.6",
+        "p-limit": "^3.0.2",
+        "prettier": "2.0.5",
+        "request": "^2.88.0",
+        "rimraf": "^3.0.2",
+        "typescript": "^3.9.7",
+        "underscore": "^1.10.2"
+    }
+}

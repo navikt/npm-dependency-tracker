@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "commonjs",
+        "lib": ["es2017"],
+        "allowJs": false,
+        "outDir": "./lib",
+        "rootDir": "../shared",
+        "strict": true,
+        "noImplicitAny": true,
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "node",
+        "isolatedModules": false,
+        "jsx": "react",
+        "declaration": true,
+        "preserveConstEnums": true
+    },
+    "include": ["../shared"],
+    "exclude": ["./node_modules", "../shared/lib"]
+}

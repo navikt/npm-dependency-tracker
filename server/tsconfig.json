@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "commonjs",
+        "lib": ["es2017"],
+        "allowJs": true,
+        "outDir": "./build",
+        "rootDir": "../server",
+        "strict": true,
+        "noImplicitAny": true,
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "node",
+        "isolatedModules": false,
+        "jsx": "react"
+    },
+    "include": ["../server"],
+    "exclude": ["./node_modules", "../server/build", "./crawler/output", "./crawler/navikt-repos"]
+}
