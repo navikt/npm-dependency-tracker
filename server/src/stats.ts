@@ -1,4 +1,11 @@
-import { History, PackFilter, Repo, RepoResult, Stat } from '@nav-frontend/shared-types';
+import {
+    History,
+    PackFilter,
+    Repo,
+    RepoResult,
+    Stat,
+    VersionLimit
+} from '@nav-frontend/shared-types';
 import moment from 'moment';
 import { inDep, sortBy } from './generateRes';
 
@@ -198,7 +205,7 @@ const depsPerRepo = (repo: Repo, filter: PackFilter[]) => {
                 for (const pack of repo.commits[i].packages) {
                     filter.forEach((fil, i) => {
                         if (inPackage(pack, fil)) {
-                            counter[i] += 1;
+                            counter[i] = 1;
                         }
                     });
                 }
@@ -287,9 +294,13 @@ export const depVekst = (repos: Repo[], filter: PackFilter[]) => {
     return {
         name: 'Pakker',
         xAxis: 'månede',
-        lines: filter.map((fil) => {
-            return fil.name;
-        }),
+        lines: filter
+            .filter((fil) => {
+                if (fil.version === '') return true;
+            })
+            .map((fil) => {
+                return fil.name;
+            }),
         events: sumEvents
     } as History;
 };

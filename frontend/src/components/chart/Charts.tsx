@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import {
     ResponsiveContainer,
@@ -10,18 +10,10 @@ import {
     Tooltip
 } from 'recharts';
 import { RootState } from '../../redux/creator';
-import { ToggleGruppe, ToggleKnappPureProps } from 'nav-frontend-toggle';
 import { Undertittel } from 'nav-frontend-typografi';
 
 import './Chart.less';
 import { guid } from 'nav-frontend-js-utils';
-
-const indexOfpressed = (i: ToggleKnappPureProps[]) => {
-    for (let x = 0; x < i.length; x++) {
-        if (i[x].pressed) return x;
-    }
-    return -1;
-};
 
 type renderProps = {
     data: any[];
@@ -48,8 +40,6 @@ const ChartRendrer = (props: renderProps) => {
 
 const Chart = () => {
     const history = useSelector((state: RootState) => state.AppReducer.server.history);
-    const [pressed, setPressed] = useState(0);
-    console.log(pressed);
     return (
         <div className="chart">
             {history.length === 0 ? (

@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import classnames from 'classnames';
-import { Undertittel } from 'nav-frontend-typografi';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import InfiniteScroll from 'react-infinite-scroller';
 
@@ -28,6 +27,7 @@ export const DisplayRepos = () => {
         isArchived: false
     });
     const [loadCount, setLoadCount] = useState<number>(1);
+    const [reverse, setReverse] = useState<boolean>(false);
     const [displayData, setdisplayData] = useState<RepoResult[]>([]);
 
     let data = useSelector((state: RootState) => state.AppReducer.server.repos);
@@ -45,12 +45,15 @@ export const DisplayRepos = () => {
     }, [dispatch, nameFilter]);
 
     useEffect(() => {
-        const newData = data.filter((x, y) => {
+        let d = [...data];
+        if (reverse) d.reverse();
+        const newData = d.filter((x, y) => {
             if (y <= loadCount * 30) return true;
             return false;
         });
+
         setdisplayData(newData);
-    }, [data, loadCount]);
+    }, [data, loadCount, reverse]);
     return (
         <Fragment>
             <div className={classnames('repos__filters', clsGrid(7))}>
@@ -99,7 +102,12 @@ export const DisplayRepos = () => {
                         onChange={(e) =>
                             setNameFilter({ ...nameFilter, isArchived: !nameFilter.isArchived })
                         }
-                        label="Arkivert"
+                        label="Ikke Arkivert"
+                    />
+                    <Checkbox
+                        className="repos--rightMargin"
+                        onChange={(e) => setReverse(!reverse)}
+                        label="Flip list"
                     />
                 </span>
             </div>

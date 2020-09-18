@@ -33,13 +33,14 @@ const Home = () => {
     useEffect(() => {
         dispatch(initialLoad());
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dispatch]);
+    }, []);
 
     useEffect(() => {
         if (firstName.current) {
             firstName.current = false;
             return;
         }
+        console.count('namefilter');
         dispatch(update());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [nameFilter]);
