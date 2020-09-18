@@ -1,49 +1,62 @@
 <h1 align="center">
     <img src="https://www.nav.no/_/asset/no.nav.navno:1575554845/img/navno/logo.svg" />
-    <br/>package-crawler
+    <br/>Pakkebruk i Nav
 </h1>
 
 <div align="center">
     <p>
-        Crawler for generering av data og statistikk for designsystemet. Vil i første omgang finne alle dependencies brukt i NAV sine repos og skrive dataen til en outputfil for videre prosessering.
+        Generering av data og statistikk for designsystemet.
     </p>
     <p>
       <a href="https://github.com/navikt/package-crawler/projects/1">
-          <img src="https://progress-bar.dev/20?title=Completed" />
+          <img src="https://progress-bar.dev/60?title=Completed" />
       </a>
     </p>
 </div>
 
 ## Funksjon
 
-Går gjennom alle repos i en github org og henter ut alle dependencies de bruker. Løser dette ved å laste ned alle repoene og gjennomgå dem lokalt.
-For Designsystemet sitt bruk går den gjennom alle repoene i `navikt` organisasjonen og henter ut dependencies som blir brukt.
+### Crawler
+
+Går gjennom alle repos i en github org og henter ut alle dependencies og commits der dependencies er endret. Laster ned alle repoene lokalt så trenger ~22GB plass på egen maskin. Generert output vil være på ~400MB
+
+`./server/crawler`
+
+### App
+
+Genererer lesbar data og statistikk som blir servert på en fronten-løsning
+
+`./server/src`
+`./frontend`
 
 ## Bakgrunn
 
-Vi i designsystemet ønsker mer informasjon om bruken av våre komponenter innenfor NAV, samt hvordan vi kan forbedre bruken og brukeropplevelsen rundt våre komponenter. For å gjøre dette trengs det statistikk og data.
+Vi i designsystemet ønsker mer informasjon om bruken av våre komponenter innenfor NAV, samt hvordan vi kan forbedre bruken og brukeropplevelsen rundt våre komponenter.
 
 ## Kjøring av crawler
 
-1. `Installer Node.js, yarn og typescript lokalt om ikke allerede gjort.`
-2. `Konfiguer config.ts for endring av org, blacklists etc`
-3. `Lag en .env fil i root og sett variablene for TOKEN, AGENT og ORG. (https://github.com/motdotla/dotenv)`
-4. `yarn install`
-5. `tsc`
-6. `yarn run crawler`
+1. `Konfiguer config.ts for endring av org, blacklists etc`
+2. `Lag en .env fil i server og sett variablene for TOKEN, AGENT, ORG og NAME. (https://github.com/motdotla/dotenv)`
+3. `yarn install`
+4. `yarn run crawler`
 
+    Note: Tar ca 30-40 min første gang man kjører, etter det tar det bare ~3min
 
 ### .env eksempel
+
 ```
 TOKEN=GITHUB_OAUTH_TOKEN
 AGENT=NAV-Designsystemet-crawler
 ORG=navikt
+NAME=GITHUB-USER-NAME
 ```
 
-## Kjøring av webside
+## Kjøring av app
 
-1. yarn install
-2. yarn run website
+1. `yarn install`
+2. `yarn run dev`
+
+    Note: Crawler må være kjørt før appen vil fungere
 
 ## Kontakt
 
