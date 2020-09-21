@@ -1,11 +1,4 @@
-import {
-    History,
-    PackFilter,
-    Repo,
-    RepoResult,
-    Stat,
-    VersionLimit
-} from '@nav-frontend/shared-types';
+import { History, PackFilter, Repo, RepoResult } from '@nav-frontend/shared-types';
 import moment from 'moment';
 import { inDep, sortBy } from './generateRes';
 

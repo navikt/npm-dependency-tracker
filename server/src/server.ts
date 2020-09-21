@@ -1,7 +1,6 @@
-import { RepoResult, ServerResults } from '@nav-frontend/shared-types';
+import { RepoResultFactory, ServerResults } from '@nav-frontend/shared-types';
 import express = require('express');
 const app: express.Application = express();
-const packages = require('../crawler/output/outputPackages.json');
 const raw = require('../crawler/output/outputRepos.json');
 import { filterByNames, filterByOptions, filterByPack, getRes, sortBy } from './generateRes';
 import {
@@ -52,7 +51,7 @@ app.post('/filter', function (req, res) {
 
         let history = [depVekst(result, req.body.packFilter)];
 
-        result = result.map((repo) => RepoResult(repo));
+        result = result.map((repo) => RepoResultFactory(repo));
         sortBy(result, req.body.nameFilter.sortby);
 
         history.push(repoHistory(result));

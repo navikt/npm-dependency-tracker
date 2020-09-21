@@ -1,11 +1,19 @@
-import { NameFilter, PackFilter, Repo, RepoResult, VersionLimit } from '@nav-frontend/shared-types';
+import {
+    NameFilter,
+    PackFilter,
+    Repo,
+    VersionLimit,
+    RepoResult,
+    RepoResultFactory
+} from '@nav-frontend/shared-types';
+
 const semver = require('semver');
 import semverRegex from 'semver-regex';
 
 export const getRes = (data: Repo[]): RepoResult[] => {
     let res: RepoResult[] = [];
     data.forEach((repo) => {
-        res.push(RepoResult(repo));
+        res.push(RepoResultFactory(repo));
     });
     data.sort((a, b) => a.name.localeCompare(b.name));
     return res;

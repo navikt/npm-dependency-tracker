@@ -1,5 +1,5 @@
 require('dotenv').config();
-const log = require('why-is-node-running'); // should be your first require
+// const log = require('why-is-node-running'); // should be your first require
 import { Repo } from '@nav-frontend/shared-types';
 import * as util from './util';
 

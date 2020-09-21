@@ -1,5 +1,25 @@
-declare module GithubApi {
+export declare module CommitData {
+    export interface FilePaths {
+        path?: string;
+        oldPath?: string;
+        newPath?: string;
+    }
 
+    export interface Root {
+        hash: string;
+        authorName: string;
+        authorEmail: string;
+        date: string;
+        message: string;
+        filesAdded: FilePaths[];
+        filesDeleted: FilePaths[];
+        filesModified: FilePaths[];
+        filesRenamed: FilePaths[];
+        packages: any[];
+    }
+}
+
+export declare module GithubApi {
     export interface Owner {
         login: string;
         id: number;
@@ -129,7 +149,14 @@ declare module GithubApi {
         network_count: number;
         subscribers_count: number;
     }
-
 }
 
-export default GithubApi;
+export type Repo = {
+    name: string;
+    lastCommit: string;
+    cloneUrl: string;
+    branch: string;
+    packages: any[];
+    commits: CommitData.Root[];
+    rawFetch: GithubApi.Root;
+};

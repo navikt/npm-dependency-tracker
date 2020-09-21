@@ -8,7 +8,8 @@
         "crawler": "yarn workspace crawler-server run start-crawler",
         "server": "yarn workspace crawler-server run start-server",
         "setup-shared": "yarn workspace @nav-frontend/shared-types run transpile && yarn install",
-        "dev": "yarn run setup-shared && concurrently \"yarn run server\" \"yarn run website\""
+        "dev": "yarn run setup-shared && concurrently \"yarn run server\" \"yarn run website\"",
+        "test": "jest"
     },
     "author": "NAV",
     "license": "MIT",
@@ -19,6 +20,10 @@
         "shared"
     ],
     "devDependencies": {
-        "concurrently": "5.3.0"
+        "@types/jest": "^26.0.14",
+        "concurrently": "5.3.0",
+        "jest": "^26.4.2",
+        "ts-jest": "^26.4.0",
+        "typescript": "^4.0.3"
     }
 }
