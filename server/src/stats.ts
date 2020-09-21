@@ -1,6 +1,6 @@
 import { History, PackFilter, Repo, RepoResult } from '@nav-frontend/shared-types';
 import moment from 'moment';
-import { inDep, sortBy } from './generateRes';
+import { inDep, sortBy } from './results';
 
 export const reposN = (repos: Repo[]) => {
     return { name: 'Repos N', 0: ['Antall', repos.length.toString()] };

@@ -19,7 +19,7 @@ export type RepoResult = {
 
 export function RepoResultFactory(repo: Repo): RepoResult {
     return {
-        name: repo.name,
+        name: repo.name.replace('navikt/', ''),
         url: repo.rawFetch.html_url,
         language: repo.rawFetch.language,
         packageN: repo.packages.length,
