@@ -90,7 +90,8 @@ export const reposNpackages = (repos: Repo[], rawLength: number) => {
             count[`Andre`] = 1 + (count[`Andre`] || 0);
         }
     }
-    count['Totalt'] = count['En'] + count['To'] + count['Tre'] + count['Andre'];
+    count['Totalt'] =
+        (count['En'] || 0) + (count['To'] || 0) + (count['Tre'] || 0) + (count['Andre'] || 0);
     count['Ingen'] = rawLength - repos.length + (count['Ingen'] || 0);
     const sortedPack: [string, number][] = Object.entries(count)
         .sort((a, b) => a[1] - b[1])
