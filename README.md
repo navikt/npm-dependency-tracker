@@ -25,24 +25,14 @@ Går gjennom alle repos i en github org og henter ut alle dependencies og commit
 ### App
 
 Genererer lesbar data og statistikk som blir servert på en frontend-løsning
-`frontend`
 
-> `yarn run dev` vil kjøre server og frontend separat for development
+> `yarn run prod` vil generere et prod-build og serveren vil servere react-siden gjennom expressjs. Vil starte en scheduler som oppdaterer dataen ved bruk av en crawler en gang om dagen, samt når appen starter.
 
-> `yarn run prod` vil generere et prod-build og serveren vil servere react-siden gjennom expressjs.
+Note: Hvis det er første gang du kjører appen vil dette ta 30+ minutter første gang, etter det 3-4 minutter.
 
 ## Bakgrunn
 
 Vi i designsystemet ønsker mer informasjon om bruken av våre komponenter innenfor NAV, samt hvordan vi kan forbedre bruken og brukeropplevelsen rundt våre komponenter.
-
-## Kjøring av crawler
-
-1. `Konfiguer config.ts for endring av org, blacklists etc`
-2. `Lag en .env fil i server og sett variablene for TOKEN, AGENT, ORG og NAME. (https://github.com/motdotla/dotenv)`
-3. `yarn install`
-4. `yarn run crawler`
-
-    Note: Tar ca 30-40 min første gang man kjører, etter det tar det bare ~3min
 
 ### .env eksempel
 
@@ -56,9 +46,7 @@ NAME=GITHUB-USER-NAME
 ## Kjøring av app
 
 1. `yarn install`
-2. `yarn run dev`
-
-    Note: Crawler må være kjørt før appen vil servere noe data
+2. `yarn run prod`
 
 ## Kontakt
 

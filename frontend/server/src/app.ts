@@ -34,9 +34,9 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
+// TODO: la brukeren velge om de vil oppdatere når serveren starter?
 app.on('start-cronjob', () => {
-    console.log(cron.validate('0 0 */6 * * *'));
-    const cronJob = cron.schedule('0 0 */6 * * *', function () {
+    const job = () => {
         console.log('Starting Cron job');
         if (runningCrawler) return;
         try {
@@ -56,7 +56,13 @@ app.on('start-cronjob', () => {
             runningCrawler = false;
             console.log('error running crawler');
         }
+    };
+
+    // job starts at 06.00
+    const cronJob = cron.schedule('0 6 * * *', function () {
+        job();
     });
+    job();
     cronJob.start();
 });
 
@@ -91,7 +97,6 @@ app.get('/initial-load', function (req, res) {
         res.json(result);
     }
 });
-app.put('/run-crawler-manually', async function (req, res) {});
 
 app.post('/filter', function (req, res) {
     let result;

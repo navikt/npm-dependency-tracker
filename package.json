@@ -9,7 +9,6 @@
         "server:dev": "yarn workspace frontend run start-server:dev",
         "server:prod": "yarn workspace frontend run start-server:prod",
         "setup-shared": "yarn workspace @nav-frontend/shared-types run transpile && yarn install",
-        "dev": "yarn run setup-shared && concurrently \"yarn run server:dev\" \"yarn run website\"",
         "prod": "yarn run setup-shared && yarn run server:prod",
         "test": "jest --runInBand --watch "
     },
