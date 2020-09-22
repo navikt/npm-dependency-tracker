@@ -11,6 +11,7 @@ import { RootState } from '../../redux/creator';
 import { nameFilterSlice } from '../../redux/appState';
 
 import './DisplayRepos.less';
+import { Undertittel } from 'nav-frontend-typografi';
 
 const clsGrid = (n: number) => {
     return classnames(`mdc-layout-grid__cell`, `mdc-layout-grid__cell--span-${n}`);
@@ -119,9 +120,13 @@ export const DisplayRepos = () => {
                 loader={<NavFrontendSpinner key="-1" className="repos__spinner" />}
                 className="repos__scroller"
             >
-                {displayData.map((repo) => {
-                    return <RepoPanel key={repo.name} className={clsGrid(7)} repo={repo} />;
-                })}
+                {data.length === 0 ? (
+                    <Undertittel className="repos__noData">Ingen data</Undertittel>
+                ) : (
+                    displayData.map((repo) => {
+                        return <RepoPanel key={repo.name} className={clsGrid(7)} repo={repo} />;
+                    })
+                )}
             </InfiniteScroll>
         </Fragment>
     );

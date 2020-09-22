@@ -1,9 +1,10 @@
+/* eslint-disable import/first */
 require('dotenv').config();
 // const log = require('why-is-node-running'); // should be your first require
 import { Repo } from '@nav-frontend/shared-types';
 import * as util from './util';
 
-import { loadRepos, clone, parse, cleanCommits, save, saveCurrent } from './repoHandler';
+import { loadRepos, clone, parse, save } from './repoHandler';
 
 const run = async () => {
     let repos: Repo[] | undefined = await loadRepos();
@@ -20,6 +21,7 @@ const run = async () => {
     const parsing = await parse(repos);
     let errors = update.concat(parsing);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     errors.length > 0 ? console.log('Errors: ' + errors) : null;
 
     save(repos);
@@ -33,13 +35,12 @@ const run = async () => {
  * ? Add reponame to reject and rum them again?
  * ? Only when X repos fail?
  */
-const execute = async () => {
+export const execute = async () => {
+    util.checkEnv();
     const apprunner = await run();
     if (apprunner === -1) {
         console.log('Runner failed!');
     }
 };
 
-util.checkEnv();
-
-execute();
+// execute();

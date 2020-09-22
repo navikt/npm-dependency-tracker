@@ -8,7 +8,7 @@
         "workspace-build": "craco build",
         "start-server:dev": "cd server && yarn run start-server",
         "start-server:prod": "yarn run build && (cd server && yarn run start-server)",
-        "start-crawler": "cd server && start-crawler"
+        "start-crawler": "cd server && yarn run start-crawler"
     },
     "eslintConfig": {
         "extends": "react-app"
@@ -63,6 +63,7 @@
         "nav-frontend-toggle-style": "^0.0.35",
         "nav-frontend-typografi": "^2.0.26",
         "nav-frontend-typografi-style": "^1.0.22",
+        "node-cron": "^2.0.3",
         "prop-types": "^15.7.2",
         "react": "^16.13.1",
         "react-collapse": "^5.0.1",

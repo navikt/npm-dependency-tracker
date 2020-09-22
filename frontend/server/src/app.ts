@@ -11,16 +11,19 @@ import {
     reposPeerDeps,
     repoVekstPerM
 } from './stats';
-import { exit } from 'process';
+import { execute } from '../crawler/index';
+
 import express = require('express');
 var fs = require('fs');
 const path = require('path');
+const cron = require('node-cron');
 
 const app: express.Application = express();
 
 let localData: any[] = [];
+let runningCrawler: boolean = false;
 
-app.use(express.static(path.join(__dirname, '../..', 'build')));
+app.use(express.static(path.join(__dirname, '../../..', 'build')));
 app.use(express.static('public'));
 
 app.use((req, res, next) => {
@@ -31,18 +34,47 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-app.on('ready', () => {
-    console.log('SERVER IS READY');
-    let dir = (__dirname + '/output/outputRepos.json').replace('src', 'crawler');
+app.on('start-cronjob', () => {
+    console.log(cron.validate('0 0 */6 * * *'));
+    const cronJob = cron.schedule('0 0 */6 * * *', function () {
+        console.log('Starting Cron job');
+        if (runningCrawler) return;
+        try {
+            runningCrawler = true;
+            execute()
+                .then(() => {
+                    console.log('Updated data with crawler!');
+                    app.emit('reload-data', null);
+                    runningCrawler = false;
+                    console.info('Cron job completed');
+                })
+                .catch((e: Error) => {
+                    runningCrawler = false;
+                    console.log('error running crawler');
+                });
+        } catch (e) {
+            runningCrawler = false;
+            console.log('error running crawler');
+        }
+    });
+    cronJob.start();
+});
+
+app.on('reload-data', () => {
+    // TODO: bedre pathing til data
+    let dir = (__dirname + '/output/outputRepos.json').replace('build/src', 'crawler');
     try {
         fs.readFile(dir, 'utf-8', (err: Error, data: any) => {
-            if (err) throw err;
+            if (err) {
+                console.log('Finner ikke generert data fra crawler');
+                return;
+            }
             localData = JSON.parse(data);
             localData.sort((a, b) => a.name.localeCompare(b.name));
+            console.log('Successfull load/reload of data');
         });
     } catch (error) {
-        console.log(error);
-        exit(1);
+        console.log('Error: fs.readFile in app.ts');
     }
 });
 
@@ -59,6 +91,7 @@ app.get('/initial-load', function (req, res) {
         res.json(result);
     }
 });
+app.put('/run-crawler-manually', async function (req, res) {});
 
 app.post('/filter', function (req, res) {
     let result;

@@ -20,14 +20,16 @@
 
 Går gjennom alle repos i en github org og henter ut alle dependencies og commits der dependencies er endret. Laster ned alle repoene lokalt så trenger ~22GB plass på egen maskin. Generert output vil være på ~400MB
 
-`./server/crawler`
+`server/crawler`
 
 ### App
 
 Genererer lesbar data og statistikk som blir servert på en frontend-løsning
+`frontend`
 
-`./server/src`
-`./frontend`
+> `yarn run dev` vil kjøre server og frontend separat for development
+
+> `yarn run prod` vil generere et prod-build og serveren vil servere react-siden gjennom expressjs.
 
 ## Bakgrunn
 
@@ -56,7 +58,7 @@ NAME=GITHUB-USER-NAME
 1. `yarn install`
 2. `yarn run dev`
 
-    Note: Crawler må være kjørt før appen vil fungere
+    Note: Crawler må være kjørt før appen vil servere noe data
 
 ## Kontakt
 
