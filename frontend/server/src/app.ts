@@ -1,9 +1,4 @@
-import { RepoResultFactory, ServerResults, Repo } from '@nav-frontend/shared-types';
-import express = require('express');
-import { exit } from 'process';
-const app: express.Application = express();
-var fs = require('fs');
-
+import { RepoResultFactory, ServerResults } from '@nav-frontend/shared-types';
 import { filterByNames, filterByOptions, filterByPack, getRes, sortBy } from './results';
 import {
     depVekst,
@@ -16,10 +11,19 @@ import {
     reposPeerDeps,
     repoVekstPerM
 } from './stats';
+import { exit } from 'process';
+import express = require('express');
+var fs = require('fs');
+const path = require('path');
+
+const app: express.Application = express();
 
 let localData: any[] = [];
 
-app.use(function (req, res, next) {
+app.use(express.static(path.join(__dirname, '../..', 'build')));
+app.use(express.static('public'));
+
+app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();

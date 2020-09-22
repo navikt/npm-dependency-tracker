@@ -3,12 +3,14 @@
     "version": "0.0.1",
     "npmClient": "yarn",
     "scripts": {
-        "website": "yarn workspace frontend run start",
         "website:build": "yarn workspace frontend run workspace-build",
-        "crawler": "yarn workspace crawler-server run start-crawler",
-        "server": "yarn workspace crawler-server run start-server",
+        "website": "yarn workspace frontend run start",
+        "crawler": "yarn workspace frontend run start-crawler",
+        "server:dev": "yarn workspace frontend run start-server:dev",
+        "server:prod": "yarn workspace frontend run start-server:prod",
         "setup-shared": "yarn workspace @nav-frontend/shared-types run transpile && yarn install",
-        "dev": "yarn run setup-shared && concurrently \"yarn run server\" \"yarn run website\"",
+        "dev": "yarn run setup-shared && concurrently \"yarn run server:dev\" \"yarn run website\"",
+        "prod": "yarn run setup-shared && yarn run server:prod",
         "test": "jest --runInBand --watch "
     },
     "author": "NAV",
@@ -16,7 +18,6 @@
     "private": true,
     "workspaces": [
         "frontend",
-        "server",
         "shared"
     ],
     "devDependencies": {

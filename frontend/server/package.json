@@ -1,0 +1,13 @@
+{
+    "name": "crawler-server",
+    "version": "0.1.0",
+    "description": "Server for Package-crawler",
+    "main": "server.ts",
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "ts": "tsc",
+        "start-server": "ts-node-dev src/server.ts",
+        "start-crawler": "tsc && node --max-old-space-size=4092 ./build/crawler/index.js"
+    }
+}

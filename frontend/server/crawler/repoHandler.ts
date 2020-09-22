@@ -83,7 +83,7 @@ export const clone = async (repos: Repo[]) => {
     let errors: string[] = [];
     const limiter = pLimit(config.concurrent);
 
-    let promisess: Promise<unknown>[] = repos.map((repo: Repo) => {
+    let promises: Promise<unknown>[] = repos.map((repo: Repo) => {
         return limiter(() =>
             Clone(
                 util.generateCloneUrl(repo.cloneUrl),
@@ -92,18 +92,18 @@ export const clone = async (repos: Repo[]) => {
         );
     });
 
-    await util.trackProgress(promisess, (p: number) => {});
+    await Promise.all(promises);
     return errors;
 };
 
 export const parse = async (repos: Repo[]) => {
     let errors: string[] = [];
     const limiter = pLimit(config.concurrent);
-    let promisess: Promise<unknown>[] = repos.map((repo: Repo) => {
+    let promises: Promise<unknown>[] = repos.map((repo: Repo) => {
         return limiter(async () => await Parse(repo).catch((url: string) => errors.push(url)));
     });
 
-    await util.trackProgress(promisess, (p: number) => {});
+    await Promise.all(promises);
     return errors;
 };
 

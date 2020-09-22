@@ -50,7 +50,7 @@ const Chart = () => {
                         if (his.lines.length === 0) return null;
                         else {
                             return (
-                                <div className="chart__content">
+                                <div key={guid()} className="chart__content">
                                     <Undertittel>{his.name}</Undertittel>
                                     <ChartRendrer
                                         data={his.events}
