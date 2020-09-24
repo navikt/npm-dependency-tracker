@@ -8,7 +8,7 @@
     "scripts": {
         "ts": "tsc",
         "start-server:dev": "ts-node-dev src/server.ts",
-        "start-server": "tsc && node --max-old-space-size=4092 ./build/src/server.js",
-        "start-crawler": "tsc && node --max-old-space-size=4092 ./build/crawler/index.js"
+        "start-server": "npx tsc && node --max-old-space-size=4092 ./build/src/server.js",
+        "start-crawler": "npx tsc && node --max-old-space-size=4092 ./build/crawler/index.js"
     }
 }
