@@ -1,0 +1,24 @@
+name: Build, push docker-image
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/dep-tracker:${{ github.sha }}
+
+jobs:
+
+  build:
+    name: Build and push Docker container
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and publish Docker image
+      env:
+        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+      run: |
+        docker build --tag ${IMAGE} .
+        echo "$GITHUB_TOKEN" | docker login docker.pkg.github.com -u ${{ github.repository }} --password-stdin
+        docker push ${IMAGE}
