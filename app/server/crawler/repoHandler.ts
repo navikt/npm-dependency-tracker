@@ -80,7 +80,7 @@ export const loadRepos = async () => {
 };
 
 export const clone = async (repos: Repo[]) => {
-    let errors: string[] = [];
+    let errors: Error[] = [];
     const limiter = pLimit(config.concurrent);
 
     let promises: Promise<unknown>[] = repos.map((repo: Repo) => {
@@ -88,7 +88,7 @@ export const clone = async (repos: Repo[]) => {
             Clone(
                 util.generateCloneUrl(repo.cloneUrl),
                 util.generateOutputDir(repo.name)
-            ).catch((url: string) => errors.push(url))
+            ).catch((url: Error) => errors.push(url))
         );
     });
 
@@ -97,33 +97,18 @@ export const clone = async (repos: Repo[]) => {
 };
 
 export const parse = async (repos: Repo[]) => {
-    let errors: string[] = [];
+    let errors: Error[] = [];
     const limiter = pLimit(config.concurrent);
     let promises: Promise<unknown>[] = repos.map((repo: Repo) => {
-        return limiter(async () => await Parse(repo).catch((url: string) => errors.push(url)));
+        return limiter(async () => await Parse(repo).catch((url: Error) => errors.push(url)));
     });
 
     await Promise.all(promises);
     return errors;
 };
 
-const cleanPackages = (repos: Repo[]) => {
-    repos.forEach((repo) => {
-        repo.commits = [];
-    });
-};
-
 export const save = (repos: Repo[]) => {
     writeData(repos, config.outputDir, config.outputReposName);
-};
-
-export const saveCurrent = (repos: Repo[]) => {
-    cleanPackages(repos);
-    let tmpRepos: Repo[] = [];
-    repos.forEach((repo) => {
-        if (repo.packages.length !== 0) tmpRepos.push(repo);
-    });
-    writeData(tmpRepos, config.outputDir, config.outputPackagesName);
 };
 
 export default Repo;

@@ -9,11 +9,11 @@ export const pull = (
     exec(`cd ${dir} && git pull`, (e: Error) => {
         if (e) {
             exec(`cd ${dir} && git rev-list --all -n 1`, (e: Error, data: string, out: string) => {
-                if (e) reject(dir);
+                if (e) reject(e);
                 if (out.length === 0) {
                     cb();
                 } else {
-                    reject(dir);
+                    reject(new Error('Error commands.ts l16'));
                 }
             });
         } else {
@@ -27,7 +27,7 @@ const clone = (url: string, dir: string) => {
         fs.access(dir, (err: Error) => {
             if (err) {
                 exec(`git clone ${url} ${dir}`, (e: Error) => {
-                    if (e) reject(url);
+                    if (e) reject(e);
                     resolve();
                 });
             } else {

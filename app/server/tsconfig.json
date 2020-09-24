@@ -18,5 +18,5 @@
         "jsx": "react"
     },
     "include": ["../server"],
-    "exclude": ["./node_modules", "../server/build", "./crawler/output", "./crawler/navikt-repos"]
+    "exclude": ["**/node_modules", "**/build", "**/output", "**/repositories"]
 }

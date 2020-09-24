@@ -6,10 +6,8 @@ export const userName = process.env['NAME'];
 
 export const gitApi = 'https://api.github.com/';
 export const concurrent = 50;
-export const outputReposName = 'outputRepos.json';
-export const outputDataName = 'outputData.json';
-export const outputPackagesName = 'outputPackages.json';
-export const outputDir = 'crawler/output';
+export const outputReposName = 'parsedResult.json';
+export const outputDir = 'output';
 // Directories we want to ignore looking into
 export const blacklistDir = ['node_modules'];
 export const blacklistFiles = ['package-lock.json', 'yarn.lock'];
@@ -23,4 +21,4 @@ export const blacklistRepos = [
     'navikt/EESSI-RINA-5.6.2-opensource'
 ];
 export const files = ['package.json'];
-export const repoDirName = 'crawler/navikt-repos';
+export const repoDirName = 'repositories';

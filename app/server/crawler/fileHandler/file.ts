@@ -32,6 +32,7 @@ export const writeData = (data: any, dir: string, fileName: string) => {
     let json: string;
     try {
         json = JSON.stringify(data, null, 4);
+        console.log(dir + '/' + fileName);
         mkdirp.sync(dir);
         fs.writeFileSync(dir + '/' + fileName, json, 'utf8');
     } catch (e) {

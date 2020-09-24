@@ -9,7 +9,7 @@ backend/output/**
 .vscode
 frontend/src/output
 output
-navikt-repos
+repositories
 lib
 shared/lib/**
 shared/lib

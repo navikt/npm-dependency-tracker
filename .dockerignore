@@ -1,8 +1,9 @@
-.git
-.dockerignore
-.env
-navikt-repos
-output
-.vscode
+**/.git
+**/.github
+**/.env
+**/repositories
+**/output
+**/.vscode
 **/node_modules
 node_modules
+

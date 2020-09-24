@@ -16,9 +16,7 @@ const reqTemplate = Request.defaults({
 
 const optionsTemplate = (page) => {
     return {
-        uri: generateUrl(
-            ['orgs', config.org, 'repos'].join('/')
-        ),
+        uri: generateUrl(['orgs', config.org, 'repos'].join('/')),
         qs: {
             page: page
         }
@@ -29,20 +27,12 @@ const fetch = (options) => {
     return new Promise((resolve, reject) => {
         reqTemplate.get(options, (err, res, body) => {
             if (err) reject(err);
-            let statusCode = +res.headers.status.split(
-                ' '
-            )[0];
+            let statusCode = +res.headers.status.split(' ')[0];
 
             // Github got a limit of 5000 calls/hr, so if overstepped we get locked out
-            let resHeader =
-                res.headers['x-ratelimit-remaining'];
-            if (
-                resHeader !== undefined &&
-                +resHeader === 0
-            ) {
-                const wait = new Date(
-                    +res.headers['x-ratelimit-reset'] * 1000
-                ).toLocaleString();
+            let resHeader = res.headers['x-ratelimit-remaining'];
+            if (resHeader !== undefined && +resHeader === 0) {
+                const wait = new Date(+res.headers['x-ratelimit-reset'] * 1000).toLocaleString();
                 reject(new Error(util.xrateError(wait)));
             }
 
@@ -80,23 +70,21 @@ const fetchOrgReposByPage = (page) => {
 const fetchAllRepos = () => {
     return fetchOrgReposByPage(1)
         .then((val) => {
-            let repos = [].concat(val.json);
-            let pagination = getPaginateHeaderData(
-                val.headers.link
-            );
+            try {
+                let repos = [].concat(val.json);
+                let pagination = getPaginateHeaderData(val.headers.link);
 
-            let promises = underscore
-                .range(2, pagination.last + 1)
-                .map((p) => {
+                let promises = underscore.range(2, pagination.last + 1).map((p) => {
                     return fetchOrgReposByPage(p);
                 });
 
-            return Promise.all(promises).then((values) => {
-                let rs = underscore.flatten(
-                    values.map((v) => v.json)
-                );
-                return repos.concat(rs);
-            });
+                return Promise.all(promises).then((values) => {
+                    let rs = underscore.flatten(values.map((v) => v.json));
+                    return repos.concat(rs);
+                });
+            } catch (e) {
+                throw e;
+            }
         })
         .catch((err) => {
             console.log(err.message);

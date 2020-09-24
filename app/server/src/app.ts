@@ -37,24 +37,26 @@ app.use(express.json());
 // TODO: la brukeren velge om de vil oppdatere når serveren starter?
 app.on('start-cronjob', () => {
     const job = () => {
-        console.log('Starting Cron job');
-        if (runningCrawler) return;
+        if (runningCrawler) {
+            console.log('Crawler allready running, skipping cron job');
+            return;
+        }
+        console.log('Starting cron job: ' + new Date().toUTCString());
         try {
             runningCrawler = true;
             execute()
                 .then(() => {
-                    console.log('Updated data with crawler!');
                     app.emit('reload-data', null);
                     runningCrawler = false;
-                    console.info('Cron job completed');
+                    console.log('Completed cron job: ' + new Date().toUTCString());
                 })
                 .catch((e: Error) => {
                     runningCrawler = false;
-                    console.log('error running crawler');
+                    console.log('ERROR: cron job failed with error: ' + e.message);
                 });
         } catch (e) {
             runningCrawler = false;
-            console.log('error running crawler');
+            console.log('ERROR: cron job failed with error: ' + e.message);
         }
     };
 
@@ -67,20 +69,24 @@ app.on('start-cronjob', () => {
 });
 
 app.on('reload-data', () => {
-    // TODO: bedre pathing til data
-    let dir = (__dirname + '/output/outputRepos.json').replace('build/src', 'crawler');
+    let dir = (__dirname + '/output/parsedResult.json').replace('build/src/', '');
     try {
         fs.readFile(dir, 'utf-8', (err: Error, data: any) => {
             if (err) {
-                console.log('Finner ikke generert data fra crawler');
+                if (runningCrawler)
+                    console.log('No parsed data found, crawler is generating it right now');
+                else
+                    console.log(
+                        'No parsed data found(consider restarting since crawler is not running)'
+                    );
                 return;
             }
             localData = JSON.parse(data);
             localData.sort((a, b) => a.name.localeCompare(b.name));
-            console.log('Successfull load/reload of data');
+            console.log('SUCCESS: Read parsed data generated from crawler into memory');
         });
-    } catch (error) {
-        console.log('Error: fs.readFile in app.ts');
+    } catch (e) {
+        console.log('ERROR: reload-data failed with error: ' + e.message);
     }
 });
 
