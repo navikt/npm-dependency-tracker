@@ -1,7 +1,6 @@
 import chalk from 'chalk';
 import { Repo, CommitData } from '@nav-frontend/shared-types';
-const config = require('./config.js');
-const cliProgress = require('cli-progress');
+const config = require('./config');
 const glob = require('fast-glob');
 
 // Used if there is made more than 5k calls to the Github API the last hour

@@ -3,7 +3,7 @@
         "target": "ESNext",
         "module": "commonjs",
         "lib": ["es2017"],
-        "allowJs": false,
+        "allowJs": true,
         "outDir": "./lib",
         "rootDir": "../shared",
         "strict": true,

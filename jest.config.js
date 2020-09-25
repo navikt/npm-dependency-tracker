@@ -1,28 +1,41 @@
 module.exports = {
-    preset: 'ts-jest',
+    preset: 'ts-jest/presets/js-with-babel',
     testEnvironment: 'node',
     globals: {
         'ts-jest': {
             isolatedModules: true
         }
     },
+    transform: {
+        '^.+\\.jsx?$': 'babel-jest',
+        '^.+\\.js?$': 'babel-jest'
+    },
     testPathIgnorePatterns: [
         '/node_modules/',
-        '<rootDir>/server/build/',
+        '<rootDir>/app/server/build/',
         '<rootDir>/shared/lib/',
-        '<rootDir>/server/crawler/navikt-repos/'
+        '<rootDir>/app/server/repositories/',
+        '<rootDir>/app/server/crawler/__mock__/'
     ],
     modulePathIgnorePatterns: [
         '/node_modules/',
-        '<rootDir>/server/build/',
+        '<rootDir>/app/server/build/',
         '<rootDir>/shared/lib/',
-        '<rootDir>/server/crawler/navikt-repos/'
+        '<rootDir>/app/server/repositories/',
+        '<rootDir>/app/server/crawler/__mock__/'
     ],
     testMatch: [
-        '<rootDir>/shared/**/__tests__/*.test.ts',
-        '<rootDir>/server/**/__tests__/*.test.ts'
+        '<rootDir>/shared/**/*.test.ts',
+        '<rootDir>/app/server/**/*.test.ts'
     ],
     collectCoverage: false,
     collectCoverageFrom: ['server/crawler', 'server/src'],
-    coveragePathIgnorePatterns: ['node_modules', 'build', 'navikt-repos', 'output']
+    coveragePathIgnorePatterns: [
+        'node_modules',
+        'build',
+        'repositories',
+        'output',
+        '__mock__',
+        '__tests__'
+    ]
 };

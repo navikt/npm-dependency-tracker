@@ -1,33 +1,13 @@
-import { GithubApi, CommitData, Repo } from '@nav-frontend/shared-types';
+import { GithubApi, Repo } from '@nav-frontend/shared-types';
 import fetchRepos from './github/fetch';
 import Clone from './github/commands';
 import Parse from './fileHandler/parser';
-import { writeData, reposFromFile } from './fileHandler/file';
+import { filereadJson } from './fileHandler/file';
 
 import * as util from './util';
 import * as config from './config';
 
 import pLimit from 'p-limit';
-
-const newRepo = (
-    name: string = '',
-    lastCommit: string = '',
-    cloneUrl: string = '',
-    packages: any[] = [],
-    commits: CommitData.Root[] = [],
-    branch: string = '',
-    rawFetch: GithubApi.Root
-): Repo => {
-    return {
-        name: name,
-        lastCommit: lastCommit,
-        cloneUrl: cloneUrl,
-        branch: branch,
-        packages: packages,
-        commits: commits,
-        rawFetch: rawFetch
-    };
-};
 
 export const contains = (repo: string, repos: Repo[]) => {
     return repos.filter((x: Repo) => x.name === repo).length;
@@ -44,43 +24,43 @@ export const cleanCommits = (repos: Repo[]) => {
     });
 };
 
-export const generateNewRepos = (gitRepos: GithubApi.Root[], localRepos: Repo[]) => {
-    const newRepos: Repo[] = [];
-    gitRepos.forEach((orgRepo) => {
-        if (
-            !contains(orgRepo.full_name, localRepos) &&
-            !config.blacklistRepos.includes(orgRepo.full_name)
-        ) {
-            newRepos.push(
-                newRepo(
-                    orgRepo.full_name,
-                    '',
-                    orgRepo.clone_url,
-                    [],
-                    [],
-                    orgRepo.default_branch,
-                    orgRepo
-                )
-            );
-        }
-    });
-    return [...localRepos, ...newRepos];
-};
+export const mapApiDataToRepos = (
+    apiRepos: GithubApi.Root[],
+    filter: string[] = []
+) =>
+    apiRepos
+        .map(
+            (orgRepo: GithubApi.Root): Repo => ({
+                name: orgRepo.full_name || '',
+                lastCommit: '',
+                cloneUrl: orgRepo.clone_url || '',
+                branch: orgRepo.default_branch || '',
+                packages: [],
+                commits: [],
+                rawFetch: orgRepo
+            })
+        )
+        .filter((repo: Repo) => !filter.includes(repo.name));
+
 export const loadRepos = async () => {
-    const localRepos: Repo[] = await reposFromFile();
-    const repos = await fetchRepos()
-        .then((repos: GithubApi.Root[]) => {
-            return generateNewRepos(repos, localRepos);
-        })
-        .catch((err) => {
-            console.log(err);
-            return undefined;
-        });
-    return repos;
+    let localRepos: Repo[] = [];
+    try {
+        localRepos = filereadJson() as Repo[];
+    } catch (error) {
+        console.log(error.message);
+    }
+
+    return fetchRepos()
+        .then((repos) =>
+            mapApiDataToRepos(repos, [
+                ...localRepos.map(({ name }) => name),
+                ...config.blacklistRepos
+            ])
+        )
+        .then((repos: Repo[]) => [...localRepos, ...repos]);
 };
 
 export const clone = async (repos: Repo[]) => {
-    let errors: Error[] = [];
     const limiter = pLimit(config.concurrent);
 
     let promises: Promise<unknown>[] = repos.map((repo: Repo) => {
@@ -88,27 +68,23 @@ export const clone = async (repos: Repo[]) => {
             Clone(
                 util.generateCloneUrl(repo.cloneUrl),
                 util.generateOutputDir(repo.name)
-            ).catch((url: Error) => errors.push(url))
+            ).catch((err: Error) => console.error(err.message))
         );
     });
 
-    await Promise.all(promises);
-    return errors;
+    return Promise.all(promises);
 };
 
 export const parse = async (repos: Repo[]) => {
-    let errors: Error[] = [];
     const limiter = pLimit(config.concurrent);
-    let promises: Promise<unknown>[] = repos.map((repo: Repo) => {
-        return limiter(async () => await Parse(repo).catch((url: Error) => errors.push(url)));
-    });
 
-    await Promise.all(promises);
-    return errors;
-};
-
-export const save = (repos: Repo[]) => {
-    writeData(repos, config.outputDir, config.outputReposName);
+    return Promise.all(
+        repos.map((repo: Repo) =>
+            limiter(() =>
+                Parse(repo).catch((err: Error) => console.error(err.message))
+            )
+        )
+    );
 };
 
 export default Repo;

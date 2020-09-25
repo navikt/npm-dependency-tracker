@@ -1,7 +1,7 @@
 import { Repo, CommitData } from '@nav-frontend/shared-types';
 import * as util from '../util';
 import { checkOut } from '../github/commands';
-import { fetchPackage } from './file';
+import { filereadJson } from './file';
 const { gitToJs } = require('git-parse');
 
 /**
@@ -22,8 +22,10 @@ const fetchCommitPackages = async (repo: Repo, dir: string) => {
                 if (path.indexOf('node_modules') !== -1) {
                     if (repo.name !== 'navikt/nav-frontend-moduler') continue;
                 }
-                const pa = fetchPackage(path);
-                pack.push(pa);
+                try {
+                    const pa = filereadJson(path);
+                    if (pa instanceof Object) pack.push(pa);
+                } catch (error) {}
             }
             commit.packages = pack;
             repo.lastCommit = commit.hash;
@@ -40,12 +42,16 @@ const fetchCommitPackages = async (repo: Repo, dir: string) => {
  * Gets all the commits from a given repo and filters out unwanted commit instances
  */
 const commitParsing = async (dir: string, repo: Repo, reject: any) => {
-    await gitToJs(dir, { sinceCommit: repo.lastCommit ? repo.lastCommit : undefined })
+    await gitToJs(dir, {
+        sinceCommit: repo.lastCommit ? repo.lastCommit : undefined
+    })
         .then((commits: CommitData.Root[]) => {
             let filtered = util.filterCommits(commits).reverse();
 
             filtered = util.removeOldCommits(filtered, repo.lastCommit);
-            repo.commits = repo.commits ? [...repo.commits, ...filtered] : filtered;
+            repo.commits = repo.commits
+                ? [...repo.commits, ...filtered]
+                : filtered;
         })
         .catch((e: Error) => {
             reject(e);
@@ -81,8 +87,10 @@ const parse = (repo: Repo) => {
                             path.indexOf('node_modules') === -1 ||
                             repo.name.indexOf('nav-frontend-moduler') !== -1
                         ) {
-                            const pa = fetchPackage(path);
-                            pack.push(pa);
+                            try {
+                                const pa = filereadJson(path);
+                                if (pa instanceof Object) pack.push(pa);
+                            } catch (error) {}
                         }
                     }
                     repo.packages = pack;

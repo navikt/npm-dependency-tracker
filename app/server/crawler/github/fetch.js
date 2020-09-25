@@ -1,8 +1,7 @@
-import Request from 'request';
-
 import * as util from '../util';
 import * as config from '../config';
 import * as underscore from 'underscore';
+const Request = require('request');
 
 const reqTemplate = Request.defaults({
     headers: {
@@ -68,28 +67,19 @@ const fetchOrgReposByPage = (page) => {
 
 // Fetches all the repos avaliable in the organization without parsing the data.
 const fetchAllRepos = () => {
-    return fetchOrgReposByPage(1)
-        .then((val) => {
-            try {
-                let repos = [].concat(val.json);
-                let pagination = getPaginateHeaderData(val.headers.link);
+    return fetchOrgReposByPage(1).then((val) => {
+        let repos = [].concat(val.json);
+        let pagination = getPaginateHeaderData(val.headers.link);
 
-                let promises = underscore.range(2, pagination.last + 1).map((p) => {
-                    return fetchOrgReposByPage(p);
-                });
-
-                return Promise.all(promises).then((values) => {
-                    let rs = underscore.flatten(values.map((v) => v.json));
-                    return repos.concat(rs);
-                });
-            } catch (e) {
-                throw e;
-            }
-        })
-        .catch((err) => {
-            console.log(err.message);
-            process.exit(0);
+        let promises = underscore.range(2, pagination.last + 1).map((p) => {
+            return fetchOrgReposByPage(p);
         });
+
+        return Promise.all(promises).then((values) => {
+            let rs = underscore.flatten(values.map((v) => v.json));
+            return repos.concat(rs);
+        });
+    });
 };
 
 export default fetchAllRepos;

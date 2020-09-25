@@ -13,3 +13,5 @@ repositories
 lib
 shared/lib/**
 shared/lib
+**/__mock__/files-written-for-tests
+

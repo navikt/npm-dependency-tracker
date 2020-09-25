@@ -3,31 +3,32 @@ require('dotenv').config();
 // const log = require('why-is-node-running'); // should be your first require
 import { Repo } from '@nav-frontend/shared-types';
 import * as util from './util';
-const fs = require('fs');
 
-import { loadRepos, clone, parse, save } from './repoHandler';
+import { loadRepos, clone, parse } from './repoHandler';
+import { writeData } from './fileHandler/file';
+import * as config from './config';
 
 const run = async () => {
-    let repos: Repo[] | undefined = await loadRepos();
-    if (repos === undefined) return -1;
+    try {
+        let repos: Repo[] = await loadRepos();
 
-    // Dev mode, doesnt need to work on 2k repos
-    if (process.argv.includes('--dev')) repos.length = repos.length > 10 ? 10 : repos.length;
+        // Dev mode, doesnt need to work on 2k repos
+        if (process.argv.includes('--dev')) {
+            repos = repos.splice(10, 3);
+        }
 
-    repos = util.filterBlacklisted(repos);
+        repos = util.filterBlacklisted(repos);
 
-    const update = await clone(repos);
-    const parsing = await parse(repos);
-    let errors = update.concat(parsing);
+        await clone(repos);
+        await parse(repos);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    errors.length > 0
-        ? fs.writeFileSync('Errors.log', JSON.stringify(errors.map((e) => e.message)), 'utf8')
-        : null;
+        writeData(repos, config.outputDir, config.outputReposName);
 
-    save(repos);
-
-    return 1;
+        return 1;
+    } catch (error) {
+        console.log(error.message);
+        process.exit(0);
+    }
 };
 
 /**
