@@ -1,9 +1,8 @@
 name: Build, push docker-image
 
-on:
-  push:
-    branches:
-      - master
+
+on: 
+  workflow_dispatch
 
 env:
   IMAGE: docker.pkg.github.com/${{ github.repository }}/dep-tracker:${{ github.sha }}
