@@ -6,11 +6,12 @@
         "start": "craco --max_old_space_size=4096 start",
         "build": "craco build",
         "workspace-build": "craco build",
-        "start-server:dev": "cd server && yarn run start-server",
+        "start-server:dev": "cd server && yarn run start-server --dev",
         "server-build": "yarn run build",
         "start-server:prod": "cd server && yarn run start-server",
         "start-crawler": "cd server && yarn run start-crawler"
     },
+    "proxy": "http://localhost:3001",
     "eslintConfig": {
         "extends": "react-app"
     },

@@ -3,8 +3,6 @@ import { combineReducers, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { RootState } from './creator';
 
-const url = process.env.REACT_APP_URL ? process.env.REACT_APP_URL : 'http://localhost:3001';
-
 enum Actions {
     'INITIAL_LOAD' = 'INITIAL_LOAD',
     'SUCCESS_LOAD' = 'SUCCESS_LOAD',
@@ -55,7 +53,7 @@ const postJson = (url: string, data: string) =>
 
 function* fetchJson(action: AppActions) {
     try {
-        const data = yield call(() => fetch(url + '/initial-load').then((res) => res.json()));
+        const data = yield call(() => fetch('/initial-load').then((res) => res.json()));
         yield put(serverLoad.actions.SUCCESS_LOAD(data));
     } catch (e) {
         yield put(serverLoad.actions.ERROR_LOAD());
@@ -70,7 +68,7 @@ function* callServer() {
             packFilter: filters.packfilter,
             preset: ''
         };
-        const res = yield call(() => postJson(url + '/filter', JSON.stringify(filter)));
+        const res = yield call(() => postJson('/filter', JSON.stringify(filter)));
         yield put(serverLoad.actions.SUCCESS_LOAD(res));
         return;
     } catch (e) {

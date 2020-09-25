@@ -61,9 +61,15 @@ app.on('start-cronjob', () => {
     };
 
     // job starts at 06.00
-    const cronJob = cron.schedule('0 6 * * *', function () {
-        job();
-    });
+    const cronJob = cron.schedule(
+        '26 9 * * *',
+        function () {
+            job();
+        },
+        {
+            timezone: 'Europe/Paris'
+        }
+    );
     job();
     cronJob.start();
 });

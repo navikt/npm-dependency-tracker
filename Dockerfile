@@ -7,6 +7,6 @@ COPY . .
 
 RUN yarn install && yarn run setup-build
 
-EXPOSE 8080
+EXPOSE 8080:3001
 
 CMD ["yarn", "run", "prod", "--dev"]
