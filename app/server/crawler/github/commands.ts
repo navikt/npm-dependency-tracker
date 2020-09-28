@@ -1,3 +1,6 @@
+import { Repo } from '@nav-frontend/shared-types';
+
+import * as util from '../util';
 const { exec } = require('child_process');
 const fs = require('fs');
 
@@ -8,21 +11,26 @@ export const pull = (
 ) => {
     exec(`cd ${dir} && git pull`, (e: Error) => {
         if (e) {
-            exec(`cd ${dir} && git rev-list --all -n 1`, (e: Error, data: string, out: string) => {
-                if (e) reject(e);
-                if (out.length === 0) {
-                    cb();
-                } else {
-                    reject(new Error('Error commands.ts l16'));
+            exec(
+                `cd ${dir} && git rev-list --all -n 1`,
+                (e: Error, data: string, out: string) => {
+                    if (e) reject(e);
+                    if (out.length === 0) {
+                        cb();
+                    } else {
+                        reject(new Error('Error commands.ts l16'));
+                    }
                 }
-            });
+            );
         } else {
             cb();
         }
     });
 };
 
-const clone = (url: string, dir: string) => {
+const clone = (repo: Repo) => {
+    const url = util.generateCloneUrl(repo.cloneUrl);
+    const dir = util.generateOutputDir(repo.name);
     return new Promise((resolve, reject) => {
         fs.access(dir, (err: Error) => {
             if (err) {

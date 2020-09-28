@@ -9,6 +9,7 @@
         "ts": "tsc",
         "start-server:dev": "ts-node-dev src/server.ts --dev",
         "start-server": "tsc && node --max-old-space-size=4092 ./build/src/server.js",
-        "start-crawler": "tsc && node --max-old-space-size=4092 ./build/crawler/index.js"
+        "start-crawler-old": "tsc && node --max-old-space-size=4092 ./build/crawler/index.js",
+        "start-crawler": "tsc && node ./build/crawler/index.js"
     }
 }

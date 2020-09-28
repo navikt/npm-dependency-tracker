@@ -4,32 +4,11 @@ require('dotenv').config();
 import { Repo } from '@nav-frontend/shared-types';
 import * as util from './util';
 
-import { loadRepos, clone, parse } from './repoHandler';
+import Clone from './github/commands';
+import Parse from './fileHandler/parser';
+import { loadRepos, pLimiter } from './repoHandler';
 import { writeData } from './fileHandler/file';
 import * as config from './config';
-
-const run = async () => {
-    try {
-        let repos: Repo[] = await loadRepos();
-
-        // Dev mode, doesnt need to work on 2k repos
-        if (process.argv.includes('--dev')) {
-            repos = repos.splice(10, 3);
-        }
-
-        repos = util.filterBlacklisted(repos);
-
-        await clone(repos);
-        await parse(repos);
-
-        writeData(repos, config.outputDir, config.outputReposName);
-
-        return 1;
-    } catch (error) {
-        console.log(error.message);
-        process.exit(0);
-    }
-};
 
 /**
  * Todo: Better error handling when promise fails.
@@ -39,9 +18,21 @@ const run = async () => {
  */
 export const execute = async () => {
     util.checkEnv();
-    const apprunner = await run();
-    if (apprunner === -1) {
-        console.log('Runner failed!');
+    try {
+        let repos: Repo[] = await loadRepos();
+
+        // Dev mode, doesnt need to work on 2k repos
+        if (process.argv.includes('--dev')) {
+            if (repos.length > 13) repos = repos.splice(10, 3);
+        }
+
+        await pLimiter(repos, Clone);
+        await pLimiter(repos, Parse);
+
+        writeData(repos, config.outputDir, config.outputReposName);
+    } catch (error) {
+        console.log(error.message);
+        process.exit(0);
     }
 };
 

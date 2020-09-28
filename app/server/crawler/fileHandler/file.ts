@@ -1,8 +1,6 @@
-import { Repo } from '@nav-frontend/shared-types';
 const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');
-const config = require('../config');
 
 export const filereadJson = (pathing: string = ''): any[] | {} => {
     if (pathing === '') return [];
@@ -14,7 +12,9 @@ export const filereadJson = (pathing: string = ''): any[] | {} => {
 export const writeData = (data: any, dir: string, filename: string) => {
     const dirpath = path.resolve(process.cwd(), dir);
     mkdirp.sync(dirpath);
-    fs.writeFileSync(dirpath + '/' + filename, JSON.stringify(data), 'utf8');
-    console.log(dirpath + '/' + filename);
-    console.log(process.cwd());
+    const json = JSON.stringify(data);
+    fs.writeFileSync(dirpath + '/' + filename, json, 'utf8');
+    console.log(
+        `Wrote ${Math.ceil(Buffer.byteLength(json) / 1024 / 1024)}Mb to output`
+    );
 };

@@ -16,7 +16,7 @@ export const blacklistRepos = [
     'navikt/sosialhjelp-soknad-api',
     'navikt/pesys',
     'navikt/stelvio',
-    'navikt/spsak',
+    'npositionPanelRightavikt/spsak',
     'navikt/modiapersonoversikt-api',
     'navikt/EESSI-RINA-5.6.2-opensource'
 ];
