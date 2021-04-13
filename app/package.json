@@ -87,7 +87,7 @@
         "git-clone": "^0.1.0",
         "git-parse": "^1.0.4",
         "gitdiff-parser": "^0.2.2",
-        "gitlog": "^4.0.0",
+        "gitlog": "^4.0.4",
         "isomorphic-git": "^1.7.4",
         "mkdirp": "^1.0.4",
         "node-cmd": "^3.0.0",
