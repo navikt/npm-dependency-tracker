@@ -118,7 +118,7 @@
         "request": "^2.88.0",
         "rimraf": "^3.0.2",
         "typescript": "^3.9.7",
-        "underscore": "^1.10.2",
+        "underscore": "^1.12.1",
         "ts-node-dev": "1.0.0-pre.62"
     },
     "browserslist": {
